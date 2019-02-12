@@ -6,36 +6,36 @@ The application will consist of:
 
 General guidelines: These are the general guidelines for the projects (may be subject to change):
 
-  ·A user can login/logout
+    ·A user can login/logout
 
-  ·A non-registered user can register an account
+    ·A non-registered user can register an account
 
-  ·A user can view his/her profile
+    ·A user can view his/her profile
 
-  ·A user can edit their profile
+    ·A user can edit their profile
 
-  ·A user will be able to view their collection of Pokémon
+    ·A user will be able to view their collection of Pokémon
 
-  ·A user will be able to get a random Pokémon card
+    ·A user will be able to get a random Pokémon card
 
-  ·A user will be able to view a chart with data about their collection
+    ·A user will be able to view a chart with data about their collection
 
-  ·A user can trade duplicate cards for credit in a shop
+    ·A user can trade duplicate cards for credit in a shop
 
-  ·A user can view their position on a leaderboard
+    ·A user can view their position on a leaderboard
 
-  ·A user can filter their collection of cards by type
+    ·A user can filter their collection of cards by type
 
-  ·A user can filter their collection of cards by name
+    ·A user can filter their collection of cards by name
 
-  ·A non-registered user can view a user leaderboard
+    ·A non-registered user can view a user leaderboard
 
-  Optional requirements:
+Optional requirements:
 
-  ·A registered user can view another existing user’s collection
+    ·A registered user can view another existing user’s collection
 
-  ·Evolution based system
+    ·Evolution based system
 
-  ·Rarity based system
+    ·Rarity based system
 
-  ·Badge based system
+    ·Badge based system
