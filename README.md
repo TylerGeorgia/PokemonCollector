@@ -1,8 +1,8 @@
 A Pokémon collectable card game whose goal is to collect all the unique types of Pokémon.
 The application will consist of:
-1.       A point system where points are awarded based on collecting a new unique type of Pokémon, a full evolution set of Pokémon, and completing certain milestones
-2.       A credit system were users can turn in duplicate cards, and a shop where they can spend credits to get cards they do not currently possess
-3.       A leaderboard where users can compare their progress with other users on the server
+1. A point system where points are awarded based on collecting a new unique type of Pokémon, a full evolution set of Pokémon, and completing certain milestones
+2. A credit system were users can turn in duplicate cards, and a shop where they can spend credits to get cards they do not currently possess
+3. A leaderboard where users can compare their progress with other users on the server
 
 General guidelines: These are the general guidelines that the team chose to follow
 ·         A user can login/logout
