@@ -4,37 +4,38 @@ The application will consist of:
 2. A credit system were users can turn in duplicate cards, and a shop where they can spend credits to get cards they do not currently possess
 3. A leaderboard where users can compare their progress with other users on the server
 
-General guidelines: These are the general guidelines that the team chose to follow
-·A user can login/logout
+General guidelines: These are the general guidelines for the projects (may be subject to change):
 
-·A non-registered user can register an account
+  ·A user can login/logout
 
-·A user can view his/her profile
+  ·A non-registered user can register an account
 
-·A user can edit their profile
+  ·A user can view his/her profile
 
-·A user will be able to view their collection of Pokémon
+  ·A user can edit their profile
 
-·A user will be able to get a random Pokémon card
+  ·A user will be able to view their collection of Pokémon
 
-·A user will be able to view a chart with data about their collection
+  ·A user will be able to get a random Pokémon card
 
-·A user can trade duplicate cards for credit in a shop
+  ·A user will be able to view a chart with data about their collection
 
-·A user can view their position on a leaderboard
+  ·A user can trade duplicate cards for credit in a shop
 
-·A user can filter their collection of cards by type
+  ·A user can view their position on a leaderboard
 
-·A user can filter their collection of cards by name
+  ·A user can filter their collection of cards by type
 
-·A non-registered user can view a user leaderboard
+  ·A user can filter their collection of cards by name
 
-Optional requirements:
+  ·A non-registered user can view a user leaderboard
 
-·A registered user can view another existing user’s collection
+  Optional requirements:
 
-·Evolution based system
+  ·A registered user can view another existing user’s collection
 
-·Rarity based system
+  ·Evolution based system
 
-·Badge based system
+  ·Rarity based system
+
+  ·Badge based system
