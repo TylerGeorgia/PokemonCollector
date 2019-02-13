@@ -54,6 +54,7 @@ public class JDBCConnectionUtil {
 		}
 
 		// Establish connection using jdbc
+		log.info("Class: JDBCConnectionUtil Method: GetConnection - Establishing Connection");
 		Connection conn = DriverManager.getConnection(url, user, pass);
 
 		return conn;
