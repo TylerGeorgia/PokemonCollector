@@ -46,15 +46,18 @@ public class UserDaoImpl implements UserDao{
 			cs.registerOutParameter(1,java.sql.Types.VARCHAR);
 			cs.execute();
 			hashedPassword = cs.getString(1);
-			String sql3 = "select * from tbl_user where username = '?' AND password = '?'";
+			log.info("pass hash is : " + hashedPassword);
+			System.out.print("pass hash:" + hashedPassword);
+			String sql3 = "select * from tbl_user where username = ? AND password = ?";
 			PreparedStatement ps = conn.prepareStatement(sql3);
 			ps.setString(1, username.toLowerCase());
 			ps.setString(2, hashedPassword);
 			
+			
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				userQ = new User();
-				userQ.setUsername(username);
+				userQ.setUsername(rs.getString("username"));
 				userQ.setEmail(rs.getString("email"));
 				userQ.setFirstName(rs.getString("first_name"));
 				userQ.setLastName(rs.getString("last_name"));
@@ -80,15 +83,14 @@ public class UserDaoImpl implements UserDao{
 			ps.setString(3, newUser.getFirstName());
 			ps.setString(4, newUser.getLastName());
 			ps.setString(5, newUser.getEmail().toLowerCase());
+			ps.execute();
 			
-			if(ps.executeUpdate() < 1) {
-				userCreated = false;
-			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 			userCreated = false;
 			log.info("Error in Class UserDaoImpl: Method createUser()");
 		}
+		
 		return userCreated;
 	}
 
@@ -108,7 +110,7 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs;
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_user where username = '?'";
+			String sql = "select * from tbl_user where username = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username.toLowerCase());
 			rs = ps.executeQuery();
@@ -128,7 +130,7 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs;
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_user where email = '?'";
+			String sql = "select * from tbl_user where email = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, email.toLowerCase());
 			rs = ps.executeQuery();
