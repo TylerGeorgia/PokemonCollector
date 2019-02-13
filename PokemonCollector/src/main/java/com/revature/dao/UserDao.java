@@ -7,7 +7,7 @@ import com.revature.model.User;
 
 public interface UserDao {
 	public List<User> getLeaderBoard ();
-	public boolean checkUserCredentials(String username, String password);
+	public User checkUserCredentials(String username, String password);
 	public boolean createUser(User newUser);
 	public User getUserById(int uId);
 	public Pokedex getPokedex(int uId);

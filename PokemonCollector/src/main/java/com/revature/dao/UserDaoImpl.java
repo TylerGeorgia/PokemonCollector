@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao{
 	private UserDaoImpl() {};
 	
 	public static UserDaoImpl getUserDao() {
-		if(userDao != null) {
+		if(userDao == null) {
 			userDao = new UserDaoImpl();
 		}
 		
