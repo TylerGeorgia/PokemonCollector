@@ -35,6 +35,21 @@ public class Dispatcher {
 		 * @return: true if successful, false if unsuccessful
 		 */
 		case "create":
+			ld.createUser(request, response);
+			break;
+		/*Checks the username
+		 * @POST: Checks the username
+		 * @return: true if unique
+		 */
+		case "checkUser":
+			break;
+		/*
+		 * Checks the email
+		 * @POST: Checks the email
+		 * @return: true if unique
+		 */
+		case "checkEmail":
+			
 			break;
 		/*Validates existing user login
 		 * @POST: Checks login
