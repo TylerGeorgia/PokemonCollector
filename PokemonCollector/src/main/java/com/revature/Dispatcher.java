@@ -42,6 +42,7 @@ public class Dispatcher {
 		 * @return: true if unique
 		 */
 		case "checkUser":
+			ld.processUsername(request, response);
 			break;
 		/*
 		 * Checks the email
@@ -49,14 +50,14 @@ public class Dispatcher {
 		 * @return: true if unique
 		 */
 		case "checkEmail":
-			
+			ld.processEmail(request, response);
 			break;
 		/*Validates existing user login
 		 * @POST: Checks login
 		 * @return: JSON with user information (null if empty)
 		 */
 		case "login":
-			
+			ld.processLogin(request, response);
 			break;
 		/*Manipulates collection for the user
 		 * @POST: Gets all duplicates for a user

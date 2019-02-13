@@ -14,8 +14,6 @@ public class LoginDelegate {
 	
 	//Mapper that marshals the POJOs to JSON
 	private final ObjectMapper mapper = new ObjectMapper();
-	//TODO: I need instances of the DAO
-	
 	
 	/**Creates a user and generates a JSON of the user information
 	 * @param request HttpRequest
@@ -23,7 +21,6 @@ public class LoginDelegate {
 	 * @throws IOException
 	 */
 	public void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("In create User");
 		String user = request.getParameter("USERNAME");
 		String pwd = request.getParameter("PASSWORD");
 		String first = request.getParameter("FIRSTNAME");
@@ -44,17 +41,53 @@ public class LoginDelegate {
 			response.getWriter().append(mapper.writeValueAsString("false"));
 		}
 	}
-	/**Processes user login, validates, sends back JSON with 
+	
+	/**Processes user login, validates, sends back JSON with all user credentials
+	 * @param request HttpRequest 
+	 * @param response HttpResponse
+	 * @throws IOException
+	 */
+	public void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String user = request.getParameter("USERNAME");
+		String pwd = request.getParameter("PASSWORD");
+		User current_user = AppServices.getAppServices().checkUserCredentials(user, pwd);
+		response.setContentType("application/json");
+		response.getWriter().append(mapper.writeValueAsString(current_user));
+		//TODO: Sessions
+	}
+
+	/**Performs the verification of the user name, checks for duplicates
 	 * @param request HttpRequest 
 	 * @param response HttpResponse
 	 * @throws IOException
 	 */
 	public void processUsername(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		 response.setContentType("application/json");
-		 ArrayList<User> current_user = new ArrayList<User>();
-		 
+		String user = request.getParameter("USERNAME");
+		response.setContentType("application/json");
+		//User name exists
+		if (AppServices.getAppServices().validateUsername(user)) {
+			response.getWriter().append(mapper.writeValueAsString("false"));
+		}
+		else { //User name is unique
+			response.getWriter().append(mapper.writeValueAsString("true"));
+		}
 	}
 	
-	
+	/**Performs the verification of the email, checks for duplicates
+	 * @param request HttpRequest 
+	 * @param response HttpResponse
+	 * @throws IOException
+	 */
+	public void processEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String email = request.getParameter("EMAIL");
+		response.setContentType("application/json");
+		//Email exists
+		if (AppServices.getAppServices().validateEmail(email)) {
+			response.getWriter().append(mapper.writeValueAsString("false"));
+		}
+		else { //Email is unique
+			response.getWriter().append(mapper.writeValueAsString("true"));
+		}
+	}
 	
 }
