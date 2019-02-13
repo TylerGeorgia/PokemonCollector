@@ -75,11 +75,11 @@ public class UserDaoImpl implements UserDao{
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
 			String sql = "call prc_insert_user(?,?,?,?,?)";
 			CallableStatement ps = conn.prepareCall(sql);
-			ps.setString(1, newUser.getEmail().toLowerCase());
+			ps.setString(1, newUser.getUsername().toLowerCase());
 			ps.setString(2,  newUser.getPassword());
 			ps.setString(3, newUser.getFirstName());
 			ps.setString(4, newUser.getLastName());
-			ps.setString(5, newUser.getEmail());
+			ps.setString(5, newUser.getEmail().toLowerCase());
 			
 			if(ps.executeUpdate() < 1) {
 				userCreated = false;
