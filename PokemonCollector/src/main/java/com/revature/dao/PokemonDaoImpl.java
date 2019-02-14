@@ -49,15 +49,36 @@ public class PokemonDaoImpl implements PokemonDao {
 	}
 
 	@Override
-	public int generateSaleValue(int pokemonId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<Pokemon> getPokemonByType(PokemonType pType) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pokemon> pokemonOfType = null;
+		ResultSet rs;
+		String pokemonType = "" + pType;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_type where type_name = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString( 1 , pokemonType);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				pokemonOfType = new ArrayList<Pokemon>();
+				int typeId = rs.getInt("type_id");
+
+				ResultSet rs2;
+				String sql2 = "select * from tbl_pokemon_to_type where type_id = ?";
+				PreparedStatement ps2 = conn.prepareStatement(sql2);
+				ps2.setInt(1,  typeId);
+				rs2 = ps2.executeQuery();
+				
+				while(rs2.next()) {
+					Pokemon nextPokemon = getPokemonById(rs2.getInt("pokemon_id"));
+					pokemonOfType.add(nextPokemon);
+					
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			log.info("Error in Class PokemonDaoImpl: Method getTypesByPokemonId()");
+		}
+		return pokemonOfType;
 	}
 
 	@Override
