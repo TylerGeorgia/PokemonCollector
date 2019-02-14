@@ -44,8 +44,34 @@ public class PokemonDaoImpl implements PokemonDao {
 
 	@Override
 	public List<Pokemon> getAllPokemon() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Pokemon> allPokemon = null;
+		ResultSet rs;
+		
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_pokemon";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				allPokemon = new ArrayList<Pokemon>();
+				Pokemon firstPokemon = new Pokemon();
+				firstPokemon.setPokemonId(rs.getInt("pokemon_id"));
+				firstPokemon.setPokemonName(rs.getString("pokemon_name"));
+				firstPokemon.setPokemonRarity(rs.getInt("rarity"));
+				allPokemon.add(firstPokemon);
+			}
+			while(rs.next()) {
+				Pokemon nextPokemon = new Pokemon();
+				nextPokemon.setPokemonId(rs.getInt("pokemon_id"));
+				nextPokemon.setPokemonName(rs.getString("pokemon_name"));
+				nextPokemon.setPokemonRarity(rs.getInt("rarity"));
+				allPokemon.add(nextPokemon);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			log.info("Error in Class PokemonDaoImpl: Method getAllPokemon()");
+		}
+		return allPokemon;
 	}
 
 	@Override

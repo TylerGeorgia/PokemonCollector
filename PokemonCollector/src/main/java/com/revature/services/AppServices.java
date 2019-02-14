@@ -39,12 +39,19 @@ public class AppServices {
 	
 	//TODO: test
 	public List<Pokemon> getAllPokemon(){
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getAllPokemon();
 	}
 	
 	//TODO: test
 	public int generateSaleValue(int pokemonId){
-		return 0;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		int baseRarity = pokemonDao.getRarityByPokemonId(pokemonId);
+		
+		//CALCULATING SALE VALUE
+		int saleValue = baseRarity/10;
+		
+		return saleValue;
 	}
 	
 	//TODO: test
