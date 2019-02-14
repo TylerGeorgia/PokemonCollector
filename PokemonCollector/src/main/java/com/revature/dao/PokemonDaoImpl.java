@@ -28,8 +28,7 @@ public class PokemonDaoImpl implements PokemonDao {
 		}
 		return pokemonDao;
 	}
-	
-	//Dao methods
+
 	@Override
 	public Pokemon getPokemonById(int pokemonId) {
 		Pokemon pokeToGet = null;
