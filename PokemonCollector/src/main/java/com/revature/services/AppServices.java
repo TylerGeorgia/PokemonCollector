@@ -25,6 +25,7 @@ public class AppServices {
 		return appService;
 	}
 	
+	//TODO: test
 	public Pokemon getPokemonById(int pokemonId) {
 		return null;
 	}
@@ -52,7 +53,7 @@ public class AppServices {
 	public int getRarityByPokemonId(int pokemonId){
 		return 0;
 	}
-	
+
 	public int sellAllDuplicatePokemonByUserId(int userId){
 		return 0;
 	}
@@ -60,7 +61,7 @@ public class AppServices {
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
 		return 0;
 	}
-
+	
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		return null;
 	}
@@ -68,9 +69,10 @@ public class AppServices {
 	public Pokemon buyPokemon(int uId, int pokeId){
 		return null;
 	}
-	
-	public List<User> getLeaderBoard (int pgNumber){
-		return null;
+	//TODO: test
+	public List<User> getLeaderBoard (){
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		return userDao.getLeaderBoard();
 	}
 	
 	public User checkUserCredentials(String username, String password){
@@ -85,7 +87,8 @@ public class AppServices {
 	}
 	
 	public User getUserById(int uId){
-		return null;
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		return userDao.getUserById(uId);
 	}
 	
 	public Pokedex getPokedex(int uId) {
@@ -102,3 +105,4 @@ public class AppServices {
 		return userDao.validateUsername(email);
 	}
 }
+

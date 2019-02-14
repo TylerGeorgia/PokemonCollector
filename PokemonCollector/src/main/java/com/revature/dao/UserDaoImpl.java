@@ -5,6 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> David_Lee_Code
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -29,8 +33,33 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public List<User> getLeaderBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> leaderBoard = new ArrayList<User>(100);
+		ResultSet rs;
+		
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "SELECT * FROM (SELECT * FROM tbl_user ORDER BY "
+					+ "score desc) where ROWNUM <= 100";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			int index = 0;
+			while(rs.next()) {
+				User nextUser = new User();
+				nextUser.setUsername(rs.getString("username"));
+				nextUser.setEmail(rs.getString("email"));
+				nextUser.setFirstName(rs.getString("first_name"));
+				nextUser.setLastName(rs.getString("last_name"));
+				nextUser.setUserId(rs.getInt("user_id"));
+				nextUser.setScore(rs.getInt("score"));
+				nextUser.setCredit(rs.getInt("credits"));
+				leaderBoard.add(index, nextUser);
+				index++;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			leaderBoard = null;
+			log.info("Error in Class UserDaoImpl: Method getLeaderBoard()");
+		}
+		return leaderBoard;
 	}
 
 	public User checkUserCredentials(String username, String password) {
@@ -95,8 +124,31 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	public User getUserById(int uId) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs;
+		User desiredUser = null;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_user where user_id = ?";
+			CallableStatement ps = conn.prepareCall(sql);
+			ps.setInt(1,uId);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				desiredUser = new User();
+				desiredUser.setUsername(rs.getString("username"));
+				desiredUser.setEmail(rs.getString("email"));
+				desiredUser.setFirstName(rs.getString("first_name"));
+				desiredUser.setLastName(rs.getString("last_name"));
+				desiredUser.setCredit(rs.getInt("credits"));
+				desiredUser.setScore(rs.getInt("score"));
+				desiredUser.setUserId(rs.getInt("user_id"));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			desiredUser = null;
+			log.info("Error in Class UserDaoImpl: Method getUserById()");
+		}
+		return desiredUser;
 	}
 
 	public Pokedex getPokedex(int uId) {
@@ -145,4 +197,5 @@ public class UserDaoImpl implements UserDao{
 		return isValidEmail;
 	}
 
+	}
 }
