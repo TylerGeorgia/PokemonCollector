@@ -149,11 +149,6 @@ public class UserDaoImpl implements UserDao{
 		return desiredUser;
 	}
 
-	public Pokedex getPokedex(int uId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public boolean validateUsername(String username) {
 		
 		boolean isValidUsername = true;
