@@ -1,0 +1,45 @@
+<app-nav-bar></app-nav-bar>
+<div class="container bg-dark text-light mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form action="login" method="Post">
+        <div class="form-group">
+          <label for="username"></label>
+          <input
+            type="text"
+            class="form-control"
+            id="userNameInput"
+            aria-describedby="usernamehelp"
+            placeholder="Enter Username"
+            name="username"
+            required
+          />
+          <small id="usernamehelp" class="form-text text-muted"
+            >Usernames are case sensitive.</small
+          >
+        </div>
+        <div class="form-group">
+          <label for="password"></label>
+          <input
+            type="password"
+            class="form-control"
+            id="exampleInputPassword1"
+            placeholder="Password"
+            name="password"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          (click)="onSubmit()"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<button routerLink="/userhome">Go to User Home</button>
