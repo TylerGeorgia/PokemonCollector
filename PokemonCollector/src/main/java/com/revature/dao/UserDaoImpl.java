@@ -29,10 +29,8 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public List<User> getLeaderBoard() {
-
 		List<User> leaderBoard = new ArrayList<User>(100);
 		ResultSet rs;
-		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
 			String sql = "select * from tbl_user order by score desc fetch first 100 rows only;";
 			PreparedStatement ps = conn.prepareStatement(sql);

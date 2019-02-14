@@ -72,8 +72,7 @@ public class AppServices {
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		return pokemonDao.getRarityByPokemonId(pokemonId);
 	}
-	
-	//TODO: test
+
 	public int sellAllDuplicatePokemonByUserId(int userId){
 		return 0;
 	}
@@ -82,8 +81,6 @@ public class AppServices {
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
 		return 0;
 	}
-
-	//TODO: test
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		return null;
 	}
@@ -93,7 +90,6 @@ public class AppServices {
 		return null;
 	}
 	
-	//TODO: test
 	public List<User> getLeaderBoard (){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.getLeaderBoard();
@@ -130,3 +126,4 @@ public class AppServices {
 		return userDao.validateUsername(email);
 	}
 }
+
