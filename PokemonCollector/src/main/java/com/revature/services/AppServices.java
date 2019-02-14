@@ -1,9 +1,11 @@
 package com.revature.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.revature.dao.PokemonDaoImpl;
 import com.revature.dao.UserDaoImpl;
 import com.revature.model.Pokedex;
 import com.revature.model.Pokemon;
@@ -37,30 +39,39 @@ public class AppServices {
 	
 	//TODO: test
 	public List<Pokemon> getAllPokemon(){
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getAllPokemon();
 	}
 	
 	//TODO: test
 	public int generateSaleValue(int pokemonId){
-		return 0;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		int baseRarity = pokemonDao.getRarityByPokemonId(pokemonId);
+		
+		//CALCULATING SALE VALUE
+		int saleValue = baseRarity/10;
+		
+		return saleValue;
 	}
 	
 	//TODO: test
 	public List<Pokemon> getPokemonByType(PokemonType pType){
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getPokemonByType(pType);
 	}
 	
 	//TODO: test
 	public List<String> getTypesByPokemonId(int pokemonId){
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getTypesByPokemonId(pokemonId);
 	}
 	
 	//TODO: test
 	public int getRarityByPokemonId(int pokemonId){
-		return 0;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getRarityByPokemonId(pokemonId);
 	}
-	
-	//TODO: test
+
 	public int sellAllDuplicatePokemonByUserId(int userId){
 		return 0;
 	}
@@ -69,8 +80,6 @@ public class AppServices {
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
 		return 0;
 	}
-
-	//TODO: test
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		return null;
 	}
@@ -80,7 +89,6 @@ public class AppServices {
 		return null;
 	}
 	
-	//TODO: test
 	public List<User> getLeaderBoard (){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.getLeaderBoard();
@@ -117,3 +125,4 @@ public class AppServices {
 		return userDao.validateUsername(email);
 	}
 }
+

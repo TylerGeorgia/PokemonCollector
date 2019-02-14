@@ -14,10 +14,9 @@ public class JDBCConnectionUtil {
 	
 	final static Logger log = Logger.getLogger(JDBCConnectionUtil.class);
 
-
-	public static Connection getConnection() throws SQLException {
+	public static Connection getConnection() throws SQLException  {
 		try {
-			InputStream dbProps = JDBCConnectionUtil.class.getClassLoader().getResourceAsStream("config.properties");
+			InputStream dbProps = JDBCConnectionUtil.class.getClassLoader().getResourceAsStream("connect.properties");
 		    Properties prop = new Properties();
 		    prop.load(dbProps);
 			Class.forName(prop.getProperty("driver"));
