@@ -10,7 +10,6 @@ public interface UserDao {
 	public User checkUserCredentials(String username, String password);
 	public boolean createUser(User newUser);
 	public User getUserById(int uId);
-	public Pokedex getPokedex(int uId);
 	public boolean validateUsername(String username);
 	public boolean validateEmail(String email);
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.revature.model.Pokedex;
 import com.revature.model.User;
 import com.revature.util.JDBCConnectionUtil;
 
@@ -35,7 +34,7 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs;
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_user order by score desc fetch first 100 rows only";
+			String sql = "select * from tbl_user order by score desc fetch first 100 rows only;";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			int index = 0;
