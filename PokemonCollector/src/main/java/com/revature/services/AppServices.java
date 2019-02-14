@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -30,26 +31,32 @@ public class AppServices {
 		return null;
 	}
 	
+	//TODO: test
 	public Pokemon getPokemonByName( String pokemonName){
 		return null;
 	}
 	
+	//TODO: test
 	public List<Pokemon> getAllPokemon(){
 		return null;
 	}
 	
+	//TODO: test
 	public int generateSaleValue(int pokemonId){
 		return 0;
 	}
 	
+	//TODO: test
 	public List<Pokemon> getPokemonByType(PokemonType pType){
 		return null;
 	}
 	
+	//TODO: test
 	public List<String> getTypesByPokemonId(int pokemonId){
 		return null;
 	}
 	
+	//TODO: test
 	public int getRarityByPokemonId(int pokemonId){
 		return 0;
 	}
@@ -58,18 +65,19 @@ public class AppServices {
 		return 0;
 	}
 	
+	//TODO: test
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
 		return 0;
 	}
-	
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		return null;
 	}
 	
+	//TODO: test
 	public Pokemon buyPokemon(int uId, int pokeId){
 		return null;
 	}
-	//TODO: test
+	
 	public List<User> getLeaderBoard (){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.getLeaderBoard();
@@ -86,6 +94,7 @@ public class AppServices {
 		return userDao.createUser(newUser);
 	}
 	
+	//TODO: test
 	public User getUserById(int uId){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.getUserById(uId);

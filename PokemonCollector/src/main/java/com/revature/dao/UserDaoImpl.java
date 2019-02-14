@@ -5,10 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
-=======
-import java.util.ArrayList;
->>>>>>> David_Lee_Code
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -37,8 +33,7 @@ public class UserDaoImpl implements UserDao{
 		ResultSet rs;
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM (SELECT * FROM tbl_user ORDER BY "
-					+ "score desc) where ROWNUM <= 100";
+			String sql = "select * from tbl_user order by score desc fetch first 100 rows only";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			int index = 0;
@@ -148,6 +143,7 @@ public class UserDaoImpl implements UserDao{
 			desiredUser = null;
 			log.info("Error in Class UserDaoImpl: Method getUserById()");
 		}
+		
 		return desiredUser;
 	}
 
