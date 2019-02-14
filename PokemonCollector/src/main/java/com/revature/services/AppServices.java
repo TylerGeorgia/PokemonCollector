@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.revature.dao.PokemonDaoImpl;
 import com.revature.dao.UserDaoImpl;
 import com.revature.model.Pokedex;
 import com.revature.model.Pokemon;
@@ -58,7 +59,8 @@ public class AppServices {
 	
 	//TODO: test
 	public int getRarityByPokemonId(int pokemonId){
-		return 0;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getRarityByPokemonId(pokemonId);
 	}
 	
 	//TODO: test
