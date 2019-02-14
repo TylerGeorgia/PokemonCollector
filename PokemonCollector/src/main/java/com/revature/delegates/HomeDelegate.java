@@ -16,4 +16,5 @@ public class HomeDelegate {
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(AppServices.getAppService().getLeaderBoard()));
 	}
+
 }

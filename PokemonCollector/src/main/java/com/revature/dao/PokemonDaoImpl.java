@@ -28,18 +28,51 @@ public class PokemonDaoImpl implements PokemonDao {
 		}
 		return pokemonDao;
 	}
-	
-	//Dao methods
+
 	@Override
 	public Pokemon getPokemonById(int pokemonId) {
-		// TODO Auto-generated method stub
-		return null;
+		Pokemon pokeToGet = null;
+		ResultSet rs;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_pokemon where pokemon_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt( 1 , pokemonId );
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				pokeToGet = new Pokemon();
+				pokeToGet.setPokemonId(rs.getInt("pokemon_id"));
+				pokeToGet.setPokemonName(rs.getString("pokemon_name"));
+				pokeToGet.setPokemonRarity(rs.getInt("rarity"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+			log.info("Error in Class PokemonDaoImpl: Method getPokemonById()");
+		}
+		return pokeToGet;
 	}
 
 	@Override
 	public Pokemon getPokemonByName(String pokemonName) {
-		// TODO Auto-generated method stub
-		return null;
+		Pokemon pokeToGet = null;
+		ResultSet rs;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_pokemon where pokemon_name = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString( 1 , pokemonName );
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				pokeToGet = new Pokemon();
+				pokeToGet.setPokemonId(rs.getInt("pokemon_id"));
+				pokeToGet.setPokemonName(rs.getString("pokemon_name"));
+				pokeToGet.setPokemonRarity(rs.getInt("rarity"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+			log.info("Error in Class PokemonDaoImpl: Method getPokemonById()");
+		}
+		return pokeToGet;
 	}
 
 	@Override

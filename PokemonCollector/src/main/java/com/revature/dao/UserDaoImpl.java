@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao{
 		List<User> leaderBoard = new ArrayList<User>(100);
 		ResultSet rs;
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_user order by score desc fetch first 100 rows only;";
+			String sql = "SELECT * FROM (SELECT * FROM tbl_user ORDER BY score desc) WHERE rownum <= 100";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			int index = 0;

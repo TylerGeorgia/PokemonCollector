@@ -65,6 +65,7 @@ public class Dispatcher {
 		 * @return: JSON with Pokemon IDs for a particular user
 		 */
 		case "collection":
+			//TODO
 			break;
 		/*Generates a random pokemon for a user
 		 * @GET: Generates a random pokemon for a user
@@ -72,6 +73,7 @@ public class Dispatcher {
 		 * @POST: Returns the users current collection
 		 */
 		case "generate":
+			//TODO
 			break;
 		/* Shop sell and buy functions
 		 * @GET: Redeems all or specific pokemon selected by user
@@ -79,6 +81,7 @@ public class Dispatcher {
 		 * @return: The updated user collection 
 		 */
 		case "redeem":
+			//TODO
 			break;
 		/*Returns the current leader board
 		 * @GET: Gets the leader board
