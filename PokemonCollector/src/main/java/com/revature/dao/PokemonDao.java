@@ -14,8 +14,6 @@ public interface PokemonDao {
 	
 	public List<Pokemon> getAllPokemon();
 	
-	public int generateSaleValue(int pokemonId);
-	
 	public List<Pokemon> getPokemonByType(PokemonType pType);
 	
 	public List<String> getTypesByPokemonId(int pokemonId);
@@ -29,8 +27,5 @@ public interface PokemonDao {
 	public Pokemon generateAndAddRandomPokemon(int uId);	
 	
 	public Pokemon buyPokemon(int uId, int pokeId);
-	
-	
-	
 	
 }
