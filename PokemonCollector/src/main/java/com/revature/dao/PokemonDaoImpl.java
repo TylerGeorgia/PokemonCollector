@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -61,8 +62,30 @@ public class PokemonDaoImpl implements PokemonDao {
 
 	@Override
 	public List<String> getTypesByPokemonId(int pokemonId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> pokemonsTypes = new ArrayList<String>();
+		ResultSet rs;
+		
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_pokemon_to_type where pokemon_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt( 1 , pokemonId );
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				ResultSet rs2;
+				int typeId = rs.getInt("type_id");
+				String sql2 = "select * from tbl_type where type_id = ?";
+				PreparedStatement ps2 = conn.prepareStatement(sql2);
+				ps2.setInt(1,  typeId);
+				rs2 = ps2.executeQuery();
+				if(rs2.next()) {
+					pokemonsTypes.add(rs2.getString("type_name"));
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			log.info("Error in Class PokemonDaoImpl: Method getTypesByPokemonId()");
+		}
+		return pokemonsTypes;
 	}
 
 	@Override

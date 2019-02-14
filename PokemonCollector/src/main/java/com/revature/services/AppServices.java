@@ -54,7 +54,8 @@ public class AppServices {
 	
 	//TODO: test
 	public List<String> getTypesByPokemonId(int pokemonId){
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getTypesByPokemonId(pokemonId);
 	}
 	
 	//TODO: test
