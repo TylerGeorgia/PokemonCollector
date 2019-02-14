@@ -29,7 +29,8 @@ public class AppServices {
 	
 	//TODO: test
 	public Pokemon getPokemonById(int pokemonId) {
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getPokemonById(pokemonId);
 	}
 	
 	//TODO: test
