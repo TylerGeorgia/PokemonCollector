@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao{
 		}catch(SQLException e) {
 			e.printStackTrace();
 			leaderBoard = null;
-			log.info("Error in Class UserDaoImpl: Method validateUsername()");
+			log.info("Error in Class UserDaoImpl: Method getLeaderBoard()");
 		}
 		return leaderBoard;
 	}
