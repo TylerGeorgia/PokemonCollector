@@ -32,7 +32,7 @@ public class LoginDelegate {
 		new_user.setFirstName(first);
 		new_user.setLastName(last);
 		new_user.setEmail(email);
-		if (AppServices.getAppServices().createUser(new_user)) {
+		if (AppServices.getAppService().createUser(new_user)) {
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString("true"));
 		}
@@ -50,7 +50,7 @@ public class LoginDelegate {
 	public void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String user = request.getParameter("USERNAME");
 		String pwd = request.getParameter("PASSWORD");
-		User current_user = AppServices.getAppServices().checkUserCredentials(user, pwd);
+		User current_user = AppServices.getAppService().checkUserCredentials(user, pwd);
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(current_user));
 		//TODO: Sessions
@@ -65,7 +65,7 @@ public class LoginDelegate {
 		String user = request.getParameter("USERNAME");
 		response.setContentType("application/json");
 		//User name exists
-		if (AppServices.getAppServices().validateUsername(user)) {
+		if (AppServices.getAppService().validateUsername(user)) {
 			response.getWriter().append(mapper.writeValueAsString("false"));
 		}
 		else { //User name is unique
@@ -82,7 +82,7 @@ public class LoginDelegate {
 		String email = request.getParameter("EMAIL");
 		response.setContentType("application/json");
 		//Email exists
-		if (AppServices.getAppServices().validateEmail(email)) {
+		if (AppServices.getAppService().validateEmail(email)) {
 			response.getWriter().append(mapper.writeValueAsString("false"));
 		}
 		else { //Email is unique
@@ -90,4 +90,7 @@ public class LoginDelegate {
 		}
 	}
 	
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+	}
 }

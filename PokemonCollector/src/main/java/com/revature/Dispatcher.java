@@ -80,11 +80,19 @@ public class Dispatcher {
 		 */
 		case "redeem":
 			break;
+		/*Returns the current leader board
+		 * @GET: Gets the leader board
+		 * @return JSON of leader board
+		 */
+		case "leader":
+			hd.returnLeaderboard(request, response);
+			break;
 		/* Logs the user out
 		 * @POST: Destroys the current session and logs the user out
 		 * @return: True if successful
 		 */
 		case "logout":
+			ld.logout(request, response);
 			break;
 		default:
 			System.out.println("Not yet implemented");

@@ -19,7 +19,7 @@ public class JunitTests {
 //	}
 	@Test
 	public void badLogin() {
-		assertEquals(null,AppServices.getAppServices().checkUserCredentials("Bad", "Login"));
+		assertEquals(null,AppServices.getAppService().checkUserCredentials("Bad", "Login"));
 	}
 	@Test
 	public void goodLogin() {
@@ -29,9 +29,8 @@ public class JunitTests {
 		new_user.setUsername("TestUsername");
 		new_user.setPassword("password");
 		new_user.setEmail("Test@Email.com");
-		assertEquals("TestUsername",AppServices.getAppServices().checkUserCredentials("TestUsername", "password").getUsername());
+		assertEquals("TestUsername",AppServices.getAppService().checkUserCredentials("TestUsername", "password").getUsername());
 	}
-	
 	
 	
 }
