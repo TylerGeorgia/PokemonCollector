@@ -128,12 +128,14 @@ public class AppServices {
 		
 		Pokemon pokemonToBuy = null;
 		
-		int pokemonCost = generateSaleValue(pId);
+		int pokemonCost = pokemonDao.getRarityByPokemonId(pId);
 		int userCredits = userDao.getUserCredit(uId);
 		
 		if(userCredits > pokemonCost) {
 			userCredits -= pokemonCost;
 			userDao.updateUserCredit(userCredits, uId);
+			log.info("Class: AppServices Method: buyPokemon /n"
+					+ "	userCredits: " + userCredits + " - PokemonCost: " + pokemonCost);
 			pokemonDao.addPokemonByUserIdAndPokemonId(uId, pId);
 			pokemonToBuy = pokemonDao.getPokemonById(pId);
 		}

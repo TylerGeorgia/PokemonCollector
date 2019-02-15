@@ -102,6 +102,7 @@ public class JunitTests {
 	
 	@Test
 	public void buyPokemon() {
+
 		assertEquals("bulbasaur", AppServices.getAppService().buyPokemon(3, 1).getPokemonName());
 	}
 	@Test
@@ -109,6 +110,9 @@ public class JunitTests {
 		assertNull(AppServices.getAppService().buyPokemon(1, 1).getPokemonName());
 	}
 //	@Test -WORKS
+	
+//	@Test
+
 //	public void sellAllDupPokemon() {
 //		User gooduser = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
 //		assertEquals(gooduser.getScore(),
