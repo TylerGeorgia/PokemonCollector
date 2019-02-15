@@ -100,10 +100,10 @@ public class JunitTests {
 		assertNotNull(AppServices.getAppService().generateAndAddRandomPokemon(1));
 	}
 	
-//	@Test
-//	public void buyPokemon() {
-//		assertEquals("bulbasaur", AppServices.getAppService().buyPokemon(1, 1).getPokemonName());
-//	}
+	@Test
+	public void buyPokemon() {
+		assertEquals("bulbasaur", AppServices.getAppService().buyPokemon(1, 99).getPokemonName());
+	}
 	
 //	@Test
 //	public void sellAllDupPokemon() {
