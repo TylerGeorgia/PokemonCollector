@@ -91,7 +91,7 @@ public class AppServices {
 		return newCreditTotal;
 	}
 	
-	//TODO: test
+	//PASSED
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		int newCreditTotal = userDao.getUserCredit(uId);
@@ -121,7 +121,7 @@ public class AppServices {
 		return randomPokemon;
 	}
 	
-	//TODO: FAILED***UPDATES ALL TABLE VALUES AMOUNT/ DOES NOT SUBTRACT FROM CREDIT
+	//PASSED
 	public Pokemon buyPokemon(int uId, int pId){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
