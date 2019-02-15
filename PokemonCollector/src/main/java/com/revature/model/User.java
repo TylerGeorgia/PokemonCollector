@@ -10,7 +10,14 @@ public class User {
 	private String lastName;
 	private int credit;
 	private int score;
+	private int superUser;
 	
+	public int getSuperUser() {
+		return superUser;
+	}
+	public void setSuperUser(int superUser) {
+		this.superUser = superUser;
+	}
 	public int getUserId() {
 		return userId;
 	}

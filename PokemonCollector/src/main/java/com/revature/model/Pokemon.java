@@ -21,7 +21,7 @@ public class Pokemon {
 		this.pokemonId =  pId;
 		this.pokemonName = pName;
 		this.pokemonRarity = pRarity;
-		this.pokemonCount = count;
+		//this.pokemonCount = count;
 	}
 	
 	public Pokemon() {

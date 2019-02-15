@@ -99,13 +99,14 @@ public class UserDaoImpl implements UserDao{
 		boolean userCreated = true;
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "call prc_insert_user(?,?,?,?,?)";
+			String sql = "call prc_insert_user(?,?,?,?,?,?)";
 			CallableStatement ps = conn.prepareCall(sql);
 			ps.setString(1, newUser.getUsername().toLowerCase());
 			ps.setString(2,  newUser.getPassword());
 			ps.setString(3, newUser.getFirstName());
 			ps.setString(4, newUser.getLastName());
 			ps.setString(5, newUser.getEmail().toLowerCase());
+			ps.setInt(6, newUser.getSuperUser());
 			ps.execute();
 			
 		}catch(SQLException e) {
@@ -186,8 +187,7 @@ public class UserDaoImpl implements UserDao{
 		}
 		return isValidEmail;
 	}
-	
-	
+		
 	public int getUserCredit(int uId) {
 		ResultSet rs;
 		int userCredits = -1;

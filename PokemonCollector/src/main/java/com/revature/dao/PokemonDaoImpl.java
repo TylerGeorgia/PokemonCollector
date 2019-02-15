@@ -211,8 +211,7 @@ public class PokemonDaoImpl implements PokemonDao {
 			log.info("Error in Class PokemonDaoImpl: Method getPokemonByUserId()");
 		}
 		return userPokemon;
-	}
-	
+	}	
 
 	@Override
 	public boolean decrementPokemonCountByUserAndPokemonId(int uId, int pId) {

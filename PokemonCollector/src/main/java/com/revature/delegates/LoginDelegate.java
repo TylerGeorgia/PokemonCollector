@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.model.User;
@@ -50,10 +51,11 @@ public class LoginDelegate {
 	public void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String user = request.getParameter("USERNAME");
 		String pwd = request.getParameter("PASSWORD");
+		HttpSession session = request.getSession();
 		User current_user = AppServices.getAppService().checkUserCredentials(user, pwd);
+		session.setAttribute("U_ID",current_user.getUserId());
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(current_user));
-		//TODO: Sessions
 	}
 
 	/**Performs the verification of the user name, checks for duplicates
@@ -90,7 +92,13 @@ public class LoginDelegate {
 		}
 	}
 	
+	/** Invalidates the current user session
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+		HttpSession oldSession = request.getSession();
+		oldSession.invalidate();
 	}
 }
