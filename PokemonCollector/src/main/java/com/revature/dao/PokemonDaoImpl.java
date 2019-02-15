@@ -42,7 +42,7 @@ public class PokemonDaoImpl implements PokemonDao {
 			if(rs.next()) {
 				pokeToGet = new Pokemon();
 				pokeToGet.setPokemonId(rs.getInt("pokemon_id"));
-				pokeToGet.setPokemonName(rs.getString("pokemon_name"));
+				pokeToGet.setPokemonName(rs.getString("poke_name"));
 				pokeToGet.setPokemonRarity(rs.getInt("rarity"));
 			}
 		}catch(SQLException e) {
@@ -58,14 +58,14 @@ public class PokemonDaoImpl implements PokemonDao {
 		Pokemon pokeToGet = null;
 		ResultSet rs;
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_pokemon where pokemon_name = ?";
+			String sql = "select * from tbl_pokemon where poke_name = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString( 1 , pokemonName );
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				pokeToGet = new Pokemon();
 				pokeToGet.setPokemonId(rs.getInt("pokemon_id"));
-				pokeToGet.setPokemonName(rs.getString("pokemon_name"));
+				pokeToGet.setPokemonName(rs.getString("poke_name"));
 				pokeToGet.setPokemonRarity(rs.getInt("rarity"));
 			}
 		}catch(SQLException e) {
@@ -90,14 +90,14 @@ public class PokemonDaoImpl implements PokemonDao {
 				allPokemon = new ArrayList<Pokemon>();
 				Pokemon firstPokemon = new Pokemon();
 				firstPokemon.setPokemonId(rs.getInt("pokemon_id"));
-				firstPokemon.setPokemonName(rs.getString("pokemon_name"));
+				firstPokemon.setPokemonName(rs.getString("poke_name"));
 				firstPokemon.setPokemonRarity(rs.getInt("rarity"));
 				allPokemon.add(firstPokemon);
 			}
 			while(rs.next()) {
 				Pokemon nextPokemon = new Pokemon();
 				nextPokemon.setPokemonId(rs.getInt("pokemon_id"));
-				nextPokemon.setPokemonName(rs.getString("pokemon_name"));
+				nextPokemon.setPokemonName(rs.getString("poke_name"));
 				nextPokemon.setPokemonRarity(rs.getInt("rarity"));
 				allPokemon.add(nextPokemon);
 			}
@@ -116,7 +116,7 @@ public class PokemonDaoImpl implements PokemonDao {
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
 			String sql = "select * from tbl_type where type_name = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString( 1 , pokemonType);
+			ps.setString( 1 , pokemonType.toLowerCase());
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				pokemonOfType = new ArrayList<Pokemon>();

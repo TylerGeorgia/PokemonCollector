@@ -207,12 +207,13 @@ public class UserDaoImpl implements UserDao{
 		return userCredits;
 	}
 
-	public boolean updateUserCredit(int newValue) {
+	public boolean updateUserCredit(int newValue, int uId) {
 		boolean isUpdated = true;
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "UPDATE tbl_user SET credits = ?";
+			String sql = "UPDATE tbl_user SET credits = ? where user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, newValue);
+			ps.setInt(2, uId);
 			ps.executeUpdate();
 			
 		}catch(SQLException e) {

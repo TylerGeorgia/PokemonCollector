@@ -34,7 +34,7 @@ public class AppServices {
 		return pokemonDao.getPokemonById(pokemonId);
 	}
 	
-	//TODO: FAILED***RETURNS NULL
+	//TODO: test
 	public List<Pokemon> getAllPokemon(){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		return pokemonDao.getAllPokemon();
@@ -51,7 +51,7 @@ public class AppServices {
 		return saleValue;
 	}
 	
-	//TODO: FAILED***RETURNS NULL
+	//TODO: test
 	public List<Pokemon> getPokemonByType(PokemonType pType){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		return pokemonDao.getPokemonByType(pType);
@@ -69,7 +69,7 @@ public class AppServices {
 		return pokemonDao.getRarityByPokemonId(pokemonId);
 	}
 
-	//TODO: FAILED MAJOR ISSUE***POKEMON AMOUNT GOES BELOW ZERO
+	//TODO: test
 	public int sellAllDuplicatePokemonByUserId(int userId){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		int newCreditTotal = userDao.getUserCredit(userId);
@@ -81,16 +81,17 @@ public class AppServices {
 			int pokemonId = nextPokemon.getPokemonId();
 			while(nextPokemon.getCount() > 1) {
 				if(pokemonDao.decrementPokemonCountByUserAndPokemonId(userId, pokemonId)) {
-					newCreditTotal = generateSaleValue(pokemonId);
+					newCreditTotal += generateSaleValue(pokemonId);
+					nextPokemon.decrementCount();
 				}
 			}
 		}
 		
-		userDao.updateUserCredit(newCreditTotal);
+		userDao.updateUserCredit(newCreditTotal, userId);
 		return newCreditTotal;
 	}
 	
-	//TODO: FAILED MAJOR ISSUE***CREDITS UPDATING WHOLE TABLE
+	//TODO: test
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		int newCreditTotal = userDao.getUserCredit(uId);
@@ -99,17 +100,17 @@ public class AppServices {
 		if(count > 0) {
 			pokemonDao.decrementPokemonCountByUserAndPokemonId(uId, pId);
 			newCreditTotal += generateSaleValue(pId);
+			count--;
 		}
 		
-		userDao.updateUserCredit(newCreditTotal);
+		userDao.updateUserCredit(newCreditTotal, uId);
 		return newCreditTotal;
 	}
 	
-	//TODO: RETURNS invalid column name ERROR PASSED: RETURNS A POKEMON ID --OKAY
+	//TODO: Test
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
-		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		
 		int randomPokemonId = (int)Math.floor((Math.random() * Pokemon.totalNumberOfUniquePokemon)) + 1;
 		Pokemon randomPokemon = pokemonDao.getPokemonById(randomPokemonId);
@@ -120,7 +121,7 @@ public class AppServices {
 		return randomPokemon;
 	}
 	
-	//TODO: FAILED MAJOR ISSUE***CREDITS UPDATING WHOLE TABLE
+	//TODO: test
 	public Pokemon buyPokemon(int uId, int pId){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
@@ -132,7 +133,7 @@ public class AppServices {
 		
 		if(userCredits > pokemonCost) {
 			userCredits -= pokemonCost;
-			userDao.updateUserCredit(userCredits);
+			userDao.updateUserCredit(userCredits, uId);
 			pokemonDao.addPokemonByUserIdAndPokemonId(uId, pId);
 			pokemonToBuy = pokemonDao.getPokemonById(pId);
 		}
@@ -174,7 +175,7 @@ public class AppServices {
 	//PASSED
 	public boolean validateEmail(String email) {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
-		return userDao.validateUsername(email);
+		return userDao.validateEmail(email);
 	}
 }
 

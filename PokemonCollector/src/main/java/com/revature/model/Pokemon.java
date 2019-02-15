@@ -68,6 +68,9 @@ public class Pokemon {
 		this.count = pokemonCount;
 	}
 
-	
+	public Integer decrementCount() {
+		count = count -1;
+		return count;
+	}
 	
 }
