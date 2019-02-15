@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -31,11 +32,6 @@ public class AppServices {
 	public Pokemon getPokemonById(int pokemonId) {
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		return pokemonDao.getPokemonById(pokemonId);
-	}
-	
-	//TODO: test
-	public Pokemon getPokemonByName( String pokemonName){
-		return null;
 	}
 	
 	//TODO: test
@@ -73,21 +69,64 @@ public class AppServices {
 		return pokemonDao.getRarityByPokemonId(pokemonId);
 	}
 
+	//TODO: test
 	public int sellAllDuplicatePokemonByUserId(int userId){
-		return 0;
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		int newCreditTotal = userDao.getUserCredit(userId);
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		List<Pokemon> userPokemon = pokemonDao.getPokemonByUserId(userId);
+		Iterator<Pokemon> it = userPokemon.iterator();
+		while(it.hasNext()) {
+			Pokemon nextPokemon = (Pokemon)it.next();
+			int pokemonId = nextPokemon.getPokemonId();
+			while(nextPokemon.getCount() > 1) {
+				if(pokemonDao.decrementPokemonCountByUserAndPokemonId(userId, pokemonId)) {
+					newCreditTotal = generateSaleValue(pokemonId);
+				}
+			}
+		}
+		
+		userDao.updateUserCredit(newCreditTotal);
+		return newCreditTotal;
 	}
 	
 	//TODO: test
 	public int sellDuplicateByUserAndPokemonId(int uId, int pId){
-		return 0;
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		int newCreditTotal = userDao.getUserCredit(uId);
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		int count = pokemonDao.getPokemonCountByUserIdAndPokemonId(uId, pId);
+		if(count > 0) {
+			pokemonDao.decrementPokemonCountByUserAndPokemonId(uId, pId);
+			newCreditTotal += generateSaleValue(pId);
+		}
+		
+		userDao.updateUserCredit(newCreditTotal);
+		return newCreditTotal;
 	}
+	
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		return null;
 	}
 	
 	//TODO: test
-	public Pokemon buyPokemon(int uId, int pokeId){
-		return null;
+	public Pokemon buyPokemon(int uId, int pId){
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		
+		Pokemon pokemonToBuy = null;
+		
+		int pokemonCost = generateSaleValue(pId);
+		int userCredits = userDao.getUserCredit(uId);
+		
+		if(userCredits > pokemonCost) {
+			userCredits -= pokemonCost;
+			userDao.updateUserCredit(userCredits);
+			pokemonDao.addPokemonByUserIdAndPokemonId(uId, pId);
+			pokemonToBuy = pokemonDao.getPokemonById(pId);
+		}
+		
+		return pokemonToBuy;
 	}
 	
 	public List<User> getLeaderBoard (){
@@ -110,10 +149,6 @@ public class AppServices {
 	public User getUserById(int uId){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.getUserById(uId);
-	}
-	
-	public Pokedex getPokedex(int uId) {
-		return null;
 	}
 	
 	public boolean validateUsername(String username) {

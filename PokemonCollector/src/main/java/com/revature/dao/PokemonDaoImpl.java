@@ -1,5 +1,6 @@
 package com.revature.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -189,29 +190,100 @@ public class PokemonDaoImpl implements PokemonDao {
 		}
 		return rarity;
 	}
+	
+	public List<Pokemon> getPokemonByUserId(int uId) {
+		List<Pokemon> userPokemon = new ArrayList<Pokemon> ();
+		ResultSet rs;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select * from tbl_user_to_pokemon where user_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt( 1 , uId );
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int pokemonId = rs.getInt("pokemon_id");
+				Pokemon nextPokemon = getPokemonById(pokemonId);
+				nextPokemon.setCount(rs.getInt("amount"));
+				
+				userPokemon.add(nextPokemon);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			userPokemon = null;
+			log.info("Error in Class PokemonDaoImpl: Method getPokemonByUserId()");
+		}
+		return userPokemon;
+	}
+	
 
 	@Override
-	public int sellAllDuplicatePokemonByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean decrementPokemonCountByUserAndPokemonId(int uId, int pId) {
+		boolean isDecremented = false;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "UPDATE tbl_user_to_pokemon set amount = amount -1 where user_id = ? AND pokemon_id = ?";
+			PreparedStatement cs = conn.prepareStatement(sql);
+			cs.setInt( 1 , uId );
+			cs.setInt( 2 , pId );
+			if(cs.executeUpdate() >=1) {
+				isDecremented = true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+			log.info("Error in Class PokemonDaoImpl: Method addPokemonByUserIdAndPokemonId()");
+		}
+		return isDecremented;
 	}
-
+	
 	@Override
-	public int sellDuplicateByUserAndPokemonId(int uId, int pId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Pokemon addPokemonByUserIdAndPokemonId(int uId, int pId) {
+		
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "call prc_insert_user_collection(?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt( 1 , uId );
+			cs.setInt( 2 , pId );
+			cs.execute();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			log.info("Error in Class PokemonDaoImpl: Method addPokemonByUserIdAndPokemonId()");
+		}
+		return getPokemonById(pId);
 	}
 
-	@Override
-	public Pokemon generateAndAddRandomPokemon(int uId) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getPokemonCountByUserIdAndPokemonId(int uId, int pId) {
+		int userPokemonCount = 0;
+		ResultSet rs;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select amount from tbl_user_to_pokemon where user_id = ? and pokemon_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt( 1 , uId );
+			ps.setInt( 2 , pId );
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				userPokemonCount = rs.getInt("amount");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			log.info("Error in Class PokemonDaoImpl: Method addPokemonByUserIdAndPokemonId()");
+		}
+		return userPokemonCount;
 	}
-
-	@Override
-	public Pokemon buyPokemon(int uId, int pokeId) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public boolean incrementPokemonCountByUserAndPokemonId(int uId, int pId) {
+		boolean isIncremented = false;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "UPDATE tbl_user_to_pokemon SET amount = amount + 1 WHERE user_id = ? AND pokemon_id = ?";
+			PreparedStatement cs = conn.prepareStatement(sql);
+			cs.setInt( 1 , uId );
+			cs.setInt( 2 , pId );
+			if(cs.executeUpdate() >=1) {
+				isIncremented = true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+			log.info("Error in Class PokemonDaoImpl: Method addPokemonByUserIdAndPokemonId()");
+		}
+		return isIncremented;	
 	}
-
 }
