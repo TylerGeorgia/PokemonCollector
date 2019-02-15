@@ -186,5 +186,41 @@ public class UserDaoImpl implements UserDao{
 		}
 		return isValidEmail;
 	}
+	
+	
+	public int getUserCredit(int uId) {
+		ResultSet rs;
+		int userCredits = -1;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select credits from tbl_user where user_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, uId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				userCredits = rs.getInt("credits");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			userCredits = -1;
+			log.info("Error in Class UserDaoImpl: Method validateEmail()");
+		}
+		return userCredits;
+	}
+
+	public boolean updateUserCredit(int newValue) {
+		boolean isUpdated = true;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "UPDATE tbl_user SET credits = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, newValue);
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			isUpdated = false;
+			log.info("Error in Class UserDaoImpl: Method updateUserCredit()");
+		}
+		return isUpdated;
+	}
 
 }
