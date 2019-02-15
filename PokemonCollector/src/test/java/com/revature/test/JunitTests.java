@@ -106,7 +106,7 @@ public class JunitTests {
 	}
 	@Test
 	public void buyPokemonNoCredits() {
-		assertNull(AppServices.getAppService().buyPokemon(1, 1).getPokemonName());
+		assertNull(AppServices.getAppService().buyPokemon(1, 1));
 	}
 //	@Test -WORKS
 //	public void sellAllDupPokemon() {
