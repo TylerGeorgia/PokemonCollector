@@ -3,7 +3,7 @@ package com.revature.model;
 public class Pokemon {
 	
 	//TODO: make dynamic if numPokemon will change
-	private static int totalNumberOfUniquePokemon = 151;
+	public static int totalNumberOfUniquePokemon = 151;
 	
 	//instance members
 	private int pokemonId;

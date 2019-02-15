@@ -106,7 +106,17 @@ public class AppServices {
 	}
 	
 	public Pokemon generateAndAddRandomPokemon(int uId){
-		return null;
+		
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		
+		int randomPokemonId = (int)Math.floor((Math.random() * Pokemon.totalNumberOfUniquePokemon)) + 1;
+		Pokemon randomPokemon = pokemonDao.getPokemonById(randomPokemonId);
+		
+		pokemonDao.addPokemonByUserIdAndPokemonId(uId, randomPokemonId);
+		randomPokemon.setCount(pokemonDao.getPokemonCountByUserIdAndPokemonId(uId, randomPokemonId));
+		
+		return randomPokemon;
 	}
 	
 	//TODO: test
