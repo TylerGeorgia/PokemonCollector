@@ -10,35 +10,41 @@ import com.revature.delegates.HomeDelegate;
 import com.revature.delegates.LoginDelegate;
 
 public class Dispatcher {
-	
-	//Handles user session/account manipulation
+
+	// Handles user session/account manipulation
 	private HomeDelegate hd = new HomeDelegate();
-	
-	//Handles login and logout processes and user creation
+
+	// Handles login and logout processes and user creation
 	private LoginDelegate ld = new LoginDelegate();
-	
+
 	/**
-	 * @param request HttpServletRequest
+	 * @param request  HttpServletRequest
 	 * @param response HttpServletResponse
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String switchString = request.getRequestURI().substring(request.getContextPath().length()+1);
+		String switchString = request.getRequestURI().substring(request.getContextPath().length() + 1);
 		while (switchString.indexOf("/") > 0) {
-			//If there the URL contains /, get the substring of the URL
-			switchString = switchString.substring(0,switchString.indexOf("/"));
+			// If there the URL contains /, get the substring of the URL
+			switchString = switchString.substring(0, switchString.indexOf("/"));
 		}
-		switch(switchString) {
-		/* Creates a new user for the website
+		switch (switchString) {
+		/*
+		 * Creates a new user for the website
+		 * 
 		 * @POST: Creates a user
+		 * 
 		 * @return: true if successful, false if unsuccessful
 		 */
 		case "create":
 			ld.createUser(request, response);
 			break;
-		/*Checks the username
+		/*
+		 * Checks the username
+		 * 
 		 * @POST: Checks the username
+		 * 
 		 * @return: true if unique
 		 */
 		case "checkUser":
@@ -46,49 +52,82 @@ public class Dispatcher {
 			break;
 		/*
 		 * Checks the email
+		 * 
 		 * @POST: Checks the email
+		 * 
 		 * @return: true if unique
 		 */
 		case "checkEmail":
 			ld.processEmail(request, response);
 			break;
-		/*Validates existing user login
+		/*
+		 * Validates existing user login
+		 * 
 		 * @POST: Checks login
+		 * 
 		 * @return: JSON with user information (null if empty)
 		 */
 		case "login":
 			ld.processLogin(request, response);
 			break;
-		/*Manipulates collection for the user
+		/*
+		 * Manipulates collection for the user
+		 * 
 		 * @POST: Gets all duplicates for a user
+		 * 
 		 * @GET: Get a users current collection
+		 * 
 		 * @return: JSON with Pokemon IDs for a particular user
 		 */
 		case "collection":
+			// TODO
 			break;
-		/*Generates a random pokemon for a user
+		/*
+		 * Generates a random pokemon for a user
+		 * 
 		 * @GET: Generates a random pokemon for a user
+		 * 
 		 * @return: JSON with a random Pokemon
+		 * 
 		 * @POST: Returns the users current collection
 		 */
 		case "generate":
+			if ("GET".equals(request.getMethod())) {
+				hd.generatePokemon(request, response);
+			} else if ("POST".equals(request.getMethod())) {
+
+			}
+			// TODO
+			else
+				System.out.println("Not yet implemented");
 			break;
-		/* Shop sell and buy functions
+		/*
+		 * Shop sell and buy functions
+		 * 
 		 * @GET: Redeems all or specific pokemon selected by user
+		 * 
 		 * @POST: Adds a Pokemon to a user collection
-		 * @return: The updated user collection 
+		 * 
+		 * @return: The updated user collection
 		 */
 		case "redeem":
+			// TODO
 			break;
-		/*Returns the current leader board
+		/*
+		 * Returns the current leader board
+		 * 
 		 * @GET: Gets the leader board
+		 * 
 		 * @return JSON of leader board
 		 */
 		case "leader":
 			hd.returnLeaderboard(request, response);
 			break;
-		/* Logs the user out
+		/*
+		 * Logs the user out
+		 * 
 		 * @POST: Destroys the current session and logs the user out
+		 * 
 		 * @return: True if successful
 		 */
 		case "logout":
@@ -96,7 +135,7 @@ public class Dispatcher {
 			break;
 		default:
 			System.out.println("Not yet implemented");
-	
+
 		}
 	}
 }
