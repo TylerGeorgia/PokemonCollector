@@ -27,12 +27,14 @@ public class LoginDelegate {
 		String first = request.getParameter("FIRSTNAME");
 		String last = request.getParameter("LASTNAME");
 		String email = request.getParameter("EMAIL");
+		int superUser = Integer.parseInt(request.getParameter("ISSUPER").trim());
 		User new_user = new User();
 		new_user.setUsername(user);
 		new_user.setPassword(pwd);
 		new_user.setFirstName(first);
 		new_user.setLastName(last);
 		new_user.setEmail(email);
+		new_user.setSuperUser(superUser);
 		if (AppServices.getAppService().createUser(new_user)) {
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString("true"));
