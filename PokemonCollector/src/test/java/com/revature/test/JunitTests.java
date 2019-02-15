@@ -100,19 +100,19 @@ public class JunitTests {
 		assertNotNull(AppServices.getAppService().generateAndAddRandomPokemon(1));
 	}
 	
-//	@Test
-//	public void buyPokemon() {
-//		assertEquals("bulbasaur", AppServices.getAppService().buyPokemon(1, 1).getPokemonName());
-//	}
+	@Test
+	public void buyPokemon() {
+		assertEquals("bulbasaur", AppServices.getAppService().buyPokemon(1, 1).getPokemonName());
+	}
 	
-//	@Test
+//	@Test -WORKS
 //	public void sellAllDupPokemon() {
 //		User gooduser = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
-//		assertEquals(gooduser.getScore()+(45*47),
+//		assertEquals(gooduser.getScore(),
 //				AppServices.getAppService().sellAllDuplicatePokemonByUserId(gooduser.getUserId()));
 //	}
-	
-//	@Test
+//	
+//	@Test -WORKS
 //	public void sellDupSpecificPokemon() {
 //		User user = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
 //		assertEquals(user.getScore()+45,

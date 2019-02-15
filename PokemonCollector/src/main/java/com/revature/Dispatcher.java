@@ -5,6 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Session;
 
 import com.revature.delegates.HomeDelegate;
 import com.revature.delegates.LoginDelegate;
@@ -38,7 +41,12 @@ public class Dispatcher {
 		 * @return: true if successful, false if unsuccessful
 		 */
 		case "create":
-			ld.createUser(request, response);
+			if ("POST".equals(request.getMethod())) {
+				ld.createUser(request, response);
+			}
+			else {
+				System.out.println("Not yet implemented");
+			}
 			break;
 		/*
 		 * Checks the username
@@ -48,7 +56,12 @@ public class Dispatcher {
 		 * @return: true if unique
 		 */
 		case "checkUser":
-			ld.processUsername(request, response);
+			if ("POST".equals(request.getMethod())) {
+				ld.processUsername(request, response);
+			}
+			else {
+				System.out.println("Not yet implemented");
+			}
 			break;
 		/*
 		 * Checks the email
@@ -58,7 +71,12 @@ public class Dispatcher {
 		 * @return: true if unique
 		 */
 		case "checkEmail":
-			ld.processEmail(request, response);
+			if ("POST".equals(request.getMethod())) {
+				ld.processEmail(request, response);
+			}
+			else {
+				System.out.println("Not yet implmented");
+			}
 			break;
 		/*
 		 * Validates existing user login
@@ -68,7 +86,12 @@ public class Dispatcher {
 		 * @return: JSON with user information (null if empty)
 		 */
 		case "login":
-			ld.processLogin(request, response);
+			if ("POST".equals(request.getMethod())) {
+				ld.processLogin(request, response);
+			}
+			else {
+				System.out.println("Not yet implemented");
+			}
 			break;
 		/*
 		 * Manipulates collection for the user
@@ -89,16 +112,11 @@ public class Dispatcher {
 		 * 
 		 * @return: JSON with a random Pokemon
 		 * 
-		 * @POST: Returns the users current collection
 		 */
 		case "generate":
 			if ("GET".equals(request.getMethod())) {
 				hd.generatePokemon(request, response);
-			} else if ("POST".equals(request.getMethod())) {
-
-			}
-			// TODO
-			else
+			} else
 				System.out.println("Not yet implemented");
 			break;
 		/*
@@ -106,12 +124,25 @@ public class Dispatcher {
 		 * 
 		 * @GET: Redeems all or specific pokemon selected by user
 		 * 
-		 * @POST: Adds a Pokemon to a user collection
+		 * @POST: Adds a Pokemon to a user collection if there is enough credit
 		 * 
 		 * @return: The updated user collection
 		 */
 		case "redeem":
-			// TODO
+			if ("GET".equals(request.getMethod())) {
+				if (request.getParameter("POKE_ID") != null) {
+					hd.sellSpecificPokemon(request, response);
+				}
+				else {
+					hd.sellAllPokemon(request, response);
+				}
+			} 
+			else if ("POST".equals(request.getMethod())) {
+				hd.buyPokemon(request, response);
+			}
+			
+			else
+				System.out.println("Not yet implemented");
 			break;
 		/*
 		 * Returns the current leader board
@@ -121,12 +152,16 @@ public class Dispatcher {
 		 * @return JSON of leader board
 		 */
 		case "leader":
+			if ("GET".equals(request.getMethod())) {
 			hd.returnLeaderboard(request, response);
+			}
+			else
+				System.out.println("Not yet implemented");
 			break;
 		/*
 		 * Logs the user out
 		 * 
-		 * @POST: Destroys the current session and logs the user out
+		 * @POST/GET: Destroys the current session and logs the user out
 		 * 
 		 * @return: True if successful
 		 */

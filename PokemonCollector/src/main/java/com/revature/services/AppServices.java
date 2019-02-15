@@ -34,7 +34,7 @@ public class AppServices {
 		return pokemonDao.getPokemonById(pokemonId);
 	}
 	
-	//TODO: test
+	//PASSED
 	public List<Pokemon> getAllPokemon(){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		return pokemonDao.getAllPokemon();
@@ -51,7 +51,7 @@ public class AppServices {
 		return saleValue;
 	}
 	
-	//TODO: test
+	//PASSED
 	public List<Pokemon> getPokemonByType(PokemonType pType){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		return pokemonDao.getPokemonByType(pType);
@@ -69,7 +69,7 @@ public class AppServices {
 		return pokemonDao.getRarityByPokemonId(pokemonId);
 	}
 
-	//TODO: test
+	//PASSED
 	public int sellAllDuplicatePokemonByUserId(int userId){
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		int newCreditTotal = userDao.getUserCredit(userId);
@@ -107,7 +107,7 @@ public class AppServices {
 		return newCreditTotal;
 	}
 	
-	//TODO: Test
+	//PASSED
 	public Pokemon generateAndAddRandomPokemon(int uId){
 		
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
@@ -121,7 +121,7 @@ public class AppServices {
 		return randomPokemon;
 	}
 	
-	//TODO: test
+	//TODO: FAILED***UPDATES ALL TABLE VALUES AMOUNT/ DOES NOT SUBTRACT FROM CREDIT
 	public Pokemon buyPokemon(int uId, int pId){
 		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
