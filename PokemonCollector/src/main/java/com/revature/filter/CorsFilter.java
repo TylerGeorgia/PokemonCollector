@@ -29,7 +29,7 @@ public class CorsFilter implements Filter {
 		
 		httpResponse.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		httpResponse.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-		
+		httpResponse.addHeader("Access-Control-Allow-Headers", "http://localhost:4200");
 		//The most important part
 		chain.doFilter(httpRequest, httpResponse);
 	}
