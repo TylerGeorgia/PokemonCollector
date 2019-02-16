@@ -1,12 +1,17 @@
 package com.revature.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.revature.model.Pokedex;
+import com.revature.model.PokedexBuilder;
 import com.revature.model.Pokemon;
 import com.revature.model.PokemonType;
 import com.revature.model.User;
@@ -109,10 +114,8 @@ public class JunitTests {
 	public void buyPokemonNoCredits() {
 		assertNull(AppServices.getAppService().buyPokemon(1, 1));
 	}
-//	@Test -WORKS
 	
-//	@Test
-
+// 	@Test - WORKS
 //	public void sellAllDupPokemon() {
 //		User gooduser = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
 //		assertEquals(gooduser.getScore(),

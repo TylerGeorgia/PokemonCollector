@@ -12,6 +12,9 @@ import com.revature.services.*;
 public class HomeDelegate {
 	
 	private final ObjectMapper mapper = new ObjectMapper();
+	Pokedex pokedex = new Pokedex();
+	PokedexBuilder pokebuild = new PokedexBuilder();
+	
 	/**Returns the current top 100 users in a JSON format
 	 * @param request
 	 * @param response
@@ -62,6 +65,11 @@ public class HomeDelegate {
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
 	
+	/**Buys a specific Pokemon and removes credits from users account
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	public void buyPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		int user_ID = (int) session.getAttribute("U_ID");
@@ -71,4 +79,24 @@ public class HomeDelegate {
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}
 
+	public void getUserCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		pokedex.setOwner(pokebuild.buildUser((int) session.getAttribute("U_ID")));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList((int) session.getAttribute("U_ID")));
+		response.setContentType("application/json");
+		response.getWriter().append(mapper.writeValueAsString(pokedex));
+	}
+	
+	public void getUserDuplicates(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		pokedex.setOwner(pokebuild.buildUser((int) session.getAttribute("U_ID")));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList((int) session.getAttribute("U_ID")));
+		response.setContentType("application/json");
+		response.getWriter().append(mapper.writeValueAsString(pokedex.getOwner()));
+		for (Pokemon p : pokedex.getOwnedPokemon()) {
+			if (p.getCount() > 1) {
+				response.getWriter().append(mapper.writeValueAsString(p));
+			}
+		}
+	}
 }

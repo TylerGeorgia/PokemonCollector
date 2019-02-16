@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.revature.dao.PokemonDaoImpl;
 import com.revature.dao.UserDaoImpl;
+import com.revature.services.AppServices;
 
 public class PokedexBuilder {
-
+	
 	public User buildUser(int uId) {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.getUserById(uId);

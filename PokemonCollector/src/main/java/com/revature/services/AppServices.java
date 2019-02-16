@@ -175,7 +175,7 @@ public class AppServices {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.validateUsername(username);
 	}
-
+	
 	// PASSED
 	public boolean validateEmail(String email) {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();

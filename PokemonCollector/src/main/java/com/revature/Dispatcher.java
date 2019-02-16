@@ -71,7 +71,7 @@ public class Dispatcher {
 				ld.processEmail(request, response);
 			}
 			else {
-				System.out.println("Not yet implmented");
+				System.out.println("Not yet implemented");
 			}
 			break;
 		/*
@@ -99,7 +99,15 @@ public class Dispatcher {
 		 * @return: JSON with Pokemon IDs for a particular user
 		 */
 		case "collection":
-			// TODO
+			if ("POST".equals(request.getMethod())) {
+				hd.getUserDuplicates(request, response);
+			}
+			else if ("GET".contentEquals(request.getMethod())) {
+				hd.getUserCollection(request, response);
+			}
+			else {
+				System.out.println("Not yet implemented");
+			}
 			break;
 		/*
 		 * Generates a random pokemon for a user

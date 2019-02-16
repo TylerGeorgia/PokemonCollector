@@ -52,10 +52,10 @@ public class LoginDelegate {
 		String user = request.getParameter("USERNAME");
 		String pwd = request.getParameter("PASSWORD");
 		HttpSession session = request.getSession();
-		User current_user = AppServices.getAppService().checkUserCredentials(user, pwd);
-		session.setAttribute("U_ID",current_user.getUserId());
+		User currentUser = AppServices.getAppService().checkUserCredentials(user, pwd);
+		session.setAttribute("U_ID",currentUser.getUserId());
 		response.setContentType("application/json");
-		response.getWriter().append(mapper.writeValueAsString(current_user));
+		response.getWriter().append(mapper.writeValueAsString(currentUser));
 	}
 
 	/**Performs the verification of the user name, checks for duplicates
