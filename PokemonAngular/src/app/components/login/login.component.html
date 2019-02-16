@@ -1,42 +1,45 @@
 <app-nav-bar></app-nav-bar>
-<div class="container bg-dark text-light mt-5">
+<div class="container-fluids bg-dark text-light mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <form action="login" method="Post">
+    <div class="col-md-6 bg-light text-dark">
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
-          <label for="username"></label>
+          <label for="USERNAME">Username</label>
           <input
             type="text"
-            class="form-control"
-            id="userNameInput"
-            aria-describedby="usernamehelp"
-            placeholder="Enter Username"
-            name="username"
             required
+            #name="ngModel"
+            name="USERNAME"
+            class="form-control"
+            [class.is-valid]="name.valid"
+            [class.is-invalid]="name.invalid && name.touched"
+            [(ngModel)]="userModel.username"
           />
-          <small id="usernamehelp" class="form-text text-muted"
-            >Usernames are case sensitive.</small
+          <small
+            class="text-danger"
+            [class.d-none]="name.valid || name.untouched"
+            >Name is required.</small
           >
         </div>
         <div class="form-group">
-          <label for="password"></label>
+          <label for="PASSWORD">Password</label>
           <input
             type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
-            name="password"
             required
+            #password="ngModel"
+            name="PASSWORD"
+            class="form-control"
+            [class.is-valid]="password.valid"
+            [class.is-invalid]="password.invalid && password.touched"
+            [(ngModel)]="userModel.password"
           />
+          <small
+            class="text-danger"
+            [class.d-none]="password.valid || password.untouched"
+            >Password is required.</small
+          >
         </div>
-
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-          (click)="onSubmit()"
-        >
-          Submit
-        </button>
+        <button class="btn btn-primary" type="submit">Login</button>
       </form>
     </div>
   </div>

@@ -9,9 +9,8 @@ export class CollectionPreviewComponent implements OnInit {
   constructor(private http: HttpClient) {}
   private url = "https://pokeapi.co/api/v2/pokemon/1/";
   ngOnInit() {
-    let obs = this.http.get(this.url);
-    obs.subscribe(response => 
-    
-    console.log(response));
+    // let obs = this.http.get(this.url);
+    // obs.subscribe(response =>
+    //  console.log(response));
   }
 }
