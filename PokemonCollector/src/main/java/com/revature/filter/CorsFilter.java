@@ -27,7 +27,7 @@ public class CorsFilter implements Filter {
 		//you are requesting from, the second being 'Access-Control-Allow-Methods' with the 
 		//HTTP Methods you grant access to 
 		
-		httpResponse.addHeader("Access-Control-Allow-Origin", "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080");
+		httpResponse.addHeader("Access-Control-Allow-Origin", "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/PokemonCollector/");
 		httpResponse.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
 		
 		//The most important part
