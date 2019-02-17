@@ -56,7 +56,7 @@ import { FormsModule } from "@angular/forms";
     CollectionItemComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [],
+  providers: [LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

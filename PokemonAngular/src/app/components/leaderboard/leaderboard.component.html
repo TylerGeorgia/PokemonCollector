@@ -2,7 +2,18 @@
   <div class="row">
     <div class="col-md-12 learderboard-cont">
       <h1>Leaderboard</h1>
-      <h4>Username: {{ username }} Credit: {{ credit }} Score: {{ score }}</h4>
+      <table
+        class="table table-light   table-hover custom_table"
+        id="leaderboardTable"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Score</th>
+            <th scope="col">Username</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
 </div>

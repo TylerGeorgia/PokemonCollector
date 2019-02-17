@@ -7,22 +7,23 @@ import { UserService } from "src/app/service/user.service";
   styleUrls: ["./leaderboard.component.css"]
 })
 export class LeaderboardComponent implements OnInit {
-  //Sets URL to get leader board information.
-  //private localURL = "http://localhost:8080/PokemonCollector/leader";
-  //Add instance of HttpClient to the constructor.
-  leaderBoardObj = {};
-  leaderboard = [];
-  username: string;
-  credit: number;
-  score: number;
-  constructor(private UserService: UserService) {}
+  constructor(private _userService: UserService) {}
 
   ngOnInit() {
-    let currentLeaderBoard = [];
-    this.leaderBoardObj = this.UserService.getLeaderboard().subscribe(
-      data => (console.log(data), (currentLeaderBoard = data))
-    );
-    console.log(this.leaderboard);
-    console.log(this.leaderboard);
+    this._userService.getLeaderboard().subscribe(data => {
+      console.log(data);
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        $("#leaderboardTable")
+          .find("tbody")
+          .append(
+            "<tr><td>" +
+              data[i].score +
+              "</td><td>" +
+              data[i].username +
+              "</td></tr>"
+          );
+      }
+    });
   }
 }

@@ -1,37 +1,104 @@
 <app-nav-bar></app-nav-bar>
-<div class="container bg-dark text-light mt-5">
+<div class="container-fluid bg-dark text-light mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <form>
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
+          <label for="FIRSTNAME">Enter Firstname</label>
           <input
-            type="email"
+            type="text"
+            required
+            #firstName="ngModel"
+            name="FIRSTNAME"
             class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
+            [class.is-valid]="firstName.valid"
+            [class.is-invalid]="firstName.invalid && firstName.touched"
+            [(ngModel)]="userModel.firstName"
           />
-          <small id="emailHelp" class="form-text text-muted"
-            >We'll never share your email with anyone else.</small
+          <small
+            class="text-danger"
+            [class.d-none]="firstName.valid || firstName.untouched"
+          >
+            Firstname is required
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="LASTNAME">Enter Lastname</label>
+          <input
+            type="text"
+            required
+            #lastName="ngModel"
+            name="LASTNAME"
+            class="form-control"
+            [class.is-valid]="lastName.valid"
+            [class.is-invalid]="lastName.invalid && lastName.touched"
+            [(ngModel)]="userModel.lastName"
+          />
+          <small
+            class="text-danger"
+            [class.d-none]="lastName.valid || lastName.untouched"
+          >
+            Lastname is required
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="USERNAME">Username</label>
+          <input
+            type="text"
+            required
+            #username="ngModel"
+            name="USERNAME"
+            class="form-control"
+            [class.is-valid]="username.valid"
+            [class.is-invalid]="username.invalid && username.touched"
+            [(ngModel)]="userModel.username"
+          />
+          <small
+            class="text-danger"
+            [class.d-none]="username.valid || username.untouched"
+            >Username is required.</small
           >
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
+          <label for="PASSWORD">Password</label>
           <input
             type="password"
+            required
+            #password="ngModel"
+            name="PASSWORD"
             class="form-control"
-            id="exampleInputPassword1"
-            placeholder="Password"
+            [class.is-valid]="password.valid"
+            [class.is-invalid]="password.invalid && password.touched"
+            [(ngModel)]="userModel.password"
           />
-        </div>
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1"
-            >Check me out</label
+          <small
+            class="text-danger"
+            [class.d-none]="password.valid || password.untouched"
+            >Password is requried.</small
           >
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group">
+          <label for="EMAIL">Email</label>
+          <input
+            type="email"
+            required
+            #email="ngModel"
+            name="EMAIL"
+            class="form-control"
+            [class.is-valid]="email.valid"
+            [class.is-invalid]="email.invalid && email.touched"
+            [(ngModel)]="userModel.email"
+          />
+          <small
+            class="text-danger"
+            [class.d-none]="email.valid || email.untouched"
+            >Email is requried.</small
+          >
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
   </div>

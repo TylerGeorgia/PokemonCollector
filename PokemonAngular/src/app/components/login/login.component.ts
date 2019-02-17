@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { User } from "src/app/user";
-import { LoginService } from "src/app/service/login.service";
+import { UserService } from "src/app/service/user.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
@@ -10,35 +10,30 @@ import { LoginService } from "src/app/service/login.service";
 })
 export class LoginComponent implements OnInit {
   userModel = new User("", "");
+  // activeUser: User;
+  // activeUserModel = new User("hello", "password");
 
-  constructor(private _loginService: LoginService) {}
+  constructor(private _router: Router, private _userService: UserService) {}
 
   ngOnInit() {}
-
+  //onSubmit Method for submission of the login form.
   onSubmit() {
-    console.log(this.userModel);
-    this._loginService
-      .login(this.userModel)
-      .subscribe(
-        data => console.log("Success!", data),
-        error => console.error("Error", error)
-      );
+    this._userService.login(this.userModel).subscribe(
+      data => {
+        console.log("Success!", data);
+        if (data == null) {
+          console.log("invalid login");
+        } else {
+          //Store Active User as Local Storage Object
+          localStorage.setItem("currentUser", JSON.stringify(data));
+          //Route to new userHome
+          this._router.navigate(["/userhome"]);
+          //return (this.activeUserModel = data);
+        }
+      },
+      error => {
+        console.log("Error", error);
+      }
+    );
   }
-
-  // private loginUrl = "http://localhost:8080/PokemonCollector/login";
-
-  // onSubmit() {
-  //   // this.clickMessage = "Hi, how are ya.";
-  //   // console.log(this.clickMessage);
-  //   let postData = new FormData();
-  //   postData.append("USERNAME", "TEMP");
-  //   postData.append("PASSWORD", "pass");
-
-  //   this.http.post(this.loginUrl, postData).subscribe(
-  //     data => {},
-  //     err => {
-  //       console.log("Error: " + err.error);
-  //     }
-  //   );
-  // }
 }
