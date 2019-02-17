@@ -1,10 +1,13 @@
 package com.revature.delegates;
 
 import java.io.IOException;
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.model.User;
 import com.revature.services.AppServices;
@@ -20,20 +23,8 @@ public class LoginDelegate {
 	 * @throws IOException
 	 */
 	public void createUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String user = request.getParameter("USERNAME");
-		String pwd = request.getParameter("PASSWORD");
-		String first = request.getParameter("FIRSTNAME");
-		String last = request.getParameter("LASTNAME");
-		String email = request.getParameter("EMAIL");
-		int superUser = Integer.parseInt(request.getParameter("ISSUPER").trim());
-		User new_user = new User();
-		new_user.setUsername(user);
-		new_user.setPassword(pwd);
-		new_user.setFirstName(first);
-		new_user.setLastName(last);
-		new_user.setEmail(email);
-		new_user.setSuperUser(superUser);
-		if (AppServices.getAppService().createUser(new_user)) {
+		User param = mapper.readValue(request.getReader(), User.class); 
+		if (AppServices.getAppService().createUser(param)) {
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString("true"));
 		}
@@ -49,11 +40,12 @@ public class LoginDelegate {
 	 * @throws IOException
 	 */
 	public void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String user = request.getParameter("USERNAME");
-		String pwd = request.getParameter("PASSWORD");
+		User param = mapper.readValue(request.getReader(), User.class); 
 		HttpSession session = request.getSession();
-		User currentUser = AppServices.getAppService().checkUserCredentials(user, pwd);
-		session.setAttribute("U_ID",currentUser.getUserId());
+		User currentUser = AppServices.getAppService().checkUserCredentials(param.getUsername(), param.getPassword());
+		if (currentUser != null) {
+			session.setAttribute("U_ID",currentUser.getUserId());
+		}
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(currentUser));
 	}
@@ -64,10 +56,10 @@ public class LoginDelegate {
 	 * @throws IOException
 	 */
 	public void processUsername(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String user = request.getParameter("USERNAME");
+		User param = mapper.readValue(request.getReader(), User.class); 
 		response.setContentType("application/json");
 		//User name exists
-		if (AppServices.getAppService().validateUsername(user)) {
+		if (AppServices.getAppService().validateUsername(param.getUsername())) {
 			response.getWriter().append(mapper.writeValueAsString("false"));
 		}
 		else { //User name is unique
@@ -81,10 +73,10 @@ public class LoginDelegate {
 	 * @throws IOException
 	 */
 	public void processEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String email = request.getParameter("EMAIL");
+		User param = mapper.readValue(request.getReader(), User.class); 
 		response.setContentType("application/json");
 		//Email exists
-		if (AppServices.getAppService().validateEmail(email)) {
+		if (AppServices.getAppService().validateEmail(param.getEmail())) {
 			response.getWriter().append(mapper.writeValueAsString("false"));
 		}
 		else { //Email is unique
