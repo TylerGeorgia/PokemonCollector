@@ -1,13 +1,16 @@
 package com.revature.delegates;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.model.*;
-import com.revature.services.*;
+import com.revature.model.Pokedex;
+import com.revature.model.PokedexBuilder;
+import com.revature.model.Pokemon;
+import com.revature.model.User;
+import com.revature.services.AppServices;
 
 public class HomeDelegate {
 	
@@ -31,10 +34,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void generatePokemon(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		HttpSession session = request.getSession();
-		int user_ID = (int) session.getAttribute("U_ID");
-		Pokemon poke = AppServices.getAppService().generateAndAddRandomPokemon(user_ID);
-		response.setContentType("application/json");
+		User param = mapper.readValue(request.getReader(), User.class); 
+		Pokemon poke = AppServices.getAppService().generateAndAddRandomPokemon(param.getUserId());
+		//response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}
 	
@@ -44,9 +46,8 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellAllPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
-		int user_ID = (int) session.getAttribute("U_ID");
-		int score = AppServices.getAppService().sellAllDuplicatePokemonByUserId(user_ID);
+		User param = mapper.readValue(request.getReader(), User.class); 
+		int score = AppServices.getAppService().sellAllDuplicatePokemonByUserId(param.getUserId());
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
@@ -57,10 +58,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellSpecificPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
-		int user_ID = (int) session.getAttribute("U_ID");
-		int poke_ID = Integer.parseInt(request.getParameter("POKE_ID").trim());
-		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(user_ID, poke_ID);
+		User param = mapper.readValue(request.getReader(), User.class); 
+		Pokemon pokeparam = mapper.readValue(request.getReader(), Pokemon.class); 
+		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(param.getUserId(), pokeparam.getPokemonId());
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
@@ -71,26 +71,35 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void buyPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
-		int user_ID = (int) session.getAttribute("U_ID");
-		int poke_ID = Integer.parseInt(request.getParameter("POKE_ID").trim());
-		Pokemon poke = AppServices.getAppService().buyPokemon(user_ID, poke_ID);
+		User param = mapper.readValue(request.getReader(), User.class); 
+		Pokemon pokeParam = mapper.readValue(request.getReader(), Pokemon.class); 
+		Pokemon poke = AppServices.getAppService().buyPokemon(param.getUserId(), pokeParam.getPokemonId());
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}
 
+	/**Gets a user collection
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	public void getUserCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
-		pokedex.setOwner(pokebuild.buildUser((int) session.getAttribute("U_ID")));
-		pokedex.setOwnedPokemon(pokebuild.buildPokemonList((int) session.getAttribute("U_ID")));
+		User param = mapper.readValue(request.getReader(), User.class); 
+		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(pokedex));
 	}
 	
+	/**Gets the duplicates of the pokemon
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	public void getUserDuplicates(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
-		pokedex.setOwner(pokebuild.buildUser((int) session.getAttribute("U_ID")));
-		pokedex.setOwnedPokemon(pokebuild.buildPokemonList((int) session.getAttribute("U_ID")));
+		User param = mapper.readValue(request.getReader(), User.class); 
+		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(pokedex.getOwner()));
 		for (Pokemon p : pokedex.getOwnedPokemon()) {

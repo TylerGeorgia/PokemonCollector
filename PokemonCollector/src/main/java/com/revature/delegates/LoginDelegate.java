@@ -2,13 +2,20 @@ package com.revature.delegates;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Session;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.model.Pokedex;
+import com.revature.model.PokedexBuilder;
+import com.revature.model.Pokemon;
 import com.revature.model.User;
 import com.revature.services.AppServices;
 
@@ -41,13 +48,22 @@ public class LoginDelegate {
 	 */
 	public void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User param = mapper.readValue(request.getReader(), User.class); 
-		HttpSession session = request.getSession();
 		User currentUser = AppServices.getAppService().checkUserCredentials(param.getUsername(), param.getPassword());
-		if (currentUser != null) {
-			session.setAttribute("U_ID",currentUser.getUserId());
-		}
 		response.setContentType("application/json");
+		if (currentUser != null) {
+//		PokedexBuilder collect = new PokedexBuilder();
+//		Pokedex deck = new Pokedex();
+//		User user = collect.buildUser(currentUser.getUserId());
+//		List<Pokemon> list = collect.buildPokemonList(currentUser.getUserId());
+//		deck.setOwner(user);
+//		deck.setOwnedPokemon(list);
 		response.getWriter().append(mapper.writeValueAsString(currentUser));
+		HttpSession session = request.getSession();
+		session.setAttribute("USER", currentUser);
+		}
+		else {
+		response.getWriter().append(mapper.writeValueAsString(currentUser));
+		}
 	}
 
 	/**Performs the verification of the user name, checks for duplicates

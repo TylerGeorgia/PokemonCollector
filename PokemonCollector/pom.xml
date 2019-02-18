@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc8</artifactId>
+			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0</version>
 		</dependency>
 		<!-- log4J Central Maven Repository -->

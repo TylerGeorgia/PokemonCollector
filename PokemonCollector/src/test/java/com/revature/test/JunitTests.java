@@ -23,16 +23,16 @@ public class JunitTests {
 
 // USER TESTS ------------------------------------------------------------
 	
-//	@Test
-//	public void legitUser() {
-//		new_user.setFirstName("Test");
-//		new_user.setLastName("Case");
-//		new_user.setUsername("TestUsername");
-//		new_user.setPassword("password");
-//		new_user.setEmail("Test@Email.com");
-//		new_user.setSuperUser(0);
-//		assertTrue(AppServices.getAppService().createUser(new_user));
-//	}
+	@Test
+	public void legitUser() {
+		new_user.setFirstName("Test");
+		new_user.setLastName("Case");
+		new_user.setUsername("TetUsername");
+		new_user.setPassword("password");
+		new_user.setEmail("Test@Emal.com");
+		new_user.setSuperUser(0);
+		assertTrue(AppServices.getAppService().createUser(new_user));
+	}
 
 	@Test
 	public void badLogin() {
