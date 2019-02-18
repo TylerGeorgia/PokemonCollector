@@ -84,7 +84,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void getUserCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User param = mapper.readValue(request.getReader(), User.class); 
+		User param = new User();
+		param.setUserId(Integer.parseInt(request.getParameter("USERID"))); 
+		//User param = mapper.readValue(request.getReader(), User.class); 
 		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
 		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
 		response.setContentType("application/json");
