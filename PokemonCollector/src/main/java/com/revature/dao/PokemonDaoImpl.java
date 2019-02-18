@@ -194,14 +194,18 @@ public class PokemonDaoImpl implements PokemonDao {
 		List<Pokemon> userPokemon = new ArrayList<Pokemon> ();
 		ResultSet rs;
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_user_to_pokemon where user_id = ?";
+			String sql = "SELECT *\r\n" + 
+					"FROM VW_USER_COLLECTION_FULL\r\n" + 
+					"WHERE USER_ID =?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt( 1 , uId );
 			rs = ps.executeQuery();
+			Pokemon nextPokemon = new Pokemon();
 			while(rs.next()) {
-				int pokemonId = rs.getInt("pokemon_id");
-				Pokemon nextPokemon = getPokemonById(pokemonId);
-				nextPokemon.setCount(rs.getInt("amount"));
+				nextPokemon.setPokemonId(rs.getInt("POKEMON_ID"));
+				nextPokemon.setPokemonName(rs.getString("POKE_NAME"));
+				nextPokemon.setPokemonRarity(rs.getInt("RARITY"));
+				nextPokemon.setCount(rs.getInt("AMOUNT"));
 				
 				userPokemon.add(nextPokemon);
 			}
