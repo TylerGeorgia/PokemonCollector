@@ -114,12 +114,6 @@ public class JunitTests {
 	public void buyPokemonNoCredits() {
 		assertNull(AppServices.getAppService().buyPokemon(1, 1));
 	}
-	
-	@Test
-	public void getCollection() {
-		
-		assertNull(AppServices.getAppService().buyPokemon(1, 1));
-	}
 //	@Test
 //	public void getAllPokemonForUser() {
 //		List<Pokemon> allpok = PokemonDaoImpl.getPokemonDao().getPokemonByUserId(3);

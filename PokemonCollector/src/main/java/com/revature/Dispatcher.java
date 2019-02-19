@@ -143,8 +143,7 @@ public class Dispatcher {
 			} 
 			else if ("POST".equals(request.getMethod())) {
 				hd.buyPokemon(request, response);
-			}
-			
+			}			
 			else
 				System.out.println("Not yet implemented");
 			break;
@@ -161,6 +160,18 @@ public class Dispatcher {
 			}
 			else
 				System.out.println("Not yet implemented");
+			break;
+		/*
+		 * Returns all pokemon for the shop
+		 * 
+		 * @GET: Returns all stored pokemon
+		 * 
+		 * @return: JSON of pokemon
+		 */
+		case "shop":
+			if ("GET".equals(request.getMethod())) {
+				hd.getAllPokemon(request, response);
+			}
 			break;
 		/*
 		 * Logs the user out

@@ -108,4 +108,9 @@ public class HomeDelegate {
 			}
 		}
 	}
+	
+	public void getAllPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("application/json");
+		response.getWriter().append(mapper.writeValueAsString(AppServices.getAppService().getAllPokemon()));
+	}
 }
