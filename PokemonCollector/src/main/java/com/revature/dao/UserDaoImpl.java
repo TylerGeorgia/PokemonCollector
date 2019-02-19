@@ -29,12 +29,10 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	public List<User> getLeaderBoard() {
-
 		List<User> leaderBoard = new ArrayList<User>(100);
 		ResultSet rs;
-		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "select * from tbl_user order by score desc fetch first 100 rows only;";
+			String sql = "SELECT * FROM (SELECT * FROM tbl_user ORDER BY score) WHERE rownum <= 100";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			int index = 0;
@@ -72,12 +70,10 @@ public class UserDaoImpl implements UserDao{
 			cs.execute();
 			hashedPassword = cs.getString(1);
 			log.info("pass hash is : " + hashedPassword);
-			System.out.print("pass hash:" + hashedPassword);
 			String sql3 = "select * from tbl_user where username = ? AND password = ?";
 			PreparedStatement ps = conn.prepareStatement(sql3);
 			ps.setString(1, username.toLowerCase());
-			ps.setString(2, hashedPassword);
-			
+			ps.setString(2, hashedPassword);			
 			
 			rs = ps.executeQuery();
 			if(rs.next()) {
@@ -101,13 +97,14 @@ public class UserDaoImpl implements UserDao{
 		boolean userCreated = true;
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()){
-			String sql = "call prc_insert_user(?,?,?,?,?)";
+			String sql = "call prc_insert_user(?,?,?,?,?,?)";
 			CallableStatement ps = conn.prepareCall(sql);
 			ps.setString(1, newUser.getUsername().toLowerCase());
 			ps.setString(2,  newUser.getPassword());
 			ps.setString(3, newUser.getFirstName());
 			ps.setString(4, newUser.getLastName());
 			ps.setString(5, newUser.getEmail().toLowerCase());
+			ps.setInt(6, newUser.getSuperUser());
 			ps.execute();
 			
 		}catch(SQLException e) {
@@ -188,5 +185,65 @@ public class UserDaoImpl implements UserDao{
 		}
 		return isValidEmail;
 	}
+		
+	public int getUserCredit(int uId) {
+		ResultSet rs;
+		int userCredits = -1;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "select credits from tbl_user where user_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, uId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				userCredits = rs.getInt("credits");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			userCredits = -1;
+			log.info("Error in Class UserDaoImpl: Method validateEmail()");
+		}
+		return userCredits;
+	}
 
+	public boolean updateUserCredit(int newValue, int uId) {
+		boolean isUpdated = true;
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "UPDATE tbl_user SET credits = ? where user_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, newValue);
+			ps.setInt(2, uId);
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			isUpdated = false;
+			log.info("Error in Class UserDaoImpl: Method updateUserCredit()");
+		}
+		return isUpdated;
+	}
+
+	
+	@Override
+	public boolean updateUser(User updateUser) {
+		boolean userUpdated = true;
+		
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "CALL PRC_UPDATE_USER(?,?,?,?,?,?)";
+			CallableStatement ps = conn.prepareCall(sql);
+			ps.setInt(1, updateUser.getUserId());
+			ps.setString(2,  updateUser.getPassword());
+			ps.setString(3, updateUser.getFirstName());
+			ps.setString(4, updateUser.getLastName());
+			ps.setString(5, updateUser.getEmail().toLowerCase());
+			ps.setInt(6, updateUser.getSuperUser());
+			ps.execute();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			userUpdated = false;
+			log.info("Error in Class UserDaoImpl: Method updateUser()");
+		}
+		
+		return userUpdated;
+	}
 }

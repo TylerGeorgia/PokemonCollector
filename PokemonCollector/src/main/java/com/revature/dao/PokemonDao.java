@@ -20,12 +20,14 @@ public interface PokemonDao {
 	
 	public int getRarityByPokemonId(int pokemonId);
 	
-	public int sellAllDuplicatePokemonByUserId(int userId);
+	public boolean decrementPokemonCountByUserAndPokemonId(int uId, int pId);
 	
-	public int sellDuplicateByUserAndPokemonId(int uId, int pId);
+	public boolean incrementPokemonCountByUserAndPokemonId(int uId, int pId);
 
-	public Pokemon generateAndAddRandomPokemon(int uId);	
+	public Pokemon addPokemonByUserIdAndPokemonId(int uId, int pId);
 	
-	public Pokemon buyPokemon(int uId, int pokeId);
+	public List<Pokemon> getPokemonByUserId(int uId);
+	
+	public int getPokemonCountByUserIdAndPokemonId(int uId, int pId);
 	
 }

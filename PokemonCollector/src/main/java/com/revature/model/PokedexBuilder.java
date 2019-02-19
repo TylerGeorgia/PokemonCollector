@@ -2,14 +2,20 @@ package com.revature.model;
 
 import java.util.List;
 
-public class PokedexBuilder {
+import com.revature.dao.PokemonDaoImpl;
+import com.revature.dao.UserDaoImpl;
+import com.revature.services.AppServices;
 
+public class PokedexBuilder {
+	
 	public User buildUser(int uId) {
-		return null;
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		return userDao.getUserById(uId);
 	}
 	
 	public List<Pokemon> buildPokemonList(int uId){
-		return null;
+		PokemonDaoImpl pokemonDao = PokemonDaoImpl.getPokemonDao();
+		return pokemonDao.getPokemonByUserId(uId);
 	}
 
 }
