@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.revature.dao.PokemonDaoImpl;
 import com.revature.model.Pokedex;
 import com.revature.model.PokedexBuilder;
 import com.revature.model.Pokemon;
@@ -107,14 +108,19 @@ public class JunitTests {
 	
 	@Test
 	public void buyPokemon() {
-
 		assertEquals("bulbasaur", AppServices.getAppService().buyPokemon(3, 1).getPokemonName());
 	}
 	@Test
 	public void buyPokemonNoCredits() {
 		assertNull(AppServices.getAppService().buyPokemon(1, 1));
 	}
-	
+//	@Test
+//	public void getAllPokemonForUser() {
+//		List<Pokemon> allpok = PokemonDaoImpl.getPokemonDao().getPokemonByUserId(3);
+//		for (Pokemon p : allpok) {
+//			System.out.println(p.getPokemonName());
+//		}
+//	}
 // 	@Test - WORKS
 //	public void sellAllDupPokemon() {
 //		User gooduser = AppServices.getAppService().checkUserCredentials("TestUsername", "password");

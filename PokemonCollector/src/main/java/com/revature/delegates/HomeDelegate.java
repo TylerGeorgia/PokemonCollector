@@ -34,9 +34,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void generatePokemon(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		User param = mapper.readValue(request.getReader(), User.class); 
-		Pokemon poke = AppServices.getAppService().generateAndAddRandomPokemon(param.getUserId());
-		//response.setContentType("application/json");
+		int id = Integer.parseInt(request.getParameter("USERID"));
+		Pokemon poke = AppServices.getAppService().generateAndAddRandomPokemon(id);
+		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}
 	
@@ -46,8 +46,8 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellAllPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User param = mapper.readValue(request.getReader(), User.class); 
-		int score = AppServices.getAppService().sellAllDuplicatePokemonByUserId(param.getUserId());
+		int id = Integer.parseInt(request.getParameter("USERID"));
+		int score = AppServices.getAppService().sellAllDuplicatePokemonByUserId(id);
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
@@ -58,9 +58,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellSpecificPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User param = mapper.readValue(request.getReader(), User.class); 
+		int id = Integer.parseInt(request.getParameter("USERID"));
 		Pokemon pokeparam = mapper.readValue(request.getReader(), Pokemon.class); 
-		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(param.getUserId(), pokeparam.getPokemonId());
+		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(id, pokeparam.getPokemonId());
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
@@ -71,9 +71,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void buyPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User param = mapper.readValue(request.getReader(), User.class); 
+		int id = Integer.parseInt(request.getParameter("USERID")); 
 		Pokemon pokeParam = mapper.readValue(request.getReader(), Pokemon.class); 
-		Pokemon poke = AppServices.getAppService().buyPokemon(param.getUserId(), pokeParam.getPokemonId());
+		Pokemon poke = AppServices.getAppService().buyPokemon(id, pokeParam.getPokemonId());
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}
@@ -84,11 +84,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void getUserCollection(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User param = new User();
-		param.setUserId(Integer.parseInt(request.getParameter("USERID"))); 
-		//User param = mapper.readValue(request.getReader(), User.class); 
-		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
-		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
+		int id = Integer.parseInt(request.getParameter("USERID"));
+		pokedex.setOwner(pokebuild.buildUser(id));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(id));
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(pokedex));
 	}
@@ -99,9 +97,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void getUserDuplicates(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		User param = mapper.readValue(request.getReader(), User.class); 
-		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
-		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
+		int id = Integer.parseInt(request.getParameter("USERID")); 
+		pokedex.setOwner(pokebuild.buildUser(id));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(id));
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(pokedex.getOwner()));
 		for (Pokemon p : pokedex.getOwnedPokemon()) {
