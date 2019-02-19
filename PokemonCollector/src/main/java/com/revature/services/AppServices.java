@@ -162,6 +162,12 @@ public class AppServices {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.createUser(newUser);
 	}
+	
+	// PASSED
+	public boolean modifyUser(User updateUser) {
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		return userDao.updateUser(updateUser);
+	}
 
 	// PASSED
 	public User getUserById(int uId) {
