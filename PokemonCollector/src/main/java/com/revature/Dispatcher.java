@@ -39,7 +39,8 @@ public class Dispatcher {
 		case "create":
 			if ("POST".equals(request.getMethod())) {
 				ld.createUser(request, response);
-			} else {
+			}
+			else {
 				System.out.println("Not yet implemented");
 			}
 			break;
@@ -53,7 +54,8 @@ public class Dispatcher {
 		case "checkUser":
 			if ("POST".equals(request.getMethod())) {
 				ld.processUsername(request, response);
-			} else {
+			}
+			else {
 				System.out.println("Not yet implemented");
 			}
 			break;
@@ -67,7 +69,8 @@ public class Dispatcher {
 		case "checkEmail":
 			if ("POST".equals(request.getMethod())) {
 				ld.processEmail(request, response);
-			} else {
+			}
+			else {
 				System.out.println("Not yet implemented");
 			}
 			break;
@@ -81,7 +84,8 @@ public class Dispatcher {
 		case "login":
 			if ("POST".equals(request.getMethod())) {
 				ld.processLogin(request, response);
-			} else {
+			}
+			else {
 				System.out.println("Not yet implemented");
 			}
 			break;
@@ -96,10 +100,12 @@ public class Dispatcher {
 		 */
 		case "collection":
 			if ("POST".equals(request.getMethod())) {
-				hd.getUserDuplicates(request, response);
-			} else if ("GET".equals(request.getMethod())) {
+				hd.getUserDuplicates(request, response);		
+			} 
+			else if ("GET".equals(request.getMethod())) {
 				hd.getUserCollection(request, response);
-			} else {
+			}
+			else {
 				System.out.println("Not yet implemented");
 			}
 			break;
@@ -130,13 +136,14 @@ public class Dispatcher {
 			if ("GET".equals(request.getMethod())) {
 				if (request.getParameter("POKE_ID") != null) {
 					hd.sellSpecificPokemon(request, response);
-				} else {
+				}
+				else {
 					hd.sellAllPokemon(request, response);
 				}
-			} else if ("POST".equals(request.getMethod())) {
+			} 
+			else if ("POST".equals(request.getMethod())) {
 				hd.buyPokemon(request, response);
-			}
-
+			}			
 			else
 				System.out.println("Not yet implemented");
 			break;
@@ -149,8 +156,9 @@ public class Dispatcher {
 		 */
 		case "leader":
 			if ("GET".equals(request.getMethod())) {
-				hd.returnLeaderboard(request, response);
-			} else
+			hd.returnLeaderboard(request, response);
+			}
+			else
 				System.out.println("Not yet implemented");
 			break;
 		/*

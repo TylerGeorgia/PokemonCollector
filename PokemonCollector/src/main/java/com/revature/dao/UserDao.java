@@ -14,4 +14,5 @@ public interface UserDao {
 	public boolean validateEmail(String email);
 	public boolean updateUserCredit(int newValue, int uId);
 	public int getUserCredit(int uId);
+	public boolean updateUser(User updateUser);
 }

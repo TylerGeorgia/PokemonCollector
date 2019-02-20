@@ -70,12 +70,10 @@ public class UserDaoImpl implements UserDao{
 			cs.execute();
 			hashedPassword = cs.getString(1);
 			log.info("pass hash is : " + hashedPassword);
-			System.out.print("pass hash:" + hashedPassword);
 			String sql3 = "select * from tbl_user where username = ? AND password = ?";
 			PreparedStatement ps = conn.prepareStatement(sql3);
 			ps.setString(1, username.toLowerCase());
-			ps.setString(2, hashedPassword);
-			
+			ps.setString(2, hashedPassword);			
 			
 			rs = ps.executeQuery();
 			if(rs.next()) {
@@ -224,4 +222,28 @@ public class UserDaoImpl implements UserDao{
 		return isUpdated;
 	}
 
+	
+	@Override
+	public boolean updateUser(User updateUser) {
+		boolean userUpdated = true;
+		
+		try(Connection conn = JDBCConnectionUtil.getConnection()){
+			String sql = "CALL PRC_UPDATE_USER(?,?,?,?,?,?)";
+			CallableStatement ps = conn.prepareCall(sql);
+			ps.setInt(1, updateUser.getUserId());
+			ps.setString(2,  updateUser.getPassword());
+			ps.setString(3, updateUser.getFirstName());
+			ps.setString(4, updateUser.getLastName());
+			ps.setString(5, updateUser.getEmail().toLowerCase());
+			ps.setInt(6, updateUser.getSuperUser());
+			ps.execute();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			userUpdated = false;
+			log.info("Error in Class UserDaoImpl: Method updateUser()");
+		}
+		
+		return userUpdated;
+	}
 }

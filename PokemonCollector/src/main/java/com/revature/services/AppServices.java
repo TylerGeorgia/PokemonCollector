@@ -153,7 +153,6 @@ public class AppServices {
 
 	// PASSED
 	public User checkUserCredentials(String username, String password) {
-
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.checkUserCredentials(username, password);
 	}
@@ -162,6 +161,12 @@ public class AppServices {
 	public boolean createUser(User newUser) {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.createUser(newUser);
+	}
+	
+	// PASSED
+	public boolean modifyUser(User updateUser) {
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		return userDao.updateUser(updateUser);
 	}
 
 	// PASSED
