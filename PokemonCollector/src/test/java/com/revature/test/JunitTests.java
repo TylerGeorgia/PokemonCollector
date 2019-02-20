@@ -100,7 +100,7 @@ public class JunitTests {
 	}
 	@Test
 	public void getRareID() {
-		assertEquals(318,AppServices.getAppService().getRarityByPokemonId(1));
+		assertEquals(205,AppServices.getAppService().getRarityByPokemonId(11));
 	}
 	@Test
 	public void generateRandomPokemon() {

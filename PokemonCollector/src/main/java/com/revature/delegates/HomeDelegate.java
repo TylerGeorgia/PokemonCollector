@@ -1,6 +1,8 @@
 package com.revature.delegates;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +80,14 @@ public class HomeDelegate {
 		int idPoke = node.get("POKEID").asInt();
 		Pokemon poke = AppServices.getAppService().buyPokemon(idUser, idPoke);
 		response.setContentType("application/json");
-		response.getWriter().append(mapper.writeValueAsString(poke));
+		if (poke != null) {
+			pokedex.setOwner(pokebuild.buildUser(idUser));
+			pokedex.setOwnedPokemon(pokebuild.buildPokemonList(idUser));
+			response.getWriter().append(mapper.writeValueAsString(pokedex));
+		}
+		else {
+			response.getWriter().append(mapper.writeValueAsString(poke));
+		}
 	}
 
 	/**Gets a user collection
@@ -101,15 +110,15 @@ public class HomeDelegate {
 	 */
 	public void getUserDuplicates(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User param = mapper.readValue(request.getReader(), User.class); 
-		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
-		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
+		List<Pokemon> poke = pokebuild.buildPokemonList(param.getUserId());
 		response.setContentType("application/json");
-		response.getWriter().append(mapper.writeValueAsString(pokedex.getOwner()));
-		for (Pokemon p : pokedex.getOwnedPokemon()) {
+		List<Pokemon> dup = new ArrayList<Pokemon>();
+		for (Pokemon p : poke) {
 			if (p.getCount() > 1) {
-				response.getWriter().append(mapper.writeValueAsString(p));
+				dup.add(p);
 			}
 		}
+		response.getWriter().append(mapper.writeValueAsString(dup));
 	}
 	
 	/** Returns all pokemon
