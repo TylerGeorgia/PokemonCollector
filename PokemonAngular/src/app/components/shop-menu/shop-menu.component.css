@@ -32,8 +32,36 @@
   transform: scale(1.25);
 } */
 
-.shop-buy-btn {
+/* .shop-buy-btn {
   background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
   border: 1px solid black;
   width: 50%;
+} */
+
+.shop-form-scroll {
+}
+
+#shop-form {
+  height: 60%;
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+}
+
+.shop-form-item {
+  height: 200px;
+}
+
+.radio-card-grid {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
+  height: 100vh;
+  border: 2px solid yellow;
+  overflow-y: scroll;
+  padding-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  align-items: center;
+}
+
+.radio-form-item {
+  border: 1px solid white;
 }

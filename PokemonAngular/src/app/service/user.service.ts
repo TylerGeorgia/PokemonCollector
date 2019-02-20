@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { User } from "src/app/user";
+import { BuyTicket } from "src/app/models/buy-ticket";
 import { RegisterUser } from "../models/register-user";
 import { HttpParams } from "@angular/common/http";
+import { RedeemUser } from "src/app/models/redeem-user";
 @Injectable({
   providedIn: "root"
 })
@@ -26,6 +28,7 @@ export class UserService {
   _shopUrl = "http://localhost:8080/PokemonCollector/shop";
   //URL endpoint for buy pokemon
   _buyUrl = "http://localhost:8080/PokemonCollector/redeem";
+  _getDuplicatesUrl = "http://localhost:8080/PokemonCollector/collection";
 
   //Method call for GET request for leaderboard users.
   getLeaderboard() {
@@ -54,9 +57,18 @@ export class UserService {
     return this._http.get<any>(this._userCollectionUrl, { params });
   }
 
+  //Method call for GET request for retrieving user duplicates.
+  getUserDuplicates(redeemUser: RedeemUser) {
+    return this._http.post<any>(this._getDuplicatesUrl, redeemUser);
+  }
   //Method call for POST request for login.
   login(user: User) {
     return this._http.post<any>(this._loginUrl, user);
+  }
+
+  //Method call for POST to redeem for pokemon buy.
+  buyPokemon(buyTicket: BuyTicket) {
+    return this._http.post<any>(this._buyUrl, buyTicket);
   }
 
   //Method cal for GET to get all pokemon for the shop.
