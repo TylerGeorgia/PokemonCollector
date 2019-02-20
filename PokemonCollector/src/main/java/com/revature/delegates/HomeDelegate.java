@@ -58,9 +58,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellSpecificPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int id = Integer.parseInt(request.getParameter("USERID"));
-		Pokemon pokeparam = mapper.readValue(request.getReader(), Pokemon.class); 
-		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(id, pokeparam.getPokemonId());
+		int idUser = Integer.parseInt(request.getParameter("USERID"));
+		int idPoke = Integer.parseInt(request.getParameter("POKEID"));
+		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(idUser, idPoke);
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
@@ -71,9 +71,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void buyPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int id = Integer.parseInt(request.getParameter("USERID")); 
-		Pokemon pokeParam = mapper.readValue(request.getReader(), Pokemon.class); 
-		Pokemon poke = AppServices.getAppService().buyPokemon(id, pokeParam.getPokemonId());
+		int idUser = Integer.parseInt(request.getParameter("USERID"));
+		int idPoke = Integer.parseInt(request.getParameter("POKEID"));
+		Pokemon poke = AppServices.getAppService().buyPokemon(idUser, idPoke);
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}

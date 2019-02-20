@@ -186,4 +186,9 @@ public class AppServices {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.validateEmail(email);
 	}
+
+	public boolean updateUser(User user) {
+		UserDaoImpl userDao = UserDaoImpl.getUserDao();
+		return userDao.updateUser(user);
+	}
 }

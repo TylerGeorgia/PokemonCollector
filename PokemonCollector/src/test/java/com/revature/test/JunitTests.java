@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.revature.dao.PokemonDaoImpl;
@@ -114,25 +115,25 @@ public class JunitTests {
 	public void buyPokemonNoCredits() {
 		assertNull(AppServices.getAppService().buyPokemon(1, 1));
 	}
-//	@Test
-//	public void getAllPokemonForUser() {
-//		List<Pokemon> allpok = PokemonDaoImpl.getPokemonDao().getPokemonByUserId(3);
-//		for (Pokemon p : allpok) {
-//			System.out.println(p.getPokemonName());
-//		}
-//	}
-// 	@Test - WORKS
-//	public void sellAllDupPokemon() {
-//		User gooduser = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
-//		assertEquals(gooduser.getScore(),
-//				AppServices.getAppService().sellAllDuplicatePokemonByUserId(gooduser.getUserId()));
-//	}
-//	
-//	@Test -WORKS
-//	public void sellDupSpecificPokemon() {
-//		User user = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
-//		assertEquals(user.getScore()+45,
-//				AppServices.getAppService().sellDuplicateByUserAndPokemonId(user.getUserId(),124));
-//	}
+	@Test @Ignore
+	public void getAllPokemonForUser() {
+		List<Pokemon> allpok = PokemonDaoImpl.getPokemonDao().getPokemonByUserId(3);
+		for (Pokemon p : allpok) {
+			System.out.println(p.getPokemonName());
+		}
+	}
+ 	@Test @Ignore
+	public void sellAllDupPokemon() {
+		User gooduser = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
+		assertEquals(gooduser.getScore(),
+				AppServices.getAppService().sellAllDuplicatePokemonByUserId(gooduser.getUserId()));
+	}
+	
+	@Test @Ignore
+	public void sellDupSpecificPokemon() {
+		User user = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
+		assertEquals(user.getScore()+45,
+				AppServices.getAppService().sellDuplicateByUserAndPokemonId(user.getUserId(),124));
+	}
 	
 }

@@ -89,6 +89,14 @@ public class Dispatcher {
 				System.out.println("Not yet implemented");
 			}
 			break;
+		case "update":
+			if ("POST".equals(request.getMethod())) {
+				ld.processLogin(request, response);
+			}
+			else {
+				System.out.println("Not yet implemented");
+			}
+			break;
 		/*
 		 * Manipulates collection for the user
 		 * 
@@ -172,16 +180,6 @@ public class Dispatcher {
 			if ("GET".equals(request.getMethod())) {
 				hd.getAllPokemon(request, response);
 			}
-			break;
-		/*
-		 * Logs the user out
-		 * 
-		 * @POST/GET: Destroys the current session and logs the user out
-		 * 
-		 * @return: True if successful
-		 */
-		case "logout":
-			ld.logout(request, response);
 			break;
 		default:
 			System.out.println("Not yet implemented");

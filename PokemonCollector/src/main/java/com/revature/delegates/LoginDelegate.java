@@ -51,12 +51,6 @@ public class LoginDelegate {
 		User currentUser = AppServices.getAppService().checkUserCredentials(param.getUsername(), param.getPassword());
 		response.setContentType("application/json");
 		if (currentUser != null) {
-//		PokedexBuilder collect = new PokedexBuilder();
-//		Pokedex deck = new Pokedex();
-//		User user = collect.buildUser(currentUser.getUserId());
-//		List<Pokemon> list = collect.buildPokemonList(currentUser.getUserId());
-//		deck.setOwner(user);
-//		deck.setOwnedPokemon(list);
 		response.getWriter().append(mapper.writeValueAsString(currentUser));
 		HttpSession session = request.getSession();
 		session.setAttribute("USER", currentUser);
@@ -105,8 +99,9 @@ public class LoginDelegate {
 	 * @param response
 	 * @throws IOException
 	 */
-	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession oldSession = request.getSession();
-		oldSession.invalidate();
+	public void editUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		User param = mapper.readValue(request.getReader(), User.class); 
+		response.setContentType("application/json");
+		response.getWriter().append(mapper.writeValueAsString(AppServices.getAppService().updateUser(param)));
 	}
 }
