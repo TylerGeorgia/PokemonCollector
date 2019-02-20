@@ -18,10 +18,6 @@ public class CorsFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		
-		//Print out CORS filter
-		System.out.println(httpRequest.getMethod() + " request going to " 
-		+httpRequest.getRequestURI() + "from origin " +httpRequest.getRemoteHost());
-		
 		//In order for us to accept requests from other domains, we need to add two 
 		//request headers, first being 'Access-Control-Allow-Origin' with the value being the domain
 		//you are requesting from, the second being 'Access-Control-Allow-Methods' with the 

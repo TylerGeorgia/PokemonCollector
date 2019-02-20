@@ -1,0 +1,13 @@
+<div class="container bg-dark text-light">
+  <div class="row">
+    <div class="col">
+      <div id="card-gallery-grid">
+        <div class="pokemon-card-outer" *ngFor="let pokemon of pokemonArr">
+          <h1>{{ pokemon.pokemonName }}</h1>
+          <img src="{{ pokemon.URL }}" />
+          <h5>{{ pokemon.pokemonType }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
