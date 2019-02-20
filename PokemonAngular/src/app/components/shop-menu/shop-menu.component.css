@@ -1,4 +1,4 @@
-.pokemon-card-outer {
+/* .pokemon-card-outer {
   margin: 15px;
   height: 320px;
   width: 125;
@@ -30,4 +30,10 @@
 
 #card-gallery-grid .pokemon-card-outer:hover {
   transform: scale(1.25);
+} */
+
+.shop-buy-btn {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
+  border: 1px solid black;
+  width: 50%;
 }

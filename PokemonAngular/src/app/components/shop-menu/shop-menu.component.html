@@ -3,9 +3,29 @@
     <div class="col">
       <div id="card-gallery-grid">
         <div class="pokemon-card-outer" *ngFor="let pokemon of pokemonArr">
-          <h1>{{ pokemon.pokemonName }}</h1>
-          <img src="{{ pokemon.URL }}" />
-          <h5>{{ pokemon.pokemonType }}</h5>
+          <h4 class="pokemon-card-name">{{ pokemon.pokemonName }}</h4>
+          <img class="pokemon-card-img" src="{{ pokemon.URL }}" />
+          <!-- <p id="hidden-pokemon-{{ pokemon.pokemonId }}">
+            {{ pokemon.pokemonId }}
+          </p> -->
+          <div class="pokemon-card-info-cont">
+            <div>Type: {{ pokemon.pokemonType }}</div>
+            <br />
+            <div>Cost: {{ pokemon.pokemonRarity }}</div>
+            <!-- <form #buyForm="ngForm" (ngSubmit)="onBuySubmit()" novalidate>
+              <div class="form-group">
+                <input
+                  type="text"
+                  #pokemonId="ngModel"
+                  name="USERNAME"
+                  class="form-control"
+                  [(ngModel)]="pokemonModel.pokemonId"
+                />
+              </div>
+              <button class="shop-buy-btn" type="submit">Buy</button>
+            </form> -->
+            <button class="shop-buy-btn" (click)="onBuyClick()">Buy</button>
+          </div>
         </div>
       </div>
     </div>

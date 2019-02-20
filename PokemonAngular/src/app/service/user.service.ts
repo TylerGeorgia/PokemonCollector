@@ -24,6 +24,8 @@ export class UserService {
   _loginUrl = "http://localhost:8080/PokemonCollector/login";
   //URL endpoint for shop getALl
   _shopUrl = "http://localhost:8080/PokemonCollector/shop";
+  //URL endpoint for buy pokemon
+  _buyUrl = "http://localhost:8080/PokemonCollector/redeem";
 
   //Method call for GET request for leaderboard users.
   getLeaderboard() {

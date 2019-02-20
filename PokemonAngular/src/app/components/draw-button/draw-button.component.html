@@ -3,7 +3,82 @@
     <div class="col-md-12">
       <div id="drawButton" class="draw-pokemon-cont text-center">
         <h3>Draw New Pokemon</h3>
-        <button (click)="onClickMe()">Get a pokemon</button>
+        <!--(click)="onClickMe()"-->
+        <button
+          class="newPokemon-Modal-Buttons"
+          data-toggle="modal"
+          data-target="#newpokemonModal"
+          (click)="onClickMe()"
+        >
+          Get a pokemon
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="newpokemonModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="newpokemonModel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div
+      class="modal-content justify-content-center"
+      id="newPokemon-Modal-Content"
+    >
+      <div class="modal-header" id="newPokemon-Modal-Header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="newPokemon-x-button"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body justify-content-center" id="newPokemon-Modal-Body">
+        <div
+          class="pokemon-card-outer text-center "
+          *ngFor="let pokemon of pokemonArr"
+        >
+          <h4 class="pokemon-card-name">{{ pokemon.pokemonName }}</h4>
+          <img src="{{ pokemon.URL }}" class="pokemon-card-img" />
+          <div class="pokemon-card-info-cont">
+            <p>Type: {{ pokemon.pokemonType }}</p>
+          </div>
+        </div>
+        <button type="button" class="newPokemon-Modal-Buttons">
+          Draw Another!
+        </button>
+        <button
+          type="button"
+          class="newPokemon-Modal-Buttons"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+      <div
+        class="modal-footer justify-content-center"
+        id="pokemonNew-Modal-Footer"
+      >
+        <button type="button" class="newPokemon-Modal-Buttons">
+          Draw Another!
+        </button>
+        <button
+          type="button"
+          class="newPokemon-Modal-Buttons"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>

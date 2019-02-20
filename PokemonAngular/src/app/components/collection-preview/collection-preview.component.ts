@@ -7,17 +7,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./collection-preview.component.css"]
 })
 export class CollectionPreviewComponent implements OnInit {
-  pokeOneName;
-  pokeOneId;
-  pokeOneType;
-
-  pokeTwoName;
-  pokeTwoId;
-  pokeTwoType;
-
-  pokeThreeName;
-  pokeThreeId;
-  pokeThreeType;
+  pokemonArr: any[] = new Array();
 
   constructor(private _userService: UserService, private _http: HttpClient) {}
 
@@ -25,83 +15,61 @@ export class CollectionPreviewComponent implements OnInit {
     var pokeID;
     var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
 
-    //Get active users collection.
+    // this._userService.getAllPokemon().subscribe(data => {
+    //   localStorage.setItem("shop", JSON.stringify(data));
+    // });
 
-    this._userService.getUserCollection().subscribe(data => {
-      console.log(data);
-      console.log(data.ownedPokemon);
-      localStorage.setItem(
-        "currentCollection",
-        JSON.stringify(data.ownedPokemon)
-      );
-      console.log(localStorage.getItem("currentCollection"));
-      // console.log(data.ownedPokemon[0]);
-      // console.log(data.ownedPokemon[0].pokemonName);
+    // this._userService.getUserCollection().subscribe(data => {
+    //   //console.log(data);
+    //   //console.log(data.ownedPokemon);
+    //   localStorage.setItem(
+    //     "currentCollection",
+    //     JSON.stringify(data.ownedPokemon)
+    //   );
+    // });
 
-      var pokeOneName = data.ownedPokemon[0].pokemonName;
-      this.pokeOneName = pokeOneName;
-      var pokeOneId = data.ownedPokemon[0].pokemonId;
-      this.pokeOneId = pokeOneId;
+    //Get local storage object.
+    var currentCollection = JSON.parse(
+      localStorage.getItem("currentCollection")
+    );
+    console.log("currentCollection: ", currentCollection);
 
-      //Get image from pokeAPI
-      pokeID = pokeOneId;
-      this._http.get<any>(tempUrl + pokeOneId + "/").subscribe(data => {
-        console.log(data);
-        var pokeOneType = data.types[0].type.name;
-        this.pokeOneType = pokeOneType;
+    let maxLength = currentCollection.length;
+    console.log("maxLength: ", maxLength);
+    //Generate Three random numbers.
+    var randomThree = new Array();
+    for (let i = 0; i < 3; i++) {
+      randomThree.push(currentCollection[this.randomNumber(maxLength)]);
+    }
+    console.log("randomThree: ", randomThree);
 
-        $("#previewOne").append(
-          '<img class="card-img-top pokeImgPreview" src="' +
-            data.sprites.front_default +
-            '"><div class="card-body"><p class="card-title">' +
-            pokeOneName +
-            '</p><p class="card-text"> Type: ' +
-            pokeOneType +
-            " </p> </div>"
-        );
-      });
+    //Grab three random entries from current collection
+    for (let i = 0; i < randomThree.length; i++) {
+      //Add properties for URL and PokemonType to the collection.
+      var spriteURL = "";
+      var pokeTYPE = "";
+      //Call the PokeAPI for pokemon Info
+      this._http
+        .get<any>(tempUrl + randomThree[i].pokemonId + "/")
+        .subscribe(data => {
+          //Store URL of image in local varaible
+          spriteURL = data.sprites.front_default;
+          //Store type of pokemon in local variable.
+          pokeTYPE = data.types[0].type.name;
+          //Add a property to the collection object for URL
+          randomThree[i].URL = spriteURL;
+          //ADD a property to the collection object for the Type.
+          randomThree[i].pokemonType = pokeTYPE;
+          console.log(randomThree);
+          //console.log("PokemonArray", this.pokemonArr);
+          //Push new collection object to pokemonArr proeprty.
+          this.pokemonArr.push(randomThree[i]);
+          // console.log("PokemonArray: ", this.pokemonArr);
+        });
+    }
+  }
 
-      var pokeTwoName = data.ownedPokemon[1].pokemonName;
-      this.pokeTwoName = pokeTwoName;
-      var pokeTwoId = data.ownedPokemon[1].pokemonId;
-      this.pokeTwoId = data.ownedPokemon[1].pokemonId;
-
-      this._http.get<any>(tempUrl + pokeTwoId + "/").subscribe(data => {
-        console.log(data);
-        var pokeTwoType = data.types[0].type.name;
-        this.pokeTwoType = pokeTwoType;
-
-        $("#previewTwo").append(
-          '<img class="card-img-top" src="' +
-            data.sprites.front_default +
-            '"><div class="card-body card-body-poke"><p class="card-title">' +
-            pokeTwoName +
-            '</p><p class="card-text"> Type: ' +
-            pokeTwoType +
-            " </p> </div>"
-        );
-      });
-
-      var pokeThreeName = data.ownedPokemon[2].pokemonName;
-      this.pokeThreeName = pokeThreeName;
-      var pokeThreeId = data.ownedPokemon[2].pokemonId;
-      this.pokeThreeId = data.ownedPokemon[2].pokemonId;
-
-      this._http.get<any>(tempUrl + pokeThreeId + "/").subscribe(data => {
-        console.log(data);
-        var pokeThreeType = data.types[0].type.name;
-        this.pokeThreeType = pokeThreeType;
-
-        $("#previewThree").append(
-          '<img class="card-img-top" src="' +
-            data.sprites.front_default +
-            '"><div class="card-body"><p class="card-title">' +
-            pokeThreeName +
-            '</p><p class="card-text"> Type: ' +
-            pokeThreeType +
-            " </p> </div>"
-        );
-      });
-    });
+  randomNumber(max) {
+    return Math.floor(Math.random() * Math.floor(max));
   }
 }

@@ -1,17 +1,16 @@
-<div class="container bg-dark text-light">
-  <div class="row">
-    <div class="col-md-12 bg-dark text-light">
-      <!--Pokemon Cards go here-->
-      <div class="row justify-content-center p-3">
-        <div class="col-lg-3 col-sm-12 col-md-12 m-4">
-          <div class="card previewCard" id="previewOne"></div>
-        </div>
-
-        <div class="col-lg-3 col-sm-12 col-md-12 m-4">
-          <div class="card previewCard" id="previewTwo"></div>
-        </div>
-        <div class="col-lg-3 col-sm-12 col-md-12 m-4">
-          <div class="card previewCard" id="previewThree"></div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col justify-content-center">
+      <div id="card-gallery-grid">
+        <div
+          class="pokemon-card-outer text-center"
+          *ngFor="let pokemon of pokemonArr"
+        >
+          <h4 class="pokemon-card-name">{{ pokemon.pokemonName }}</h4>
+          <img src="{{ pokemon.URL }}" class="pokemon-card-img" />
+          <div class="pokemon-card-info-cont">
+            <p>Type: {{ pokemon.pokemonType }}</p>
+          </div>
         </div>
       </div>
       <a href="#" class="btn btn-primary" routerLink="/collection"
@@ -20,3 +19,5 @@
     </div>
   </div>
 </div>
+
+<!-- <a href="#" class="btn btn-primary" routerLink="/collection">Full Collection</a> -->

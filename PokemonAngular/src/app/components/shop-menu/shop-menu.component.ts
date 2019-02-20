@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/service/user.service";
+import { PokemonObject } from "src/app/models/pokemon-object";
+
 @Component({
   selector: "app-shop-menu",
   templateUrl: "./shop-menu.component.html",
@@ -22,6 +24,8 @@ import { UserService } from "src/app/service/user.service";
   // `
 })
 export class ShopMenuComponent implements OnInit {
+  pokemonModel = new PokemonObject("");
+  pokeID: string = "";
   pokemonArr: any[] = new Array();
   constructor(private _http: HttpClient, private _userService: UserService) {}
 
@@ -30,7 +34,7 @@ export class ShopMenuComponent implements OnInit {
     var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
     // Store the localStorage object into a  local variable.
     var shopCollection = JSON.parse(localStorage.getItem("shop"));
-    console.log(shopCollection.length);
+    //console.log(shopCollection.length);
     var spriteURL = "";
     var pokemonType = "";
     for (let i = 0; i < shopCollection.length; i++) {
@@ -46,8 +50,17 @@ export class ShopMenuComponent implements OnInit {
           shopCollection[i].pokemonType = pokemonType;
           this.pokemonArr.push(shopCollection[i]);
           //console.log(collection);
-          console.log(this.pokemonArr);
+          console.log(this.pokemonArr[5]);
         });
     }
+  }
+
+  onBuyClick() {
+    //Get User Id
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("currentUser: ", currentUser);
+    //Get Pokemon ID
+    console.log(event.returnValue);
+    //Send Post to redeem with both
   }
 }
