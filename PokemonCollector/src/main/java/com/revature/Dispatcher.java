@@ -97,7 +97,7 @@ public class Dispatcher {
 		case "collection":
 			if ("POST".equals(request.getMethod())) {
 				hd.getUserDuplicates(request, response);
-			} else if ("GET".contentEquals(request.getMethod())) {
+			} else if ("GET".equals(request.getMethod())) {
 				hd.getUserCollection(request, response);
 			} else {
 				System.out.println("Not yet implemented");
