@@ -12,7 +12,7 @@ export class DrawButtonComponent implements OnInit {
   private localURL = "http://localhost:8080/PokemonCollector/generate";
   private myJSON;
   private url = "https://pokeapi.co/api/v2/pokemon/1/";
-  constructor(private _userService: UserService) {}
+  constructor(private _userService: UserService, private _http: HttpClient) {}
 
   ngOnInit() {
     //By making the get request here in the on init() we can assign the value from the observable to our local class variable and the access those values in someother event aka on the button click.
@@ -22,7 +22,6 @@ export class DrawButtonComponent implements OnInit {
 
   onClickMe() {
     this._userService.generatePokemon().subscribe(data => console.log(data));
-
     //Some testing stuff
     // this.clickMessage = "Hi, how are ya.";
     // console.log(this.clickMessage);

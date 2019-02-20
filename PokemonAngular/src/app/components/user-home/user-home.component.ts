@@ -14,6 +14,11 @@ export class UserHomeComponent implements OnInit {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
     //console.log("currentUser", currentUser);
     //Make call to get collection for active user.
-    this._userService.getUserCollection().subscribe(data => console.log(data));
+    var userCollection = JSON.parse(localStorage.getItem("userCollection"));
+    console.log(userCollection);
+    //Setup shop local storage
+    this._userService.getAllPokemon().subscribe(data => {
+      localStorage.setItem("shop", JSON.stringify(data));
+    });
   }
 }

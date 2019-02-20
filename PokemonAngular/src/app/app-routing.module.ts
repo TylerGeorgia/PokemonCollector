@@ -7,6 +7,7 @@ import { UserHomeComponent } from "./components/user-home/user-home.component";
 import { CollectionPageComponent } from "./components/collection-page/collection-page.component";
 import { RedeemPageComponent } from "./components/redeem-page/redeem-page.component";
 import { ShopPageComponent } from "./components/shop-page/shop-page.component";
+import { ShopMenuComponent } from "./components/shop-menu/shop-menu.component";
 
 const routes: Routes = [
   {
