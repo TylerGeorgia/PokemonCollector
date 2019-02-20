@@ -12,18 +12,18 @@ export class UserService {
   currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   //URL endpoint for getting all users to for the leaderboard.
-  _leaderUrl = "http://localhost:8080/PokemonCollector/leader";
+  _leaderUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/leader";
   //URL endpoint for registering a new user.
-  _createUrl = "http://localhost:8080/PokemonCollector/create";
+  _createUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/create";
   //URL endpoint for generating a new pokemon.
-  _generateUrl = "http://localhost:8080/PokemonCollector/generate";
+  _generateUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/generate";
   //URL endpoint for getting active users collection.
 
-  _userCollectionUrl = "http://localhost:8080/PokemonCollector/collection";
+  _userCollectionUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/collection";
   //URL endpoint for user login.
-  _loginUrl = "http://localhost:8080/PokemonCollector/login";
+  _loginUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/login";
   //URL endpoint for shop getALl
-  _shopUrl = "http://localhost:8080/PokemonCollector/shop";
+  _shopUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/shop";
 
   //Method call for GET request for leaderboard users.
   getLeaderboard() {

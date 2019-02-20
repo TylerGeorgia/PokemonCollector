@@ -23,7 +23,7 @@ public class CorsFilter implements Filter {
 		//you are requesting from, the second being 'Access-Control-Allow-Methods' with the 
 		//HTTP Methods you grant access to 
 		
-		httpResponse.addHeader("Access-Control-Allow-Origin", "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080");
+		httpResponse.addHeader("Access-Control-Allow-Origin", "*");
 		httpResponse.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
 		httpResponse.setHeader("Access-Control-Max-Age", "3600");
 		httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
