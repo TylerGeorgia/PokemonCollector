@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.revature.model.Pokedex;
 import com.revature.model.PokedexBuilder;
 import com.revature.model.Pokemon;
@@ -58,9 +59,10 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellSpecificPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int idUser = Integer.parseInt(request.getParameter("USERID"));
-		int idPoke = Integer.parseInt(request.getParameter("POKEID"));
-		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(idUser, idPoke);
+		final ObjectNode node = new ObjectMapper().readValue(request.getReader(), ObjectNode.class);
+		int UID = node.get("USERID").asInt();
+		int PID = node.get("POKEID").asInt();
+		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(UID, PID);
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(score));
 	}
@@ -71,8 +73,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void buyPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int idUser = Integer.parseInt(request.getParameter("USERID"));
-		int idPoke = Integer.parseInt(request.getParameter("POKEID"));
+		final ObjectNode node = new ObjectMapper().readValue(request.getReader(), ObjectNode.class);
+		int idUser = node.get("USERID").asInt();
+		int idPoke = node.get("POKEID").asInt();
 		Pokemon poke = AppServices.getAppService().buyPokemon(idUser, idPoke);
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
@@ -97,9 +100,9 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void getUserDuplicates(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int id = Integer.parseInt(request.getParameter("USERID")); 
-		pokedex.setOwner(pokebuild.buildUser(id));
-		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(id));
+		User param = mapper.readValue(request.getReader(), User.class); 
+		pokedex.setOwner(pokebuild.buildUser(param.getUserId()));
+		pokedex.setOwnedPokemon(pokebuild.buildPokemonList(param.getUserId()));
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(pokedex.getOwner()));
 		for (Pokemon p : pokedex.getOwnedPokemon()) {
