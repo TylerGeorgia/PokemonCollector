@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
           console.log("invalid login");
         } else {
           //Store Active User as Local Storage Object
+
           localStorage.setItem("currentUser", JSON.stringify(data));
           //Route to new userHome
           this._router.navigate(["/userhome"]);

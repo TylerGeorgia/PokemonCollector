@@ -29,6 +29,7 @@ export class UserService {
   //URL endpoint for buy pokemon
   _buyUrl = "http://localhost:8080/PokemonCollector/redeem";
   _getDuplicatesUrl = "http://localhost:8080/PokemonCollector/collection";
+  _redeemUrl = "http://localhost:8080/PokemonCollector/redeem";
 
   //Method call for GET request for leaderboard users.
   getLeaderboard() {
@@ -55,6 +56,31 @@ export class UserService {
     userID = currentUser.userId;
     let params = new HttpParams().set("USERID", userID);
     return this._http.get<any>(this._userCollectionUrl, { params });
+  }
+
+  //Method for redeeming one specific pokemon
+  redeemPokemonById() {
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("currentUSer ", currentUser);
+    var userID: string;
+    userID = currentUser.userId;
+    var redeemTicket = JSON.parse(localStorage.getItem("redeemTicket"));
+    console.log(redeemTicket);
+    console.log(redeemTicket.pokemonId);
+    let params = new HttpParams()
+      .set("USERID", userID)
+      .set("POKEID", redeemTicket.pokemonId);
+    //params = new HttpParams().set("POKEID", redeemTicket.POKEID);
+    return this._http.get<any>(this._redeemUrl, { params });
+  }
+
+  redeemAll() {
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("currentUSer ", currentUser);
+    var userID: string;
+    userID = currentUser.userId;
+    let params = new HttpParams().set("USERID", userID);
+    return this._http.get<any>(this._redeemUrl, { params });
   }
 
   //Method call for GET request for retrieving user duplicates.

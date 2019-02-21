@@ -1,1 +1,41 @@
-<p>REDEEM</p>
+<app-logged-nav-bar></app-logged-nav-bar>
+<div class="container bg-dark text-light">
+  <div class="row">
+    <div class="col">
+      <div class="shop-form-scroll">
+        <form #redeemForm="ngForm" (ngSubmit)="onRedeemSubmit()" novalidate>
+          <div class="radio-card-grid">
+            <div
+              class="form-check radio-form-item"
+              *ngFor="let pokemon of pokemonArr"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                #pokemonCard="ngModel"
+                name="gridRadios"
+                value="{{ pokemon.pokemonId }}"
+                checked
+                [(ngModel)]="pokemonModel.pokemonId"
+              />
+              <div class="pokemon-card-outer">
+                <label class="form-check-label" for="gridRadios1">
+                  {{ pokemon.pokemonName }}
+                </label>
+                <img class="pokemon-card-img" src="{{ pokemon.URL }}" />
+                <div class="pokemon-card-info-cont">
+                  <div>Type: {{ pokemon.pokemonType }}</div>
+                  <br />
+                  <div>Cost: {{ pokemon.pokemonRarity }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="shop-buy-btn" type="submit">Buy</button>
+        </form>
+        <button class="shop-buy-btn" (click)="onBuyAll()">Redeem All</button>
+      </div>
+    </div>
+  </div>
+</div>

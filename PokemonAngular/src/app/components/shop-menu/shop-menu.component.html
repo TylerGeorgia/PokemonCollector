@@ -1,36 +1,6 @@
 <div class="container bg-dark text-light">
   <div class="row">
     <div class="col">
-      <!-- <div id="card-gallery-grid">
-        <div class="pokemon-card-outer" *ngFor="let pokemon of pokemonArr"*ngFor="let pokemon of pokemonArr">
-          <h4 class="pokemon-card-name">{{ pokemon.pokemonName }}</h4>
-          <img class="pokemon-card-img" src="{{ pokemon.URL }}" />
-
-          <div class="pokemon-card-info-cont">
-            <div>Type: {{ pokemon.pokemonType }}</div>
-            <br />
-            <div>Cost: {{ pokemon.pokemonRarity }}</div>
-
-            <button class="shop-buy-btn" (click)="onBuyClick()">
-              Buy
-            </button>
-          </div>
-          <form #buyForm="ngForm" (ngSubmit)="onBuySubmit()" novalidate>
-            <div class="form-group">
-              <input
-                disabled
-                value="{{ pokemon.pokemonId }}"
-                type="text"
-                #pokemonCard="ngModel"
-                name="POKEMONID"
-                class="form-control"
-                [(ngModel)]="pokemonModel.pokemonId"
-              />
-            </div>
-            <button class="shop-buy-btn" type="submit">Buy</button>
-          </form>
-        </div>
-      </div> -->
       <div class="shop-form-scroll">
         <form #buyForm="ngForm" (ngSubmit)="onBuySubmit()" novalidate>
           <div class="radio-card-grid">
