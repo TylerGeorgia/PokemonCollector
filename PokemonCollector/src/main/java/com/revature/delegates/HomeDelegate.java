@@ -61,12 +61,20 @@ public class HomeDelegate {
 	 * @throws IOException
 	 */
 	public void sellSpecificPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		final ObjectNode node = new ObjectMapper().readValue(request.getReader(), ObjectNode.class);
-		int UID = node.get("USERID").asInt();
-		int PID = node.get("POKEID").asInt();
-		int score = AppServices.getAppService().sellDuplicateByUserAndPokemonId(UID, PID);
+		int idUser = Integer.parseInt(request.getParameter("USERID"));
+		int idPoke = Integer.parseInt(request.getParameter("POKEID"));
+		AppServices.getAppService().sellDuplicateByUserAndPokemonId(idUser, idPoke);
+		List<Pokemon> poke = pokebuild.buildPokemonList(idUser);
 		response.setContentType("application/json");
-		response.getWriter().append(mapper.writeValueAsString(score));
+		List<Pokemon> dup = new ArrayList<Pokemon>();
+		for (Pokemon p : poke) {
+			if (p.getCount() > 1) {
+				dup.add(p);
+			}
+		}
+		pokedex.setOwner(pokebuild.buildUser(idUser));
+		pokedex.setOwnedPokemon(dup);
+		response.getWriter().append(mapper.writeValueAsString(pokedex));
 	}
 	
 	/**Buys a specific Pokemon and removes credits from users account
