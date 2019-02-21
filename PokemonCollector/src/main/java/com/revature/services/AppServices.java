@@ -191,4 +191,9 @@ public class AppServices {
 		UserDaoImpl userDao = UserDaoImpl.getUserDao();
 		return userDao.updateUser(user);
 	}
+
+	public int getPokemonCountByUserIdAndPokemonId(int uId, int pId) {
+		PokemonDaoImpl pokeDao = new PokemonDaoImpl();
+		return pokeDao.getPokemonCountByUserIdAndPokemonId(uId, pId);
+	}
 }

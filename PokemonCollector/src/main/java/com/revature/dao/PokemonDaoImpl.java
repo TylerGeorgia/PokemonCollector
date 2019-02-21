@@ -21,7 +21,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	//Singleton Implementation
 	private static PokemonDaoImpl pokemonDao = null;
 	
-	private PokemonDaoImpl() {}
+	public PokemonDaoImpl() {}
 	
 	public static PokemonDaoImpl getPokemonDao() {
 		if(pokemonDao == null) {

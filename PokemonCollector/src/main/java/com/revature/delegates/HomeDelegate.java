@@ -39,6 +39,7 @@ public class HomeDelegate {
 	public void generatePokemon(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		int id = Integer.parseInt(request.getParameter("USERID"));
 		Pokemon poke = AppServices.getAppService().generateAndAddRandomPokemon(id);
+		poke.setCount(AppServices.getAppService().getPokemonCountByUserIdAndPokemonId(id, poke.getPokemonId()));
 		response.setContentType("application/json");
 		response.getWriter().append(mapper.writeValueAsString(poke));
 	}
