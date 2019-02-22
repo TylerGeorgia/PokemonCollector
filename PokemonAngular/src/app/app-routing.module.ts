@@ -8,11 +8,17 @@ import { CollectionPageComponent } from "./components/collection-page/collection
 import { RedeemPageComponent } from "./components/redeem-page/redeem-page.component";
 import { ShopPageComponent } from "./components/shop-page/shop-page.component";
 import { ShopMenuComponent } from "./components/shop-menu/shop-menu.component";
+import { BuyConfirmComponent } from "./components/buy-confirm/buy-confirm.component";
 
 const routes: Routes = [
   {
     path: "redeem",
     component: RedeemPageComponent
+  },
+
+  {
+    path: "confirmPurchase",
+    component: BuyConfirmComponent
   },
 
   {

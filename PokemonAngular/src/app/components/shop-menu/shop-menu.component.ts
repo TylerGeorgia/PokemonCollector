@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/service/user.service";
 import { PokemonObject } from "src/app/models/pokemon-object";
 import { BuyTicket } from "src/app/models/buy-ticket";
-
+import { Router } from "@angular/router";
 @Component({
   selector: "app-shop-menu",
   templateUrl: "./shop-menu.component.html",
@@ -34,7 +34,11 @@ export class ShopMenuComponent implements OnInit {
   pokemonArr: any[] = new Array();
   @Input()
   _value: number;
-  constructor(private _http: HttpClient, private _userService: UserService) {}
+  constructor(
+    private _http: HttpClient,
+    private _userService: UserService,
+    private _router: Router
+  ) {}
 
   ngOnInit() {
     //Create URL front for pokeAPI.
@@ -85,8 +89,16 @@ export class ShopMenuComponent implements OnInit {
     console.log(this.buyTicketModel);
     //console.log(this._userService.buyPokemon(this.buyTicketModel));
     this._userService.buyPokemon(this.buyTicketModel).subscribe(data => {
-      console.log(data);
+      if (data == null) {
+        console.log("Not enough credits");
+      } else {
+        console.log("Success!", data);
+        console.log(data.owner);
+        console.log("LocalStorage", localStorage);
+        localStorage.setItem("currentUser", data.owner);
+        this._router.navigate(["confirmPurchase"]);
+      }
     });
-    console.log(this._userService.buyPokemon(this.buyTicketModel));
+    //console.log(this._userService.buyPokemon(this.buyTicketModel));
   }
 }

@@ -29,44 +29,66 @@ export class CollectionPreviewComponent implements OnInit {
     // });
 
     //Get local storage object.
-    var currentCollection = JSON.parse(
-      localStorage.getItem("currentCollection")
-    );
-    console.log("currentCollection: ", currentCollection);
+    // console.log("LOCALSTORAGE COLLECTION PREVIEW", localStorage);
+    // console.log(
+    //   "CURRENT COLLECTION - COLLECTION PREVIEW",
+    //   localStorage.getItem("currentCollection")
+    // );
+    // var currentCollection = JSON.parse(
+    //   localStorage.getItem("currentCollection")
+    // );
+    // console.log(
+    //   "localStorage - currentCollection - collection preview ",
+    //   currentCollection
+    // );
 
-    let maxLength = currentCollection.length;
-    console.log("maxLength: ", maxLength);
-    //Generate Three random numbers.
-    var randomThree = new Array();
-    for (let i = 0; i < 3; i++) {
-      randomThree.push(currentCollection[this.randomNumber(maxLength)]);
-    }
-    console.log("randomThree: ", randomThree);
+    this._userService.getUserCollection().subscribe(data => {
+      //console.log(data);
+      //console.log(data.ownedPokemon);
+      localStorage.setItem(
+        "currentCollection",
+        JSON.stringify(data.ownedPokemon)
+      );
 
-    //Grab three random entries from current collection
-    for (let i = 0; i < randomThree.length; i++) {
-      //Add properties for URL and PokemonType to the collection.
-      var spriteURL = "";
-      var pokeTYPE = "";
-      //Call the PokeAPI for pokemon Info
-      this._http
-        .get<any>(tempUrl + randomThree[i].pokemonId + "/")
-        .subscribe(data => {
-          //Store URL of image in local varaible
-          spriteURL = data.sprites.front_default;
-          //Store type of pokemon in local variable.
-          pokeTYPE = data.types[0].type.name;
-          //Add a property to the collection object for URL
-          randomThree[i].URL = spriteURL;
-          //ADD a property to the collection object for the Type.
-          randomThree[i].pokemonType = pokeTYPE;
-          console.log(randomThree);
-          //console.log("PokemonArray", this.pokemonArr);
-          //Push new collection object to pokemonArr proeprty.
-          this.pokemonArr.push(randomThree[i]);
-          // console.log("PokemonArray: ", this.pokemonArr);
-        });
-    }
+      var currentCollection = JSON.parse(
+        localStorage.getItem("currentCollection")
+      );
+      console.log("currentCollection var", currentCollection);
+      //PROBLEM HERE
+      let maxLength = currentCollection.length;
+      console.log("maxLength: ", maxLength);
+      //Generate Three random numbers.
+      var randomThree = new Array();
+      for (let i = 0; i < 3; i++) {
+        randomThree.push(currentCollection[this.randomNumber(maxLength)]);
+      }
+      console.log("randomThree: ", randomThree);
+
+      //Grab three random entries from current collection
+      for (let i = 0; i < randomThree.length; i++) {
+        //Add properties for URL and PokemonType to the collection.
+        var spriteURL = "";
+        var pokeTYPE = "";
+        //Call the PokeAPI for pokemon Info
+        this._http
+          .get<any>(tempUrl + randomThree[i].pokemonId + "/")
+          .subscribe(data => {
+            //Store URL of image in local varaible
+            spriteURL = data.sprites.front_default;
+            //Store type of pokemon in local variable.
+            pokeTYPE = data.types[0].type.name;
+            //Add a property to the collection object for URL
+            randomThree[i].URL = spriteURL;
+            //ADD a property to the collection object for the Type.
+            randomThree[i].pokemonType = pokeTYPE;
+            console.log(randomThree);
+            //console.log("PokemonArray", this.pokemonArr);
+            //Push new collection object to pokemonArr proeprty.
+            this.pokemonArr.push(randomThree[i]);
+            // console.log("PokemonArray: ", this.pokemonArr);
+          });
+      }
+    });
   }
 
   randomNumber(max) {

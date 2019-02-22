@@ -52,8 +52,10 @@ export class UserService {
     // console.log(this.currentUser);
     // console.log(this._userCollectionUrl);
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    //console.log("currentUser in userservice", currentUser);
     var userID: string;
     userID = currentUser.userId;
+    //console.log("userID in user service", userID);
     let params = new HttpParams().set("USERID", userID);
     return this._http.get<any>(this._userCollectionUrl, { params });
   }

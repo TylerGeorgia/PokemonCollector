@@ -28,6 +28,7 @@ import { UserHomeComponent } from "./components/user-home/user-home.component";
 import { CollectionItemComponent } from "./components/collection-item/collection-item.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
+import { BuyConfirmComponent } from './components/buy-confirm/buy-confirm.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { FormsModule } from "@angular/forms";
     CollectionPageComponent,
     PlayerPreviewComponent,
     UserHomeComponent,
-    CollectionItemComponent
+    CollectionItemComponent,
+    BuyConfirmComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [LoginComponent],

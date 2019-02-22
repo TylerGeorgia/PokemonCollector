@@ -5,7 +5,7 @@
         <h3>Draw New Pokemon</h3>
         <!--(click)="onClickMe()"-->
         <button
-          class="newPokemon-Modal-Buttons"
+          class="newPokemon-Gneerate-Button"
           data-toggle="modal"
           data-target="#newpokemonModal"
           (click)="onClickMe()"
@@ -31,7 +31,7 @@
       class="modal-content justify-content-center"
       id="newPokemon-Modal-Content"
     >
-      <div class="modal-header" id="newPokemon-Modal-Header">
+      <!-- <div class="modal-header" id="newPokemon-Modal-Header">
         <button
           type="button"
           class="close"
@@ -41,31 +41,44 @@
         >
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
+      </div> -->
 
       <div class="modal-body justify-content-center" id="newPokemon-Modal-Body">
+        <img
+          src="../../../assets/images/pokeball.png"
+          id="generate-pokemon-pokeball"
+          class="mb-3 animated shake"
+          (click)="onBallClick()"
+        />
         <div
-          class="pokemon-card-outer text-center "
-          *ngFor="let pokemon of pokemonArr"
+          class="pokemon-card-outer text-center d-none "
+          id="generate-pokemon-card"
         >
-          <h4 class="pokemon-card-name">{{ pokemon.pokemonName }}</h4>
-          <img src="{{ pokemon.URL }}" class="pokemon-card-img" />
+          <!-- *ngFor="let pokemon of pokemonArr" -->
+          <h4 class="pokemon-card-name">{{ this.pokemonName }}</h4>
+
+          <img src="{{ this.pokemonURL }}" class="pokemon-card-img" />
           <div class="pokemon-card-info-cont">
-            <p>Type: {{ pokemon.pokemonType }}</p>
+            <p>Type: {{ this.pokemonType }}</p>
           </div>
         </div>
-        <button type="button" class="newPokemon-Modal-Buttons">
+        <button
+          id="generate-pokemon-draw-btn"
+          type="button"
+          class="newPokemon-Modal-Buttons d-none"
+          (click)="onClickMe()"
+        >
           Draw Another!
         </button>
         <button
           type="button"
-          class="newPokemon-Modal-Buttons"
+          class="newPokemon-Modal-Buttons "
           data-dismiss="modal"
         >
           Close
         </button>
       </div>
-      <div
+      <!-- <div
         class="modal-footer justify-content-center"
         id="pokemonNew-Modal-Footer"
       >
@@ -79,7 +92,7 @@
         >
           Close
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

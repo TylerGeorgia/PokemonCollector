@@ -75,6 +75,8 @@
   border: none !important;
   display: flex;
   flex-direction: column;
+
+  align-items: center;
 }
 
 #newPokemon-Modal-Footer {
@@ -86,4 +88,12 @@
   background: linear-gradient(to top, #990033 0%, #cc0000 65%);
   border: 2px solid yellow !important;
   color: black;
+  width: 100%;
+}
+
+.newPokemon-Gneerate-Button {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  border: 2px solid yellow !important;
+  color: black;
+  width: 80%;
 }
