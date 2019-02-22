@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.revature.model.User;
-import com.revature.util.JDBCConnectionUtil;
+import com.revature.util.ConnectionPool;
 
 public class UserDaoImpl implements UserDao{
 	
@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao{
 	public List<User> getLeaderBoard() {
 		List<User> leaderBoard = new ArrayList<User>(100);
 		ResultSet rs;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "SELECT * FROM (SELECT * FROM tbl_user ORDER BY score) WHERE rownum <= 100";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao{
 		User userQ = null;
 		String hashedPassword = null;
 		ResultSet rs = null;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			
 			String sql1 = "{? = call get_user_hash(?,?)}";
 			CallableStatement cs = conn.prepareCall( sql1 );
@@ -96,7 +96,7 @@ public class UserDaoImpl implements UserDao{
 	public boolean createUser(User newUser) {
 		boolean userCreated = true;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "call prc_insert_user(?,?,?,?,?,?)";
 			CallableStatement ps = conn.prepareCall(sql);
 			ps.setString(1, newUser.getUsername().toLowerCase());
@@ -119,7 +119,7 @@ public class UserDaoImpl implements UserDao{
 	public User getUserById(int uId) {
 		ResultSet rs;
 		User desiredUser = null;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_user where user_id = ?";
 			CallableStatement ps = conn.prepareCall(sql);
 			ps.setInt(1,uId);
@@ -150,7 +150,7 @@ public class UserDaoImpl implements UserDao{
 		boolean isValidUsername = true;
 		ResultSet rs;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_user where username = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username.toLowerCase());
@@ -170,7 +170,7 @@ public class UserDaoImpl implements UserDao{
 		boolean isValidEmail = true;
 		ResultSet rs;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_user where email = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, email.toLowerCase());
@@ -189,7 +189,7 @@ public class UserDaoImpl implements UserDao{
 	public int getUserCredit(int uId) {
 		ResultSet rs;
 		int userCredits = -1;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select credits from tbl_user where user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, uId);
@@ -207,7 +207,7 @@ public class UserDaoImpl implements UserDao{
 
 	public boolean updateUserCredit(int newValue, int uId) {
 		boolean isUpdated = true;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "UPDATE tbl_user SET credits = ? where user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, newValue);
@@ -227,7 +227,7 @@ public class UserDaoImpl implements UserDao{
 	public boolean updateUser(User updateUser) {
 		boolean userUpdated = true;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "CALL PRC_UPDATE_USER(?,?,?,?,?,?)";
 			CallableStatement ps = conn.prepareCall(sql);
 			ps.setInt(1, updateUser.getUserId());

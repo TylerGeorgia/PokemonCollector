@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.revature.model.Pokemon;
 import com.revature.model.PokemonType;
-import com.revature.util.JDBCConnectionUtil;
+import com.revature.util.ConnectionPool;
 
 public class PokemonDaoImpl implements PokemonDao {
 	
@@ -34,7 +34,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	public Pokemon getPokemonById(int pokemonId) {
 		Pokemon pokeToGet = null;
 		ResultSet rs;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_pokemon where pokemon_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt( 1 , pokemonId );
@@ -57,7 +57,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	public Pokemon getPokemonByName(String pokemonName) {
 		Pokemon pokeToGet = null;
 		ResultSet rs;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_pokemon where poke_name = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString( 1 , pokemonName );
@@ -81,7 +81,7 @@ public class PokemonDaoImpl implements PokemonDao {
 		List<Pokemon> allPokemon = null;
 		ResultSet rs;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_pokemon";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -113,7 +113,7 @@ public class PokemonDaoImpl implements PokemonDao {
 		List<Pokemon> pokemonOfType = null;
 		ResultSet rs;
 		String pokemonType = "" + pType;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_type where type_name = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString( 1 , pokemonType.toLowerCase());
@@ -146,7 +146,7 @@ public class PokemonDaoImpl implements PokemonDao {
 		List<String> pokemonsTypes = new ArrayList<String>();
 		ResultSet rs;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_pokemon_to_type where pokemon_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt( 1 , pokemonId );
@@ -174,7 +174,7 @@ public class PokemonDaoImpl implements PokemonDao {
 		int rarity = -1;
 		ResultSet rs;
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select * from tbl_pokemon where pokemon_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt( 1 , pokemonId );
@@ -193,7 +193,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	public List<Pokemon> getPokemonByUserId(int uId) {
 		ResultSet rs;
 		List<Pokemon> userPokemon = new ArrayList<Pokemon>();
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "SELECT * FROM VW_USER_COLLECTION_FULL WHERE USER_ID = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1 ,uId);
@@ -217,7 +217,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	@Override
 	public boolean decrementPokemonCountByUserAndPokemonId(int uId, int pId) {
 		boolean isDecremented = false;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "UPDATE tbl_user_to_pokemon set amount = amount -1 where user_id = ? AND pokemon_id = ?";
 			PreparedStatement cs = conn.prepareStatement(sql);
 			cs.setInt( 1 , uId );
@@ -236,7 +236,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	@Override
 	public Pokemon addPokemonByUserIdAndPokemonId(int uId, int pId) {
 		
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "call prc_insert_user_collection(?,?)";
 			CallableStatement cs = conn.prepareCall(sql);
 			cs.setInt( 1 , uId );
@@ -252,7 +252,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	public int getPokemonCountByUserIdAndPokemonId(int uId, int pId) {
 		int userPokemonCount = 0;
 		ResultSet rs;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "select amount from tbl_user_to_pokemon where user_id = ? and pokemon_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt( 1 , uId );
@@ -270,7 +270,7 @@ public class PokemonDaoImpl implements PokemonDao {
 	
 	public boolean incrementPokemonCountByUserAndPokemonId(int uId, int pId) {
 		boolean isIncremented = false;
-		try(Connection conn = JDBCConnectionUtil.getConnection()){
+		try(Connection conn = ConnectionPool.getDataSource().getConnection()){
 			String sql = "UPDATE tbl_user_to_pokemon SET amount = amount + 1 WHERE user_id = ? AND pokemon_id = ?";
 			PreparedStatement cs = conn.prepareStatement(sql);
 			cs.setInt( 1 , uId );
