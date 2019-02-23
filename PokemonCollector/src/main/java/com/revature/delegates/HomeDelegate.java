@@ -38,10 +38,14 @@ public class HomeDelegate {
 	 */
 	public void generatePokemon(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		int id = Integer.parseInt(request.getParameter("USERID"));
+		List<Pokemon> genPoke = new ArrayList<Pokemon>();
 		Pokemon poke = AppServices.getAppService().generateAndAddRandomPokemon(id);
 		poke.setCount(AppServices.getAppService().getPokemonCountByUserIdAndPokemonId(id, poke.getPokemonId()));
+		pokedex.setOwner(pokebuild.buildUser(id));
+		genPoke.add(poke);
+		pokedex.setOwnedPokemon(genPoke);
 		response.setContentType("application/json");
-		response.getWriter().append(mapper.writeValueAsString(poke));
+		response.getWriter().append(mapper.writeValueAsString(pokedex));
 	}
 	
 	/** Sells all duplicate Pokemon for a user
