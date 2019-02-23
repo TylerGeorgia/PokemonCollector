@@ -1,8 +1,13 @@
 <app-nav-bar></app-nav-bar>
-<div class="container-fluids bg-dark text-light mt-5">
+<div class="container" id="login-form-cont">
   <div class="row justify-content-center">
-    <div class="col-md-6 bg-light text-dark">
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="col-md-6">
+      <form
+        #loginForm="ngForm"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        id="login-form"
+      >
         <div class="form-group">
           <label for="USERNAME">Username</label>
           <input
@@ -39,7 +44,9 @@
             >Password is required.</small
           >
         </div>
-        <button class="btn btn-primary" type="submit">Login</button>
+        <button class="btn  btn-block " id="login-form-btn" type="submit">
+          Login
+        </button>
       </form>
     </div>
   </div>

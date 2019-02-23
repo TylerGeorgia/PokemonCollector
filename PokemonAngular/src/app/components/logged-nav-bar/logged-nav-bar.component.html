@@ -1,6 +1,6 @@
 <!--Navbar-->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg " id="logged-nav-bar">
   <h5>Score {{ this.score }}</h5>
   <h5>{{ username }}</h5>
   <h5>Credits {{ credit }}</h5>
@@ -19,24 +19,24 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#" routerLink="/userhome"
+        <a class="nav-link customLink" href="#" routerLink="/userhome"
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="/shop">Shop</a>
+        <a class="nav-link customLink" href="#" routerLink="/shop">Shop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="/redeem">Redeem</a>
+        <a class="nav-link customLink" href="#" routerLink="/redeem">Redeem</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="/collection"
+        <a class="nav-link customLink" href="#" routerLink="/collection"
           >View Collection</a
         >
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#" (click)="onLogout()">Logout</a>
+        <a class="nav-link customLink" href="#" (click)="onLogout()">Logout</a>
       </li>
     </ul>
   </div>

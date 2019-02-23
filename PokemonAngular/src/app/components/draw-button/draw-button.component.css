@@ -91,9 +91,14 @@
   width: 100%;
 }
 
-.newPokemon-Gneerate-Button {
+.newPokemon-Generate-Button {
   background: linear-gradient(to top, #990033 0%, #cc0000 65%);
   border: 2px solid yellow !important;
-  color: black;
+  color: white;
   width: 80%;
+  margin-bottom: 30px;
+}
+
+#draw-button-contianer {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
 }

@@ -31,6 +31,8 @@ import { FormsModule } from "@angular/forms";
 import { BuyConfirmComponent } from "./components/buy-confirm/buy-confirm.component";
 import { SessionNavBarComponent } from "./components/session-nav-bar/session-nav-bar.component";
 
+import { GoogleChartsModule } from "angular-google-charts";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,13 @@ import { SessionNavBarComponent } from "./components/session-nav-bar/session-nav
     BuyConfirmComponent,
     SessionNavBarComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    GoogleChartsModule.forRoot()
+  ],
   providers: [LoginComponent, LoggedNavBarComponent, SessionNavBarComponent],
   bootstrap: [AppComponent]
 })
