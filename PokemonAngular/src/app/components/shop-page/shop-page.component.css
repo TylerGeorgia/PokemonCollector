@@ -1,3 +1,7 @@
+html,
+body {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
+}
 .pokemon-card-outer {
   margin: 15px;
   height: 320px;
@@ -138,4 +142,32 @@
   color: white;
   width: 80%;
   margin-bottom: 30px;
+}
+
+#shop-form-cont {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
+}
+#shop-form-cont .row {
+  background: linear-gradient(
+    to bottom left,
+    #000066 0%,
+    #666699 100%
+  ) !important;
+}
+#shop-form-col {
+  background: linear-gradient(
+    to bottom left,
+    #000066 0%,
+    #666699 100%
+  ) !important;
+  text-align: center;
+  padding: 15px;
+}
+#poke-shop-header {
+}
+
+.customRadioBtn {
+  background-color: red;
+  padding: 10px;
+  border: 1px solid yellow;
 }

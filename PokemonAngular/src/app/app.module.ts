@@ -32,6 +32,7 @@ import { BuyConfirmComponent } from "./components/buy-confirm/buy-confirm.compon
 import { SessionNavBarComponent } from "./components/session-nav-bar/session-nav-bar.component";
 
 import { GoogleChartsModule } from "angular-google-charts";
+import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 
 @NgModule({
   declarations: [

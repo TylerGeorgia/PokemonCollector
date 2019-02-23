@@ -127,3 +127,8 @@ body {
 #draw-button-contianer {
   background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
 }
+
+#catch-em-all-header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

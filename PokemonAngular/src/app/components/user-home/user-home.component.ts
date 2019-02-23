@@ -34,6 +34,15 @@ export class UserHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    let authToken = JSON.parse(localStorage.getItem("authToken"));
+    console.log("auth token", authToken);
+    if (authToken == null) {
+      console.log("inside of auth case");
+      this._router.navigate(["/landing"]);
+    } else {
+      console.log("LOgged in");
+    }
+
     console.log("LOCALSTORAGE", localStorage);
 
     //Setup shop local storage
