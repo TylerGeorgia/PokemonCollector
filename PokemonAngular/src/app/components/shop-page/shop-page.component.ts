@@ -1,13 +1,151 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/service/user.service";
 import { HttpClient } from "@angular/common/http";
+import { PokemonObject } from "src/app/models/pokemon-object";
+import { BuyTicket } from "src/app/models/buy-ticket";
+import { Router } from "@angular/router";
 @Component({
   selector: "app-shop-page",
   templateUrl: "./shop-page.component.html",
   styleUrls: ["./shop-page.component.css"]
 })
 export class ShopPageComponent implements OnInit {
-  constructor(private _http: HttpClient, private _userService: UserService) {}
+  pokemonModel = new PokemonObject("");
+  buyTicketModel = new BuyTicket("", "");
+  pokemonName: string = "";
+  pokemonType: string = "";
+  pokemonURL: string = "";
 
-  ngOnInit() {}
+  pokeID: string = "";
+  pokemonArr: any[] = new Array();
+
+  cardShow: boolean = false;
+  //Properties
+  username: string = "";
+  credit: number = 0;
+  score: number = 0;
+  constructor(
+    private _http: HttpClient,
+    private _userService: UserService,
+    private _router: Router
+  ) {}
+
+  ngOnInit() {
+    ////////////////SHOP MENU
+
+    //Front of URl for poke API
+    var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
+    // Store the localStorage shop object into a  local variable.
+    var shopCollection = JSON.parse(localStorage.getItem("shop"));
+    //Variables to hold spiriteURL and pokemonType.
+    var spriteURL = "";
+    var pokemonType = "";
+    //Loop through the entire shop collection and create a shop item for each pokemon.
+    for (let i = 0; i < shopCollection.length; i++) {
+      //Call PokeAPI for every item in collection.
+      this._http
+        .get<any>(tempUrl + shopCollection[i].pokemonId + "/")
+        .subscribe(data => {
+          //Set url from pokiAPI for sprite image.
+          spriteURL = data.sprites.front_default;
+          //Set the pokemon Type
+          pokemonType = data.types[0].type.name;
+
+          shopCollection[i].URL = spriteURL;
+          shopCollection[i].pokemonType = pokemonType;
+
+          this.pokemonArr.push(shopCollection[i]);
+        });
+    }
+
+    ///////END SHOP MENU
+
+    let tempScore = JSON.parse(sessionStorage.getItem("score"));
+    console.log("tempScore: ", tempScore);
+    //Get Active User from local storage.
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    //Set local variables for currentUser.
+    var userName = currentUser.username;
+    var credit = currentUser.credit;
+    //var score = currentUser.score;
+    var currentScore = JSON.parse(localStorage.getItem("currentScore"));
+    var score = currentUser.score;
+
+    //Bind active user info to properties.
+    //Bind username
+    this.username = userName;
+    //Bind Credit Amount
+    this.credit = credit;
+    this.score = score;
+  }
+
+  onBuySubmit() {
+    //add d-none class to id of generate-pokemon-pokeball
+    //Remove d-none from id of pokemon-card-name
+    if (this.cardShow) {
+      $("#generate-pokemon-pokeball").removeClass("d-none");
+      $("#generate-pokemon-card").addClass("d-none");
+      $("#generate-pokemon-draw-btn").addClass("d-none");
+    }
+    //Get User Id
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    //Get Pokemon ID
+    //console.log( this.pokemonModel.pokemonId);
+    this.buyTicketModel.POKEID = this.pokemonModel.pokemonId;
+    this.buyTicketModel.USERID = currentUser.userId;
+    console.log("Buy Ticket for the purchase: ", this.buyTicketModel);
+    //Call to Userservice method buyPokemon
+    //Pass in buyTicketModel
+
+    //Make a call to PokiAPI for the pokemon being bought.
+    var pokiUrl = "https://pokeapi.co/api/v2/pokemon/";
+    this._http
+      .get<any>(pokiUrl + this.buyTicketModel.POKEID + "/")
+      .subscribe(data => {
+        console.log(
+          "Response from poki api for buyitkcet pokemon info: ",
+          data
+        );
+        this.pokemonName = data.name;
+        this.pokemonType = data.types[0].type.name;
+        this.pokemonURL = data.sprites.front_default;
+      });
+
+    this._userService.buyPokemon(this.buyTicketModel).subscribe(data => {
+      if (data == null) {
+        console.log("Not enough credits");
+      } else {
+        console.log("Success!", data);
+        console.log("data.owner after buy ", data.owner);
+        this.credit = data.owner.credit;
+        this.score = data.owner.score;
+        // console.log("LocalStorage", localStorage);
+        //Update Local Storage User
+        localStorage.setItem("currentUser", JSON.stringify(data.owner));
+        //Update Local Storage Collection
+        localStorage.setItem(
+          "currentCollection",
+          JSON.stringify(data.ownedPokemon)
+        );
+      }
+    });
+  }
+
+  onBallClick() {
+    //Hide pokeball img and show card div
+    $("#generate-pokemon-pokeball").addClass("d-none");
+    $("#generate-pokemon-card").removeClass("d-none");
+    $("#generate-pokemon-draw-btn").removeClass("d-none");
+    this.cardShow = true;
+  }
+
+  //Method call for onLogout click event.
+  onLogout() {
+    //Clears local storage of user object.
+    localStorage.clear();
+    //Route back to landing page.
+    this._router.navigate(["/landing"]);
+  }
 }

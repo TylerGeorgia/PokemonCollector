@@ -73,3 +73,20 @@
   color: black;
   width: 100%;
 }
+
+#userInfoList {
+  list-style: none;
+}
+
+.userInfoItem {
+  color: white;
+}
+
+#logged-nav-bar {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  color: white;
+}
+.customLink {
+  style: none;
+  color: white;
+}

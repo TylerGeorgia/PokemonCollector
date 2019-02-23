@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/service/user.service";
 import { RedeemUser } from "src/app/models/redeem-user";
 import { CurrentSessionService } from "src/app/service/current-session.service";
+import { Router } from "@angular/router";
 
 import { LoggedNavBarComponent } from "../logged-nav-bar/logged-nav-bar.component";
 @Component({
@@ -21,7 +22,8 @@ export class DrawButtonComponent implements OnInit {
     private _userService: UserService,
     private _http: HttpClient,
     private _currentSession: CurrentSessionService,
-    private loggedNavBar: LoggedNavBarComponent
+    private loggedNavBar: LoggedNavBarComponent,
+    private _router: Router
   ) {}
 
   ngOnInit() {}
@@ -59,6 +61,10 @@ export class DrawButtonComponent implements OnInit {
         );
         //Attempt to set the score in the logged nav from the setter method.
         this.loggedNavBar.setScore(newScore);
+
+        // this._router
+        //   .navigateByUrl("/shop", { skipLocationChange: true })
+        //   .then(() => this._router.navigate(["/userhome"]));
       } else {
         //IF the count wasn't 1 then it was a duplicate pokemon. Do NOT update score.
         console.log("Duplicate Pokemon");

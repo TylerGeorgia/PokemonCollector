@@ -60,6 +60,11 @@ export class UserService {
     return this._http.get<any>(this._userCollectionUrl, { params });
   }
 
+  getUserCollectionLeaderBoard(userID: string) {
+    let params = new HttpParams().set("USERID", userID);
+    return this._http.get<any>(this._userCollectionUrl, { params });
+  }
+
   //Method for redeeming one specific pokemon
   redeemPokemonById() {
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));

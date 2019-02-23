@@ -9,11 +9,16 @@ import { RedeemPageComponent } from "./components/redeem-page/redeem-page.compon
 import { ShopPageComponent } from "./components/shop-page/shop-page.component";
 import { ShopMenuComponent } from "./components/shop-menu/shop-menu.component";
 import { BuyConfirmComponent } from "./components/buy-confirm/buy-confirm.component";
+import { LoggedNavBarComponent } from "./components/logged-nav-bar/logged-nav-bar.component";
 
 const routes: Routes = [
   {
     path: "redeem",
     component: RedeemPageComponent
+  },
+  {
+    path: "loggedNav",
+    component: LoggedNavBarComponent
   },
 
   {
@@ -50,7 +55,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

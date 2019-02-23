@@ -12,7 +12,7 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit() {
     this._userService.getLeaderboard().subscribe(data => {
       //console.log(data);
-      for (var i = 0; i < data.length; i++) {
+      for (var i = data.length - 1; i >= 0; i--) {
         //console.log(data[i]);
         $("#leaderboardTable")
           .find("tbody")

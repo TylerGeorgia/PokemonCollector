@@ -18,69 +18,71 @@ export class RedeemPageComponent implements OnInit {
   pokemonName: string = "";
   pokemonType: string = "";
   pokemonURL: string = "";
+  pokemonCount: number = 0;
+  //Properties
+  username: string = "";
+  credit: number = 0;
+  score: number = 0;
   constructor(
     private _http: HttpClient,
     private _userService: UserService,
     private _router: Router
-  ) {
-    // var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    // console.log(currentUser.userId);
-    // this.userModel.userId = currentUser.userId;
-    // console.log(this.userModel);
-    // this._userService.getUserDuplicates(this.userModel).subscribe(data => {
-    //   localStorage.setItem("userDuplicates", JSON.stringify(data));
-    //   console.log("data", data);
-    // });
-  }
+  ) {}
 
   ngOnInit() {
-    var currentDuplicates = JSON.parse(localStorage.getItem("userDuplicates"));
-    console.log(currentDuplicates);
+    //Setup User Duplicates
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    //Create URL front for pokeAPI.
-    var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
-    var spriteURL = "";
-    var pokemonType = "";
-    //Loop through current duplicates and generate form elements
-    for (let i = 0; i < currentDuplicates.length; i++) {
-      //   //Call PokeAPI for every item in collection.
-      this._http
-        .get<any>(tempUrl + currentDuplicates[i].pokemonId + "/")
-        .subscribe(data => {
-          console.log(data);
-          spriteURL = data.sprites.front_default;
-          pokemonType = data.types[0].type.name;
-          currentDuplicates[i].URL = spriteURL;
-          currentDuplicates[i].pokemonType = pokemonType;
-          this.pokemonArr.push(currentDuplicates[i]);
-        });
+    this.userModel.userId = currentUser.userId;
+    console.log("User Model", this.userModel);
+    this._userService.getUserDuplicates(this.userModel).subscribe(data => {
+      localStorage.setItem("userDuplicates", JSON.stringify(data));
+      //console.log("data in userHomePage", data);
+      //Create URL front for pokeAPI.
+      var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
+      var spriteURL = "";
+      var pokemonType = "";
+      var currentDuplicates = data;
+      //Loop through current duplicates and generate form elements
+      for (let i = 0; i < currentDuplicates.length; i++) {
+        //   //Call PokeAPI for every item in collection.
+        this._http
+          .get<any>(tempUrl + currentDuplicates[i].pokemonId + "/")
+          .subscribe(data => {
+            console.log(data);
+            spriteURL = data.sprites.front_default;
+            pokemonType = data.types[0].type.name;
+            currentDuplicates[i].URL = spriteURL;
+            currentDuplicates[i].pokemonType = pokemonType;
+            this.pokemonArr.push(currentDuplicates[i]);
+          });
 
-      console.log(currentDuplicates[i]);
-    }
-    // var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    // var tempDuplicateArray = new Array();
-    // this.userModel.userId = currentUser.userId;
-    // this._userService.getUserDuplicates(this.userModel).subscribe(data => {
-    //   console.log("data from get userDuplicates", data);
-    //   // // //Create URL front for pokeAPI.
-    //   var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
-    //   var spriteURL = "";
-    //   var pokemonType = "";
-    //   // //Loop through current duplicates and generate form elements
-    //   for (let i = 0; i < data.length; i++) {
-    //     //   //Call PokeAPI for every item in collection.
-    //     this._http
-    //       .get<any>(tempUrl + data[i].pokemonId + "/")
-    //       .subscribe(data => {
-    //         console.log(data);
-    //         spriteURL = data.sprites.front_default;
-    //         pokemonType = data.types[0].type.name;
-    //         tempDuplicateArray[i].URL = spriteURL;
-    //         tempDuplicateArray[i].pokemonType = pokemonType;
-    //         this.pokemonArr.push(tempDuplicateArray[i]);
-    //       });
-    //   }
-    // });
+        console.log(" dupes count ", currentDuplicates[i]);
+        this.pokemonCount = currentDuplicates[i].count - 1;
+        // console.log(currentDuplicates[i].count);
+        // console.log(this.pokemonCount);
+      }
+    });
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    let tempScore = JSON.parse(sessionStorage.getItem("score"));
+    console.log("tempScore: ", tempScore);
+    //Get Active User from local storage.
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    //Set local variables for currentUser.
+    var userName = currentUser.username;
+    var credit = currentUser.credit;
+    //var score = currentUser.score;
+    var currentScore = JSON.parse(localStorage.getItem("currentScore"));
+    var score = currentUser.score;
+
+    //Bind active user info to properties.
+    //Bind username
+    this.username = userName;
+    //Bind Credit Amount
+    this.credit = credit;
+    this.score = score;
   }
 
   onRedeemSubmit() {
@@ -104,15 +106,28 @@ export class RedeemPageComponent implements OnInit {
     });
 
     this._userService.redeemPokemonById().subscribe(data => {
+      //console.log("data.owner from redeem", data.owner.credit);
+      this.credit = data.owner.credit;
       localStorage.setItem("currentUser", JSON.stringify(data.owner));
       localStorage.setItem("userDuplicates", JSON.stringify(data.ownedPokemon));
+      location.reload(true);
     });
   }
 
   onBuyAll() {
     this._userService.redeemAll().subscribe(data => {
       console.log("Inside buy all", data);
+      this.credit = data;
+      location.reload(true);
       //localStorage.setItem("currentUser", JSON.stringify(data.owner));
     });
+  }
+
+  //Method call for onLogout click event.
+  onLogout() {
+    //Clears local storage of user object.
+    localStorage.clear();
+    //Route back to landing page.
+    this._router.navigate(["/landing"]);
   }
 }

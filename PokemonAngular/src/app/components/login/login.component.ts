@@ -38,16 +38,7 @@ export class LoginComponent implements OnInit {
 
           localStorage.setItem("currentUser", JSON.stringify(data));
           sessionStorage.setItem("score", data.score);
-          //Check Local Storage
-          //console.log("LocalStorage after set currentUser", localStorage);
 
-          // this._userService.getUserCollection().subscribe(data => {
-
-          //   localStorage.setItem(
-          //     "currentCollection",
-          //     JSON.stringify(data.ownedPokemon)
-          //   );
-          // });
           //Check Local Storage
           //console.log("LocalStorage after set currentCollection", localStorage);
           //Route to new userHome

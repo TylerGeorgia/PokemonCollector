@@ -44,6 +44,7 @@ export class LoggedNavBarComponent implements OnInit {
       newScore
     );
     this.score = newScore;
+
     console.log(
       "After setting this.score to value of paramater passed this.score : ",
       this.score
