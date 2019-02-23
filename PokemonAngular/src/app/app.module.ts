@@ -28,6 +28,10 @@ import { UserHomeComponent } from "./components/user-home/user-home.component";
 import { CollectionItemComponent } from "./components/collection-item/collection-item.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
+import { BuyConfirmComponent } from "./components/buy-confirm/buy-confirm.component";
+import { SessionNavBarComponent } from "./components/session-nav-bar/session-nav-bar.component";
+
+import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
   declarations: [
@@ -53,10 +57,18 @@ import { FormsModule } from "@angular/forms";
     CollectionPageComponent,
     PlayerPreviewComponent,
     UserHomeComponent,
-    CollectionItemComponent
+    CollectionItemComponent,
+    BuyConfirmComponent,
+    SessionNavBarComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [LoginComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    GoogleChartsModule.forRoot()
+  ],
+  providers: [LoginComponent, LoggedNavBarComponent, SessionNavBarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

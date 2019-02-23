@@ -117,7 +117,7 @@ public class JunitTests {
 	}
 	@Test @Ignore
 	public void getAllPokemonForUser() {
-		List<Pokemon> allpok = PokemonDaoImpl.getPokemonDao().getPokemonByUserId(3);
+		List<Pokemon> allpok = PokemonDaoImpl.getPokemonDao().getPokemonByUserId(1);
 		for (Pokemon p : allpok) {
 			System.out.println(p.getPokemonName());
 		}
@@ -132,7 +132,7 @@ public class JunitTests {
 	@Test @Ignore
 	public void sellDupSpecificPokemon() {
 		User user = AppServices.getAppService().checkUserCredentials("TestUsername", "password");
-		assertEquals(user.getScore()+45,
+		assertEquals(user.getScore(),
 				AppServices.getAppService().sellDuplicateByUserAndPokemonId(user.getUserId(),124));
 	}
 	

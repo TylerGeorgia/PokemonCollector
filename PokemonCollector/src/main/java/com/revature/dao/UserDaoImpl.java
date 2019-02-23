@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.revature.model.Pokemon;
 import com.revature.model.User;
 import com.revature.util.ConnectionPool;
 
@@ -221,7 +222,6 @@ public class UserDaoImpl implements UserDao{
 		}
 		return isUpdated;
 	}
-
 	
 	@Override
 	public boolean updateUser(User updateUser) {

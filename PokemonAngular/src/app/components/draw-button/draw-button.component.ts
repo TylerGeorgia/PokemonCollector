@@ -1,46 +1,119 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "src/app/service/user.service";
+import { RedeemUser } from "src/app/models/redeem-user";
+import { CurrentSessionService } from "src/app/service/current-session.service";
+import { Router } from "@angular/router";
+
+import { LoggedNavBarComponent } from "../logged-nav-bar/logged-nav-bar.component";
 @Component({
   selector: "app-draw-button",
   templateUrl: "./draw-button.component.html",
   styleUrls: ["./draw-button.component.css"]
 })
 export class DrawButtonComponent implements OnInit {
-  clickMessage = "";
+  pokemonArr: any[] = new Array();
+  pokemonName: string = "";
+  pokemonType: string = "";
+  pokemonURL: string = "";
+  cardShow: boolean = false;
+  userModel = new RedeemUser("");
+  constructor(
+    private _userService: UserService,
+    private _http: HttpClient,
+    private _currentSession: CurrentSessionService,
+    private loggedNavBar: LoggedNavBarComponent,
+    private _router: Router
+  ) {}
 
-  private localURL = "http://localhost:8080/PokemonCollector/generate";
-  private myJSON;
-  private url = "https://pokeapi.co/api/v2/pokemon/1/";
-  constructor(private _userService: UserService, private _http: HttpClient) {}
-
-  ngOnInit() {
-    //By making the get request here in the on init() we can assign the value from the observable to our local class variable and the access those values in someother event aka on the button click.
-    //let obs = this.http.get<any>(this.localURL);
-    //obs.subscribe(response => (this.myJSON = response));
-  }
+  ngOnInit() {}
 
   onClickMe() {
-    this._userService.generatePokemon().subscribe(data => console.log(data));
-    //Some testing stuff
-    // this.clickMessage = "Hi, how are ya.";
-    // console.log(this.clickMessage);
-    //Any HttpClient request should be done in a service then used with DependencyInjection this could be the solution to this problem.
-    //Set an observable to the result of the http.get request on the url
-    //let obs = this.http.get<any>(this.localURL);
-    //Assign the one time observable response to a property of the class.
-    //obs.subscribe(response => (this.myJSON = response));
-    //WE could log the response itself instead of assigning it to a variable in our class and see the successful JSON is returned we just cannot access it.
-    //obs.subscribe(response => console.log(response.types[0].type.name));
-    //obs.subscribe(response => console.log(response.name));
-    //This doesnt work for some reason did work in landingpage with json from our database.
-    //obs.subscribe(response => response.name);
-    // console.log(obs);
-    // console.log(obs.subscribe);
-    //This next log statement wont work because it has yet to be defined as a JSON object.
-    //console.log(this.myJSON);
-    //These will work only if the initial setup of the getRequest and assignment of our local JSON object is in a different block. EX: in the init method.
-    //console.log(this.myJSON.name);
-    //console.log(this.myJSON.types[0].type.name);
+    //add d-none class to id of generate-pokemon-pokeball
+    //Remove d-none from id of pokemon-card-name
+    if (this.cardShow) {
+      $("#generate-pokemon-pokeball").removeClass("d-none");
+      $("#generate-pokemon-card").addClass("d-none");
+      $("#generate-pokemon-draw-btn").addClass("d-none");
+    }
+    //Create a local varaible to store first part of the pokeAPI URL.
+    var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
+
+    //Make a call userService method to make call for random pokemon.
+
+    this._userService.generatePokemon().subscribe(data => {
+      console.log("Response from GeneratePokemon Call: ", data);
+      //Update the local storage user
+      localStorage.setItem("currentUser", JSON.stringify(data.owner));
+      //Get the returned user form generatecall
+      let returnedUser = data.owner;
+      console.log("User returned from GeneratePokemon Call: ", data.owner);
+      //Get the returned pokemon from the genreate call
+      let newPokemon = data.ownedPokemon[0];
+      console.log("New Pokemon return from GeneratePokemon Call: ", newPokemon);
+      //Check if the pokemon is a duplicate (if count is 1 then not a duplicate.)
+      if (newPokemon.count == 1) {
+        //New pokemon discovered update score
+        let newScore = returnedUser.score;
+        console.log(
+          "Score of the returned user from GenerateCall should be updated. ",
+          newScore
+        );
+        //Attempt to set the score in the logged nav from the setter method.
+        this.loggedNavBar.setScore(newScore);
+
+        // this._router
+        //   .navigateByUrl("/shop", { skipLocationChange: true })
+        //   .then(() => this._router.navigate(["/userhome"]));
+      } else {
+        //IF the count wasn't 1 then it was a duplicate pokemon. Do NOT update score.
+        console.log("Duplicate Pokemon");
+      }
+      //Variables for URL of sprite and poketype.
+      var spriteURL = "";
+      var pokeTYPE = "";
+      var pokemonName = "";
+
+      //Make a call to POKEAPI
+
+      this._http.get<any>(tempUrl + newPokemon.pokemonId).subscribe(data => {
+        //Data = Full pokemon reponse form the POKEAPI
+        console.log("Repsponse from the PokiAPi: ", data);
+        spriteURL = data.sprites.front_default;
+        console.log("URL of pokemon spirte image: ", spriteURL);
+        pokeTYPE = data.types[0].type.name;
+        console.log("Pokemon type from pokiAPI: ", pokeTYPE);
+        pokemonName = data.name;
+        console.log("Pokemon name from poki api: ", pokemonName);
+
+        //Set the porperty values of the class
+        this.pokemonName = pokemonName;
+        this.pokemonType = pokeTYPE;
+        this.pokemonURL = spriteURL;
+      });
+
+      //Update collection in localstorage.
+
+      //New call to database for new collection after new pokemon was added.
+      this._userService.getUserCollection().subscribe(data => {
+        console.log(
+          "Response from getUserCollection call at end of generatePokemonCall: ",
+          data
+        );
+        //Set the local storage currentColletion to the updated collection after new pokemon was added.
+        localStorage.setItem(
+          "currentCollection",
+          JSON.stringify(data.ownedPokemon)
+        );
+      });
+    });
+  }
+
+  onBallClick() {
+    //Hide pokeball img and show card div
+    $("#generate-pokemon-pokeball").addClass("d-none");
+    $("#generate-pokemon-card").removeClass("d-none");
+    $("#generate-pokemon-draw-btn").removeClass("d-none");
+    this.cardShow = true;
   }
 }

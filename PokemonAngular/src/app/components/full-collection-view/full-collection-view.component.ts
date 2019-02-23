@@ -33,29 +33,37 @@ export class FullCollectionViewComponent implements OnInit {
     //Create a local varaible to store first part of the pokeAPI URL.
     var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
     // Store the localStorage object into a  local variable.
-    var collection = JSON.parse(localStorage.getItem("currentCollection"));
 
+    let tempCollection = JSON.parse(localStorage.getItem("currentCollection"));
+    console.log("tempCollection from local storage", tempCollection);
+
+    var collection = tempCollection.ownedPokemon;
+    console.log(
+      "collection in full collection component: ",
+      tempCollection.ownedPokemon
+    );
     // //Loop through the collection object and push to the pokemonArray.
-    for (let i = 0; i < collection.length; i++) {
+    for (let i = 0; i < tempCollection.length; i++) {
+      console.log("are we in here??", tempCollection);
       //Add properties for URL and PokemonType to the collection.
       var spriteURL = "";
       var pokeTYPE = "";
       //Call the PokeAPI for pokemon Info
       this._http
-        .get<any>(tempUrl + collection[i].pokemonId + "/")
+        .get<any>(tempUrl + tempCollection[i].pokemonId + "/")
         .subscribe(data => {
           //Store URL of image in local varaible
           spriteURL = data.sprites.front_default;
           //Store type of pokemon in local variable.
           pokeTYPE = data.types[0].type.name;
           //Add a property to the collection object for URL
-          collection[i].URL = spriteURL;
+          tempCollection[i].URL = spriteURL;
           //ADD a property to the collection object for the Type.
-          collection[i].pokemonType = pokeTYPE;
-          console.log(collection);
+          tempCollection[i].pokemonType = pokeTYPE;
+
           //console.log("PokemonArray", this.pokemonArr);
           //Push new collection object to pokemonArr proeprty.
-          this.pokemonArr.push(collection[i]);
+          this.pokemonArr.push(tempCollection[i]);
           // console.log("PokemonArray: ", this.pokemonArr);
         });
     }
