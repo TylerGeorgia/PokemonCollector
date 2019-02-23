@@ -28,7 +28,8 @@ import { UserHomeComponent } from "./components/user-home/user-home.component";
 import { CollectionItemComponent } from "./components/collection-item/collection-item.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
-import { BuyConfirmComponent } from './components/buy-confirm/buy-confirm.component';
+import { BuyConfirmComponent } from "./components/buy-confirm/buy-confirm.component";
+import { SessionNavBarComponent } from "./components/session-nav-bar/session-nav-bar.component";
 
 @NgModule({
   declarations: [
@@ -55,10 +56,11 @@ import { BuyConfirmComponent } from './components/buy-confirm/buy-confirm.compon
     PlayerPreviewComponent,
     UserHomeComponent,
     CollectionItemComponent,
-    BuyConfirmComponent
+    BuyConfirmComponent,
+    SessionNavBarComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [LoginComponent],
+  providers: [LoginComponent, LoggedNavBarComponent, SessionNavBarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

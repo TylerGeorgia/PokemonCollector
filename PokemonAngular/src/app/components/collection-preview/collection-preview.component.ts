@@ -54,7 +54,7 @@ export class CollectionPreviewComponent implements OnInit {
         localStorage.getItem("currentCollection")
       );
       console.log("currentCollection var", currentCollection);
-      //PROBLEM HERE
+
       let maxLength = currentCollection.length;
       console.log("maxLength: ", maxLength);
       //Generate Three random numbers.

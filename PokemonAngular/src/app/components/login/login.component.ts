@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { User } from "src/app/user";
 import { UserService } from "src/app/service/user.service";
 import { Router } from "@angular/router";
+import { CurrentSessionService } from "src/app/service/current-session.service";
 
 @Component({
   selector: "app-login",
@@ -13,7 +14,11 @@ export class LoginComponent implements OnInit {
   // activeUser: User;
   // activeUserModel = new User("hello", "password");
 
-  constructor(private _router: Router, private _userService: UserService) {}
+  constructor(
+    private _router: Router,
+    private _userService: UserService,
+    private _currentSession: CurrentSessionService
+  ) {}
 
   ngOnInit() {
     console.log("LocalStorage: Start of Login Comp", localStorage);
@@ -28,10 +33,11 @@ export class LoginComponent implements OnInit {
         if (data == null) {
           console.log("invalid login");
         } else {
-          //Store Active User as Local Storage Object
-          //console.log("in the else of login -loginComponents");
-          //console.log("Data:", data);
+          console.log("data ", data);
+          console.log(data.username);
+
           localStorage.setItem("currentUser", JSON.stringify(data));
+          sessionStorage.setItem("score", data.score);
           //Check Local Storage
           //console.log("LocalStorage after set currentUser", localStorage);
 

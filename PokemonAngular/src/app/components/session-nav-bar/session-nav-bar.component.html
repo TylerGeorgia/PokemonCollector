@@ -1,9 +1,7 @@
-<!--Navbar-->
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <h5>Score {{ this.score }}</h5>
-  <h5>{{ username }}</h5>
-  <h5>Credits {{ credit }}</h5>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+  <h5>Score {{ score }}</h5>
+  <h5>{{ userName }}</h5>
+  <h5>Credits {{ credits }}</h5>
 
   <button
     class="navbar-toggler"
@@ -30,11 +28,11 @@
         <a class="nav-link" href="#" routerLink="/redeem">Redeem</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="/collection"
-          >View Collection</a
-        >
+        <a class="nav-link" href="#" routerLink="">View Profile</a>
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="">Edit Profile</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="#" (click)="onLogout()">Logout</a>
       </li>

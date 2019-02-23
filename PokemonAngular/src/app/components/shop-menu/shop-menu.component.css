@@ -37,6 +37,18 @@
   border: 1px solid black;
   width: 50%;
 } */
+#generate-pokemon-card {
+  margin: 15px;
+  height: 320px;
+  width: 65%;
+  text-align: center;
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  border: 5px solid yellow !important;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .shop-form-scroll {
 }
@@ -64,4 +76,47 @@
 
 .radio-form-item {
   border: 1px solid white;
+}
+
+#newPokemonModal {
+  border: none;
+}
+#newPokemon-Modal-Header {
+}
+
+#newPokemon-x-button {
+  color: white;
+}
+
+#newPokemon-Modal-Content {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+#newPokemon-Modal-Body {
+  background-color: transparent !important;
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+#newPokemon-Modal-Footer {
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.newPokemon-Modal-Buttons {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  border: 2px solid yellow !important;
+  color: black;
+  width: 100%;
+}
+
+.newPokemon-Gneerate-Button {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  border: 2px solid yellow !important;
+  color: black;
+  width: 80%;
 }
