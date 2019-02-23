@@ -16,7 +16,7 @@ export class UserService {
   //URL endpoint for getting all users to for the leaderboard.
   _leaderUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/PokemonCollector/leader";
   //URL endpoint for registering a new user.
-  _createUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080//PokemonCollector/create";
+  _createUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/PokemonCollector/create";
   //URL endpoint for generating a new pokemon.
   _generateUrl = "http://ec2-18-220-58-191.us-east-2.compute.amazonaws.com:8080/PokemonCollector/generate";
   //URL endpoint for getting active users collection.

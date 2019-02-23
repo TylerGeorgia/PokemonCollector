@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
           localStorage.setItem("currentUser", JSON.stringify(data));
           sessionStorage.setItem("score", data.score);
-
+          localStorage.setItem("authToken", JSON.stringify(true));
           //Check Local Storage
           //console.log("LocalStorage after set currentCollection", localStorage);
           //Route to new userHome

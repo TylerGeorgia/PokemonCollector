@@ -31,6 +31,14 @@ export class ShopPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    let authToken = JSON.parse(localStorage.getItem("authToken"));
+    console.log("auth token", authToken);
+    if (authToken == null) {
+      console.log("inside of auth case");
+      this._router.navigate(["/landing"]);
+    } else {
+      console.log("LOgged in");
+    }
     ////////////////SHOP MENU
 
     //Front of URl for poke API

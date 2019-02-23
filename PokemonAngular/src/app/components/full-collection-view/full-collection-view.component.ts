@@ -1,25 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-
+import { Router } from "@angular/router";
 @Component({
   selector: "app-full-collection-view",
   templateUrl: "./full-collection-view.component.html",
   styleUrls: ["./full-collection-view.component.css"]
-  // template: `
-  //   <div class="container">
-  //     <div class="row">
-  //       <div class="col">
-  //         <div id="card-gallery-grid">
-  //           <div class="pokemon-card-outer" *ngFor="let pokemon of pokemonArr">
-  //             <h1>{{ pokemon.pokemonName }}</h1>
-  //             <img src="{{ pokemon.URL }}" />
-  //             <h5>{{ pokemon.pokemonType }}</h5>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // `
 })
 export class FullCollectionViewComponent implements OnInit {
   something = "asdadadadad";
@@ -27,9 +12,17 @@ export class FullCollectionViewComponent implements OnInit {
   pokemonURL: string;
   pokemonArr: any[] = new Array();
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private _router: Router) {}
 
   ngOnInit() {
+    let authToken = JSON.parse(localStorage.getItem("authToken"));
+    console.log("auth token", authToken);
+    if (authToken == null) {
+      console.log("inside of auth case");
+      this._router.navigate(["/landing"]);
+    } else {
+      console.log("LOgged in");
+    }
     //Create a local varaible to store first part of the pokeAPI URL.
     var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
     // Store the localStorage object into a  local variable.
