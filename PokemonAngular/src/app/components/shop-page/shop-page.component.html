@@ -5,8 +5,12 @@
     <li class="nav-item ">Credits {{ credit }}</li>
   </ul> -->
 
-  <h5 class="player-info">Score {{ this.score }}</h5>
+  <img
+    src="http://i65.tinypic.com/25iyve1.png"
+    alt="Image and video hosting by TinyPic"
+  />
   <h5 class="player-info">{{ username }}</h5>
+  <h5 class="player-info">Score {{ this.score }}</h5>
   <h5 class="player-info">Credits {{ credit }}</h5>
 
   <button
@@ -69,6 +73,29 @@
             >
               Buy
             </button>
+            <div
+              class="alert alert-danger alert-dismissible fade show d-none"
+              id="no-credit-alert"
+              role="alert"
+            >
+              <img src="http://i64.tinypic.com/2nhqjbp.png" alt="" />
+
+              <strong>Oops!!</strong> You dont have enough credits.....
+
+              <img
+                src="http://i65.tinypic.com/27zauqe.png"
+                alt="Image and video hosting by TinyPic"
+              />
+              <button
+                id="login-alert"
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="onAlertClose()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
           </div>
 
           <div class="radio-card-grid">
@@ -86,14 +113,20 @@
                 [(ngModel)]="pokemonModel.pokemonId"
               />
               <div class="pokemon-card-outer">
-                <label class="form-check-label" for="gridRadios1">
+                <label
+                  class="form-check-label shop-poke-name"
+                  for="gridRadios1"
+                >
                   {{ pokemon.pokemonName }}
                 </label>
                 <img class="pokemon-card-img" src="{{ pokemon.URL }}" />
                 <div class="pokemon-card-info-cont">
-                  <div>Type: {{ pokemon.pokemonType }}</div>
-                  <br />
-                  <div>Cost: {{ pokemon.pokemonRarity }}</div>
+                  <p>Type: {{ pokemon.pokemonType }}</p>
+
+                  <p>HP: {{ pokemon.hp }}</p>
+                  <p>Attack: {{ pokemon.attack }}</p>
+                  <p>Defense: {{ pokemon.defense }}</p>
+                  <p>Cost: {{ pokemon.pokemonRarity }}</p>
                 </div>
               </div>
             </div>
@@ -135,6 +168,9 @@
           <img src="{{ this.pokemonURL }}" class="pokemon-card-img" />
           <div class="pokemon-card-info-cont">
             <p>Type: {{ this.pokemonType }}</p>
+            <p>HP: {{ this.hp }}</p>
+            <p>Attack: {{ this.attack }}</p>
+            <p>Defense: {{ this.defense }}</p>
           </div>
         </div>
 

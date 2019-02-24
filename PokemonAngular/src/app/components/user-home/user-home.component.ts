@@ -24,7 +24,9 @@ export class UserHomeComponent implements OnInit {
   username: string = "";
   credit: number = 0;
   score: number = 0;
-
+  hp: number = 0;
+  attack: number = 0;
+  defense: number = 0;
   constructor(
     private _router: Router,
     private _userService: UserService,
@@ -140,9 +142,25 @@ export class UserHomeComponent implements OnInit {
         pokemonName = data.name;
         console.log("Pokemon name from poki api: ", pokemonName);
 
+        //Speed
+        var speed = data.stats[0].base_stat;
+
+        console.log(speed);
+        //HP
+        var hp = data.stats[5].base_stat;
+
+        //Defense
+        var defense = data.stats[3].base_stat;
+
+        //Attack
+        var attack = data.stats[4].base_stat;
+
         //Set the porperty values of the class
-        this.pokemonName = pokemonName;
-        this.pokemonType = pokeTYPE;
+        this.hp = hp;
+        this.attack = attack;
+        this.defense = defense;
+        this.pokemonName = this.capitalize(pokemonName);
+        this.pokemonType = this.capitalize(pokeTYPE);
         this.pokemonURL = spriteURL;
       });
 
@@ -161,6 +179,17 @@ export class UserHomeComponent implements OnInit {
         );
       });
     });
+  }
+
+  capitalize(word: string) {
+    //console.log(tempName);
+    var newName = word.charAt(0).toUpperCase();
+    //console.log(newName);
+    var substring = word.substring(1);
+    //console.log(substring);
+    var uppercaseName = newName + substring;
+
+    return uppercaseName;
   }
 
   onBallClick() {

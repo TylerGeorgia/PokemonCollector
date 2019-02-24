@@ -62,7 +62,7 @@ body {
   color: black;
 }
 .pokemon-card-img {
-  border: 1px solid white;
+  border: 2px solid yellow;
   background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
   display: flex;
   width: 50%;
@@ -131,4 +131,8 @@ body {
 #catch-em-all-header {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.pokemon-card-name {
+  color: white;
 }

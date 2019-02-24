@@ -45,20 +45,53 @@ export class FullCollectionViewComponent implements OnInit {
       this._http
         .get<any>(tempUrl + tempCollection[i].pokemonId + "/")
         .subscribe(data => {
+          console.log(data);
           //Store URL of image in local varaible
           spriteURL = data.sprites.front_default;
           //Store type of pokemon in local variable.
-          pokeTYPE = data.types[0].type.name;
+          pokeTYPE = this.capitalize(data.types[0].type.name);
+
           //Add a property to the collection object for URL
           tempCollection[i].URL = spriteURL;
           //ADD a property to the collection object for the Type.
           tempCollection[i].pokemonType = pokeTYPE;
+          var tempName = tempCollection[i].pokemonName;
+          //console.log(tempName);
+
+          var uppercaseName = this.capitalize(tempName);
+          //console.log(uppercaseName);
+          tempCollection[i].pokemonName = uppercaseName;
+          //Set up stats
+          //Speed
+          var speed = data.stats[0].base_stat;
+          tempCollection[i].speed = speed;
+          console.log(speed);
+          //HP
+          var hp = data.stats[5].base_stat;
+          tempCollection[i].hp = hp;
+          //Defense
+          var defense = data.stats[3].base_stat;
+          tempCollection[i].defense = defense;
+          //Attack
+          var attack = data.stats[4].base_stat;
+          tempCollection[i].attack = attack;
 
           //console.log("PokemonArray", this.pokemonArr);
           //Push new collection object to pokemonArr proeprty.
           this.pokemonArr.push(tempCollection[i]);
-          // console.log("PokemonArray: ", this.pokemonArr);
+          //console.log("PokemonArray: ", this.pokemonArr);
         });
     }
+  }
+
+  capitalize(word: string) {
+    //console.log(tempName);
+    var newName = word.charAt(0).toUpperCase();
+    //console.log(newName);
+    var substring = word.substring(1);
+    //console.log(substring);
+    var uppercaseName = newName + substring;
+
+    return uppercaseName;
   }
 }

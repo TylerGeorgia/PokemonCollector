@@ -83,7 +83,7 @@ export class DrawButtonComponent implements OnInit {
         console.log("URL of pokemon spirte image: ", spriteURL);
         pokeTYPE = data.types[0].type.name;
         console.log("Pokemon type from pokiAPI: ", pokeTYPE);
-        pokemonName = data.name;
+        pokemonName = this.capitalize(data.name);
         console.log("Pokemon name from poki api: ", pokemonName);
 
         //Set the porperty values of the class
@@ -107,6 +107,17 @@ export class DrawButtonComponent implements OnInit {
         );
       });
     });
+  }
+
+  capitalize(word: string) {
+    //console.log(tempName);
+    var newName = word.charAt(0).toUpperCase();
+    //console.log(newName);
+    var substring = word.substring(1);
+    //console.log(substring);
+    var uppercaseName = newName + substring;
+
+    return uppercaseName;
   }
 
   onBallClick() {

@@ -11,7 +11,9 @@ body {
   border: 5px solid yellow !important;
   border-radius: 18px;
 }
-
+.shop-poke-name {
+  color: white;
+}
 .pokemon-card-outer img {
   border: 1px solid white;
 }
@@ -70,10 +72,6 @@ body {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 10px;
   align-items: center;
-}
-
-.radio-form-item {
-  border: 1px solid white;
 }
 
 #newPokemonModal {
@@ -170,4 +168,8 @@ body {
   background-color: red;
   padding: 10px;
   border: 1px solid yellow;
+}
+
+.pokemon-card-name {
+  color: white;
 }

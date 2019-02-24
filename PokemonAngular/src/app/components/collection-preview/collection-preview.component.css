@@ -35,7 +35,7 @@
 }
 
 .pokemon-card-name {
-  color: black;
+  color: white;
 }
 .pokemon-card-img {
   border: 1px solid white;
@@ -64,10 +64,14 @@
   background: linear-gradient(to top, #990033 0%, #cc0000 65%);
   border: 2px solid yellow !important;
   color: white;
-  width: 80%;
+
   margin-bottom: 30px;
 }
 
 #collection-preview-cont {
   text-align: center;
+}
+
+#no-pokemon-alert {
+  margin: 20px;
 }

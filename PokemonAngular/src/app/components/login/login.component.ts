@@ -11,6 +11,7 @@ import { CurrentSessionService } from "src/app/service/current-session.service";
 })
 export class LoginComponent implements OnInit {
   userModel = new User("", "");
+  alertShowing = false;
   // activeUser: User;
   // activeUserModel = new User("hello", "password");
 
@@ -32,11 +33,10 @@ export class LoginComponent implements OnInit {
 
         if (data == null) {
           console.log("invalid login");
-          
-
-
-
-
+          if (this.alertShowing == false) {
+            $("#login-alert").removeClass("d-none");
+            this.alertShowing = true;
+          }
         } else {
           console.log("data ", data);
           console.log(data.username);
@@ -55,5 +55,12 @@ export class LoginComponent implements OnInit {
         console.log("Error", error);
       }
     );
+  }
+
+  onAlertClose() {
+    if (this.alertShowing) {
+      $("#login-alert").addClass("d-none");
+      this.alertShowing = false;
+    }
   }
 }

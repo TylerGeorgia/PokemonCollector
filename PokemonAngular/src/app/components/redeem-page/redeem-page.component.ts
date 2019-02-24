@@ -18,6 +18,9 @@ export class RedeemPageComponent implements OnInit {
   pokemonName: string = "";
   pokemonType: string = "";
   pokemonURL: string = "";
+  hp: number = 0;
+  attack: number = 0;
+  defense: number = 0;
   pokemonCount: number = 0;
   //Properties
   username: string = "";
@@ -59,9 +62,25 @@ export class RedeemPageComponent implements OnInit {
           .subscribe(data => {
             console.log(data);
             spriteURL = data.sprites.front_default;
-            pokemonType = data.types[0].type.name;
+            var tempName = this.capitalize(currentDuplicates[i].pokemonName);
+
+            pokemonType = this.capitalize(data.types[0].type.name);
             currentDuplicates[i].URL = spriteURL;
             currentDuplicates[i].pokemonType = pokemonType;
+            currentDuplicates[i].pokemonName = tempName;
+            //Speed
+            var speed = data.stats[0].base_stat;
+            currentDuplicates[i].speed = speed;
+            console.log(speed);
+            //HP
+            var hp = data.stats[5].base_stat;
+            currentDuplicates[i].hp = hp;
+            //Defense
+            var defense = data.stats[3].base_stat;
+            currentDuplicates[i].defense = defense;
+            //Attack
+            var attack = data.stats[4].base_stat;
+            currentDuplicates[i].attack = attack;
             this.pokemonArr.push(currentDuplicates[i]);
           });
 
@@ -104,12 +123,20 @@ export class RedeemPageComponent implements OnInit {
     var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
     let redeemPokemonID = this.pokemonModel.pokemonId;
     this._http.get<any>(tempUrl + redeemPokemonID + "/").subscribe(data => {
-      console.log(
-        "Response from PokeApi request for pokemon getting redeemed: ",
-        data
-      );
-      this.pokemonName = data.name;
-      this.pokemonType = data.types[0].type.name;
+      //HP
+      var hp = data.stats[5].base_stat;
+
+      //Defense
+      var defense = data.stats[3].base_stat;
+
+      //Attack
+      var attack = data.stats[4].base_stat;
+
+      this.hp = hp;
+      this.attack = attack;
+      this.defense = defense;
+      this.pokemonName = this.capitalize(data.name);
+      this.pokemonType = this.capitalize(data.types[0].type.name);
       this.pokemonURL = data.sprites.front_default;
     });
 
@@ -120,6 +147,17 @@ export class RedeemPageComponent implements OnInit {
       localStorage.setItem("userDuplicates", JSON.stringify(data.ownedPokemon));
       location.reload(true);
     });
+  }
+
+  capitalize(word: string) {
+    //console.log(tempName);
+    var newName = word.charAt(0).toUpperCase();
+    //console.log(newName);
+    var substring = word.substring(1);
+    //console.log(substring);
+    var uppercaseName = newName + substring;
+
+    return uppercaseName;
   }
 
   onBuyAll() {

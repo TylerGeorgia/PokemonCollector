@@ -51,16 +51,17 @@
           >
         </div>
         <div
-          class="alert alert-warning alert-dismissible fade show"
+          class="alert alert-danger alert-dismissible fade show d-none"
+          id="login-alert"
           role="alert"
         >
-          <strong>Holy guacamole!</strong> You should check in on some of those
-          fields below.
+          <strong>User used login...</strong> It was not very effective.
           <button
+            id="login-alert"
             type="button"
             class="close"
-            data-dismiss="alert"
             aria-label="Close"
+            (click)="onAlertClose()"
           >
             <span aria-hidden="true">&times;</span>
           </button>
