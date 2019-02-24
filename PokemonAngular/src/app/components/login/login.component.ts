@@ -32,6 +32,11 @@ export class LoginComponent implements OnInit {
 
         if (data == null) {
           console.log("invalid login");
+          
+
+
+
+
         } else {
           console.log("data ", data);
           console.log(data.username);

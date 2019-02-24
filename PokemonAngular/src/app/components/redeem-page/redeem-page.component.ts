@@ -125,9 +125,10 @@ export class RedeemPageComponent implements OnInit {
   onBuyAll() {
     this._userService.redeemAll().subscribe(data => {
       console.log("Inside buy all", data);
-      this.credit = data;
+      this.credit = data.owner.credit;
+
+      localStorage.setItem("currentUser", JSON.stringify(data.owner));
       location.reload(true);
-      //localStorage.setItem("currentUser", JSON.stringify(data.owner));
     });
   }
 

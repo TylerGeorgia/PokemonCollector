@@ -11,7 +11,7 @@ import { stringify } from "@angular/compiler/src/util";
 })
 export class PlayerPreviewComponent implements OnInit {
   name: string = "aasdad";
-  userId: string = "125";
+  userId: string = "";
   pokemonArr: any[] = new Array();
 
   constructor(private _userService: UserService, private _http: HttpClient) {}
