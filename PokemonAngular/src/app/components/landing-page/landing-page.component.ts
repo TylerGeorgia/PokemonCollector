@@ -3,6 +3,7 @@ import { UserService } from "src/app/service/user.service";
 import { HttpClient } from "@angular/common/http";
 import { LbUser } from "src/app/models/lb-user";
 import { preserveWhitespacesDefault } from "@angular/compiler";
+import { ScoreModel } from "src/app/models/score-model";
 @Component({
   selector: "app-landing-page",
   templateUrl: "./landing-page.component.html",
@@ -10,6 +11,8 @@ import { preserveWhitespacesDefault } from "@angular/compiler";
 })
 export class LandingPageComponent implements OnInit {
   chartUserModel = new LbUser("");
+  scoreModel = new ScoreModel("", 0);
+  userScoreArray: any[] = new Array();
   name: string = "aasdad";
   userId: string = "125";
   tempID: string = "";
@@ -23,6 +26,8 @@ export class LandingPageComponent implements OnInit {
       //Ceate Dropdown
 
       console.log("users from resposne", data);
+
+      //////////////////////////////////////////////////////////////////////////////////////////
       for (let i = 0; i < data.length; i++) {
         console.log(data[i]);
         this.usersArr.push(data[i]);
@@ -201,6 +206,9 @@ export class LandingPageComponent implements OnInit {
         ["Fairy", fairyType],
         ["Normal", normalType]
       ]);
+
+      //var data = google.visualization.arrayToDataTable(this.userScoreArray);
+
       var options = {
         title: " Pokemon Types",
         backgroundColor: "transparent",
