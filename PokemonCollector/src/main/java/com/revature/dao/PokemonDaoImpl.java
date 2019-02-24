@@ -44,6 +44,9 @@ public class PokemonDaoImpl implements PokemonDao {
 				pokeToGet.setPokemonId(rs.getInt("pokemon_id"));
 				pokeToGet.setPokemonName(rs.getString("poke_name"));
 				pokeToGet.setPokemonRarity(rs.getInt("rarity"));
+				conn.close();
+				ps.close();
+				rs.close();
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -62,6 +65,9 @@ public class PokemonDaoImpl implements PokemonDao {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString( 1 , pokemonName );
 			rs = ps.executeQuery();
+			conn.close();
+			ps.close();
+			rs.close();
 			if(rs.next()) {
 				pokeToGet = new Pokemon();
 				pokeToGet.setPokemonId(rs.getInt("pokemon_id"));
@@ -101,6 +107,9 @@ public class PokemonDaoImpl implements PokemonDao {
 				nextPokemon.setPokemonRarity(rs.getInt("rarity"));
 				allPokemon.add(nextPokemon);
 			}
+			conn.close();
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			log.info("Error in Class PokemonDaoImpl: Method getAllPokemon()");
@@ -134,6 +143,9 @@ public class PokemonDaoImpl implements PokemonDao {
 					
 				}
 			}
+			conn.close();
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			log.info("Error in Class PokemonDaoImpl: Method getTypesByPokemonId()");
@@ -162,6 +174,9 @@ public class PokemonDaoImpl implements PokemonDao {
 					pokemonsTypes.add(rs2.getString("type_name"));
 				}
 			}
+			conn.close();
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			log.info("Error in Class PokemonDaoImpl: Method getTypesByPokemonId()");
@@ -182,6 +197,9 @@ public class PokemonDaoImpl implements PokemonDao {
 			if(rs.next()) {
 				rarity = rs.getInt("rarity");
 			}
+			conn.close();
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			rarity = -1;
@@ -206,6 +224,9 @@ public class PokemonDaoImpl implements PokemonDao {
 				nextPokemon.setCount(rs.getInt("AMOUNT"));
 				userPokemon.add(nextPokemon);
 			}
+			conn.close();
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			userPokemon = null;
@@ -225,6 +246,8 @@ public class PokemonDaoImpl implements PokemonDao {
 			if(cs.executeUpdate() >=1) {
 				isDecremented = true;
 			}
+			conn.close();
+			cs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			
@@ -242,6 +265,8 @@ public class PokemonDaoImpl implements PokemonDao {
 			cs.setInt( 1 , uId );
 			cs.setInt( 2 , pId );
 			cs.execute();
+			conn.close();
+			cs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			log.info("Error in Class PokemonDaoImpl: Method addPokemonByUserIdAndPokemonId()");
@@ -261,6 +286,9 @@ public class PokemonDaoImpl implements PokemonDao {
 			if(rs.next()) {
 				userPokemonCount = rs.getInt("amount");
 			}
+			conn.close();
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			log.info("Error in Class PokemonDaoImpl: Method addPokemonByUserIdAndPokemonId()");
@@ -278,6 +306,8 @@ public class PokemonDaoImpl implements PokemonDao {
 			if(cs.executeUpdate() >=1) {
 				isIncremented = true;
 			}
+			conn.close();
+			cs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			

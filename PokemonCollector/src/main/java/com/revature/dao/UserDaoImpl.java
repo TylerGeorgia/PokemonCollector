@@ -49,6 +49,9 @@ public class UserDaoImpl implements UserDao{
 				leaderBoard.add(index, nextUser);
 				index++;
 			}
+			
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			leaderBoard = null;
@@ -87,6 +90,10 @@ public class UserDaoImpl implements UserDao{
 				userQ.setScore(rs.getInt("score"));
 				userQ.setCredit(rs.getInt("credits"));
 			}
+			
+			ps.close();
+			rs.close();
+			cs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			log.info("Error in Class UserDaoImpl: Method createUser()");
@@ -108,6 +115,7 @@ public class UserDaoImpl implements UserDao{
 			ps.setInt(6, newUser.getSuperUser());
 			ps.execute();
 			
+			ps.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			userCreated = false;
@@ -137,6 +145,8 @@ public class UserDaoImpl implements UserDao{
 				desiredUser.setUserId(rs.getInt("user_id"));
 			}
 			
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			desiredUser = null;
@@ -159,6 +169,9 @@ public class UserDaoImpl implements UserDao{
 			if(rs.next()) {
 				isValidUsername = false;
 			}
+			
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			isValidUsername = false;
@@ -179,6 +192,9 @@ public class UserDaoImpl implements UserDao{
 			if(rs.next()) {
 				isValidEmail = false;
 			}
+			
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			isValidEmail = false;
@@ -198,6 +214,9 @@ public class UserDaoImpl implements UserDao{
 			if(rs.next()) {
 				userCredits = rs.getInt("credits");
 			}
+			
+			ps.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			userCredits = -1;
@@ -214,7 +233,7 @@ public class UserDaoImpl implements UserDao{
 			ps.setInt(1, newValue);
 			ps.setInt(2, uId);
 			ps.executeUpdate();
-			
+			ps.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			isUpdated = false;
@@ -237,7 +256,7 @@ public class UserDaoImpl implements UserDao{
 			ps.setString(5, updateUser.getEmail().toLowerCase());
 			ps.setInt(6, updateUser.getSuperUser());
 			ps.execute();
-			
+			ps.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 			userUpdated = false;
