@@ -8,6 +8,11 @@ body {
 #routeroutlet {
 }
 
+.logged-nav {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  color: white;
+}
+
 /*********************************************************Global Styles for PokemonCards**********************/
 
 .pokemon-card-outer {
@@ -70,3 +75,12 @@ body {
 }
 
 /***********************************************************************************************************/
+
+.player-info {
+  font-size: 15px;
+  padding: 10px;
+}
+
+.logged-links {
+  float: right;
+}

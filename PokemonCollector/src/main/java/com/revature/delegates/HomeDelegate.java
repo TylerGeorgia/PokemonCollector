@@ -55,9 +55,10 @@ public class HomeDelegate {
 	 */
 	public void sellAllPokemon(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int id = Integer.parseInt(request.getParameter("USERID"));
-		int score = AppServices.getAppService().sellAllDuplicatePokemonByUserId(id);
+		AppServices.getAppService().sellAllDuplicatePokemonByUserId(id);
+		pokedex.setOwner(pokebuild.buildUser(id));
 		response.setContentType("application/json");
-		response.getWriter().append(mapper.writeValueAsString(score));
+		response.getWriter().append(mapper.writeValueAsString(pokedex));
 	}
 	
 	/** Sells a specific Pokemon the user specifies
