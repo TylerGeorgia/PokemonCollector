@@ -2,6 +2,20 @@
   border: 2px solid white;
 }
 
+#collection-section-header {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
+  text-align: center;
+  min-height: 500px;
+}
+
+#pokedex-heading {
+  padding: 10px;
+}
+
+.pokemon-card-name {
+  color: white;
+}
+
 /* .pokemon-card-outer {
   margin: 15px;
   height: 320px;

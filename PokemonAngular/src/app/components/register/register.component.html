@@ -102,7 +102,23 @@
             >Email is requried.</small
           >
         </div>
-
+        <div
+          class="alert alert-danger alert-dismissible fade show d-none"
+          id="login-alert"
+          role="alert"
+        >
+          <img src="http://i64.tinypic.com/2nhqjbp.png" alt="" />
+          <strong>Erm...</strong> What was your name again...?
+          <button
+            id="login-alert"
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="onAlertClose()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <button class="btn btn-block" type="submit" id="login-form-btn">
           Submit
         </button>

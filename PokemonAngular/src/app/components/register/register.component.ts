@@ -10,18 +10,29 @@ import { Router } from "@angular/router";
 export class RegisterComponent implements OnInit {
   //isSuper is 0 => false
   userModel = new RegisterUser("", "", "", "", "", 0);
+  alertShowing = false;
   constructor(private _router: Router, private _userService: UserService) {}
 
   ngOnInit() {}
 
   onSubmit() {
-    console.log(this.userModel);
     this._userService.createUser(this.userModel).subscribe(data => {
-      if ((data = true)) {
-        this._router.navigate(["/login"]);
+      if (data === "false") {
+        if (this.alertShowing == false) {
+          $("#login-alert").removeClass("d-none");
+          this.alertShowing = true;
+        }
+        //this._router.navigate(["/landing"]);
       } else {
-        this._router.navigate(["/landing"]);
+        this._router.navigate(["/login"]);
       }
     });
+  }
+
+  onAlertClose() {
+    if (this.alertShowing) {
+      $("#login-alert").addClass("d-none");
+      this.alertShowing = false;
+    }
   }
 }

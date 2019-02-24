@@ -30,3 +30,25 @@ body {
   overflow-y: scroll;
   margin: 30px;
 }
+
+.user-item {
+}
+
+#username-label {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  margin-left: 10px;
+  width: 50%;
+  padding: 5px;
+  border: 2px solid yellow;
+}
+
+#username-container {
+  overflow-y: scroll;
+  max-height: 300px;
+}
+
+#username-submit-btn {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  border: 2px solid yellow;
+  color: white;
+}

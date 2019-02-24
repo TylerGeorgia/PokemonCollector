@@ -65,10 +65,8 @@ export class ShopMenuComponent implements OnInit {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
     //Get Pokemon ID
-    //console.log( this.pokemonModel.pokemonId);
     this.buyTicketModel.POKEID = this.pokemonModel.pokemonId;
     this.buyTicketModel.USERID = currentUser.userId;
-    console.log("Buy Ticket for the purchase: ", this.buyTicketModel);
     //Call to Userservice method buyPokemon
     //Pass in buyTicketModel
 
@@ -77,10 +75,6 @@ export class ShopMenuComponent implements OnInit {
     this._http
       .get<any>(pokiUrl + this.buyTicketModel.POKEID + "/")
       .subscribe(data => {
-        console.log(
-          "Response from poki api for buyitkcet pokemon info: ",
-          data
-        );
         this.pokemonName = data.name;
         this.pokemonType = data.types[0].type.name;
         this.pokemonURL = data.sprites.front_default;
@@ -88,11 +82,7 @@ export class ShopMenuComponent implements OnInit {
 
     this._userService.buyPokemon(this.buyTicketModel).subscribe(data => {
       if (data == null) {
-        console.log("Not enough credits");
       } else {
-        console.log("Success!", data);
-        // console.log(data.owner);
-        // console.log("LocalStorage", localStorage);
         //Update Local Storage User
         localStorage.setItem("currentUser", JSON.stringify(data.owner));
         //Update Local Storage Collection

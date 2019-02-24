@@ -33,6 +33,7 @@ import { SessionNavBarComponent } from "./components/session-nav-bar/session-nav
 
 import { GoogleChartsModule } from "angular-google-charts";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { LocationStrategy, HashLocationStrategy } from "@angular/common";
     UserHomeComponent,
     CollectionItemComponent,
     BuyConfirmComponent,
-    SessionNavBarComponent
+    SessionNavBarComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,

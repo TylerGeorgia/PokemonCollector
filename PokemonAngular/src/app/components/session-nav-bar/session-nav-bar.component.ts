@@ -13,17 +13,12 @@ export class SessionNavBarComponent implements OnInit {
 
   ngOnInit() {
     let tempScore = JSON.parse(sessionStorage.getItem("score"));
-    console.log("tempScore: ", tempScore);
     //Get Active User from local storage.
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
     //Set local variables for currentUser.
     var userName = currentUser.username;
     var credit = currentUser.credit;
-    //var score = currentUser.score;
-    var currentScore = JSON.parse(localStorage.getItem("currentScore"));
-    var score = currentScore;
-
     //Bind active user info to properties.
     //Bind username
     this.userName = userName;

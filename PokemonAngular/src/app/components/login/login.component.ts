@@ -11,8 +11,7 @@ import { CurrentSessionService } from "src/app/service/current-session.service";
 })
 export class LoginComponent implements OnInit {
   userModel = new User("", "");
-  // activeUser: User;
-  // activeUserModel = new User("hello", "password");
+  alertShowing = false;
 
   constructor(
     private _router: Router,
@@ -21,31 +20,24 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("LocalStorage: Start of Login Comp", localStorage);
   }
 
   //onSubmit Method for submission of the login form.
   onSubmit() {
     this._userService.login(this.userModel).subscribe(
       data => {
-        console.log("Success!", data);
 
         if (data == null) {
-          console.log("invalid login");
-          
-
-
-
-
+          if (this.alertShowing == false) {
+            $("#login-alert").removeClass("d-none");
+            this.alertShowing = true;
+          }
         } else {
-          console.log("data ", data);
-          console.log(data.username);
 
           localStorage.setItem("currentUser", JSON.stringify(data));
           sessionStorage.setItem("score", data.score);
           localStorage.setItem("authToken", JSON.stringify(true));
           //Check Local Storage
-          //console.log("LocalStorage after set currentCollection", localStorage);
           //Route to new userHome
           this._router.navigate(["/userhome"]);
           //return (this.activeUserModel = data);
@@ -55,5 +47,12 @@ export class LoginComponent implements OnInit {
         console.log("Error", error);
       }
     );
+  }
+
+  onAlertClose() {
+    if (this.alertShowing) {
+      $("#login-alert").addClass("d-none");
+      this.alertShowing = false;
+    }
   }
 }

@@ -42,23 +42,16 @@ export class DrawButtonComponent implements OnInit {
     //Make a call userService method to make call for random pokemon.
 
     this._userService.generatePokemon().subscribe(data => {
-      console.log("Response from GeneratePokemon Call: ", data);
       //Update the local storage user
       localStorage.setItem("currentUser", JSON.stringify(data.owner));
       //Get the returned user form generatecall
       let returnedUser = data.owner;
-      console.log("User returned from GeneratePokemon Call: ", data.owner);
       //Get the returned pokemon from the genreate call
       let newPokemon = data.ownedPokemon[0];
-      console.log("New Pokemon return from GeneratePokemon Call: ", newPokemon);
       //Check if the pokemon is a duplicate (if count is 1 then not a duplicate.)
       if (newPokemon.count == 1) {
         //New pokemon discovered update score
         let newScore = returnedUser.score;
-        console.log(
-          "Score of the returned user from GenerateCall should be updated. ",
-          newScore
-        );
         //Attempt to set the score in the logged nav from the setter method.
         this.loggedNavBar.setScore(newScore);
 
@@ -67,7 +60,6 @@ export class DrawButtonComponent implements OnInit {
         //   .then(() => this._router.navigate(["/userhome"]));
       } else {
         //IF the count wasn't 1 then it was a duplicate pokemon. Do NOT update score.
-        console.log("Duplicate Pokemon");
       }
       //Variables for URL of sprite and poketype.
       var spriteURL = "";
@@ -78,13 +70,9 @@ export class DrawButtonComponent implements OnInit {
 
       this._http.get<any>(tempUrl + newPokemon.pokemonId).subscribe(data => {
         //Data = Full pokemon reponse form the POKEAPI
-        console.log("Repsponse from the PokiAPi: ", data);
         spriteURL = data.sprites.front_default;
-        console.log("URL of pokemon spirte image: ", spriteURL);
         pokeTYPE = data.types[0].type.name;
-        console.log("Pokemon type from pokiAPI: ", pokeTYPE);
-        pokemonName = data.name;
-        console.log("Pokemon name from poki api: ", pokemonName);
+        pokemonName = this.capitalize(data.name);
 
         //Set the porperty values of the class
         this.pokemonName = pokemonName;
@@ -96,10 +84,6 @@ export class DrawButtonComponent implements OnInit {
 
       //New call to database for new collection after new pokemon was added.
       this._userService.getUserCollection().subscribe(data => {
-        console.log(
-          "Response from getUserCollection call at end of generatePokemonCall: ",
-          data
-        );
         //Set the local storage currentColletion to the updated collection after new pokemon was added.
         localStorage.setItem(
           "currentCollection",
@@ -107,6 +91,14 @@ export class DrawButtonComponent implements OnInit {
         );
       });
     });
+  }
+
+  capitalize(word: string) {
+    var newName = word.charAt(0).toUpperCase();
+    var substring = word.substring(1);
+    var uppercaseName = newName + substring;
+
+    return uppercaseName;
   }
 
   onBallClick() {

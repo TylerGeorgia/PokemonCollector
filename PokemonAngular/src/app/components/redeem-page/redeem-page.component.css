@@ -15,7 +15,7 @@
   height: 100vh;
   border: 2px solid yellow;
   overflow-y: scroll;
-  padding-top: 100px;
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 10px;
@@ -23,7 +23,6 @@
 }
 
 .radio-form-item {
-  border: 1px solid white;
 }
 
 #newPokemonModal {
@@ -88,5 +87,26 @@
 }
 .customLink {
   style: none;
+  color: white;
+}
+
+#redeem-form-col {
+  background: linear-gradient(to bottom left, #000066 0%, #666699 100%);
+  text-align: center;
+}
+
+#redeem-header-image {
+  padding: 10px;
+}
+
+.shop-buy-btn {
+  background: linear-gradient(to top, #990033 0%, #cc0000 65%);
+  border: 2px solid yellow !important;
+  color: white;
+  width: 80%;
+  margin-bottom: 30px;
+}
+
+.pokemon-card-name {
   color: white;
 }

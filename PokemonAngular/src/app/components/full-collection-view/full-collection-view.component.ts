@@ -16,28 +16,19 @@ export class FullCollectionViewComponent implements OnInit {
 
   ngOnInit() {
     let authToken = JSON.parse(localStorage.getItem("authToken"));
-    console.log("auth token", authToken);
     if (authToken == null) {
-      console.log("inside of auth case");
       this._router.navigate(["/landing"]);
     } else {
-      console.log("LOgged in");
     }
     //Create a local varaible to store first part of the pokeAPI URL.
     var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
     // Store the localStorage object into a  local variable.
 
     let tempCollection = JSON.parse(localStorage.getItem("currentCollection"));
-    console.log("tempCollection from local storage", tempCollection);
 
     var collection = tempCollection.ownedPokemon;
-    console.log(
-      "collection in full collection component: ",
-      tempCollection.ownedPokemon
-    );
     // //Loop through the collection object and push to the pokemonArray.
     for (let i = 0; i < tempCollection.length; i++) {
-      console.log("are we in here??", tempCollection);
       //Add properties for URL and PokemonType to the collection.
       var spriteURL = "";
       var pokeTYPE = "";
@@ -48,17 +39,40 @@ export class FullCollectionViewComponent implements OnInit {
           //Store URL of image in local varaible
           spriteURL = data.sprites.front_default;
           //Store type of pokemon in local variable.
-          pokeTYPE = data.types[0].type.name;
+          pokeTYPE = this.capitalize(data.types[0].type.name);
+
           //Add a property to the collection object for URL
           tempCollection[i].URL = spriteURL;
           //ADD a property to the collection object for the Type.
           tempCollection[i].pokemonType = pokeTYPE;
+          var tempName = tempCollection[i].pokemonName;
 
-          //console.log("PokemonArray", this.pokemonArr);
+          var uppercaseName = this.capitalize(tempName);
+          tempCollection[i].pokemonName = uppercaseName;
+          //Set up stats
+          //Speed
+          var speed = data.stats[0].base_stat;
+          tempCollection[i].speed = speed;
+          //HP
+          var hp = data.stats[5].base_stat;
+          tempCollection[i].hp = hp;
+          //Defense
+          var defense = data.stats[3].base_stat;
+          tempCollection[i].defense = defense;
+          //Attack
+          var attack = data.stats[4].base_stat;
+          tempCollection[i].attack = attack;
           //Push new collection object to pokemonArr proeprty.
           this.pokemonArr.push(tempCollection[i]);
-          // console.log("PokemonArray: ", this.pokemonArr);
         });
     }
+  }
+
+  capitalize(word: string) {
+    var newName = word.charAt(0).toUpperCase();
+    var substring = word.substring(1);
+    var uppercaseName = newName + substring;
+
+    return uppercaseName;
   }
 }

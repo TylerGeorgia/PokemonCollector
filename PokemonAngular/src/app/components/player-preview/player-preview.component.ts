@@ -27,9 +27,7 @@ export class PlayerPreviewComponent implements OnInit {
     this._userService
       .getUserCollectionLeaderBoard(this.userId)
       .subscribe(data => {
-        console.log("User Collection Response in player preview", data);
         let tempCollection = data.ownedPokemon;
-        //console.log("tempCollection", tempCollection);
         var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
         //Get types of each element in collection
 
@@ -37,11 +35,8 @@ export class PlayerPreviewComponent implements OnInit {
           this._http
             .get<any>(tempUrl + tempCollection[i].pokemonId + "/")
             .subscribe(data => {
-              //console.log("response from poki api: ", data);
               let tempType = data.types[0].type.name;
-              //console.log(tempType);
               tempCollection[i].pokemonType = tempType;
-              //console.log(tempCollection[i]);
               this.pokemonArr.push(tempCollection[i]);
               localStorage.setItem(
                 "playerPreview",
@@ -75,8 +70,6 @@ export class PlayerPreviewComponent implements OnInit {
       let normalType: number = 0;
       let unknownType: number = 0;
       let tempCollection = JSON.parse(localStorage.getItem("playerPreview"));
-      console.log("TempCollection", tempCollection);
-      //console.log(this.pokemonArr);
       //Loop through pokemonArr and check each elements type. Depending on a switch increment the count fo each type.
       for (let i = 0; i < tempCollection.length; i++) {
         switch (tempCollection[i].pokemonType) {

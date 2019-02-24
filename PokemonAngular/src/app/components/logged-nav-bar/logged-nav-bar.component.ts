@@ -19,7 +19,6 @@ export class LoggedNavBarComponent implements OnInit {
 
   ngOnInit() {
     let tempScore = JSON.parse(sessionStorage.getItem("score"));
-    console.log("tempScore: ", tempScore);
     //Get Active User from local storage.
     var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -39,16 +38,7 @@ export class LoggedNavBarComponent implements OnInit {
   }
 
   setScore(newScore: number) {
-    console.log(
-      "Inside of setScore Method from LoggedNavBarComponent, Value of newScore : ",
-      newScore
-    );
     this.score = newScore;
-
-    console.log(
-      "After setting this.score to value of paramater passed this.score : ",
-      this.score
-    );
   }
   //Method call for onLogout click event.
   onLogout() {

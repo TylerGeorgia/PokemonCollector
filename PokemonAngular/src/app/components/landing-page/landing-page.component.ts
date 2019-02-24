@@ -3,6 +3,7 @@ import { UserService } from "src/app/service/user.service";
 import { HttpClient } from "@angular/common/http";
 import { LbUser } from "src/app/models/lb-user";
 import { preserveWhitespacesDefault } from "@angular/compiler";
+import { ScoreModel } from "src/app/models/score-model";
 @Component({
   selector: "app-landing-page",
   templateUrl: "./landing-page.component.html",
@@ -10,6 +11,8 @@ import { preserveWhitespacesDefault } from "@angular/compiler";
 })
 export class LandingPageComponent implements OnInit {
   chartUserModel = new LbUser("");
+  scoreModel = new ScoreModel("", 0);
+  userScoreArray: any[] = new Array();
   name: string = "aasdad";
   userId: string = "125";
   tempID: string = "";
@@ -22,16 +25,14 @@ export class LandingPageComponent implements OnInit {
     this._userService.getLeaderboard().subscribe(data => {
       //Ceate Dropdown
 
-      console.log("users from resposne", data);
+
+      //////////////////////////////////////////////////////////////////////////////////////////
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i]);
         this.usersArr.push(data[i]);
       }
       //this.usersArr = data;
-      console.log("usersArr", this.usersArr);
 
       for (var i = data.length - 1; i >= 0; i--) {
-        console.log(data[i]);
         let userIDStr = data[i].userId.toString();
         this.tempID = userIDStr;
         $("#leaderboardTable")
@@ -50,7 +51,6 @@ export class LandingPageComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.chartUserModel.userId);
     this.generatePie();
   }
 
@@ -64,9 +64,7 @@ export class LandingPageComponent implements OnInit {
     this._userService
       .getUserCollectionLeaderBoard(this.chartUserModel.userId)
       .subscribe(data => {
-        console.log("User Collection Response in player preview", data);
         let tempCollection = data.ownedPokemon;
-        console.log("tempCollection", tempCollection);
         var tempUrl = "https://pokeapi.co/api/v2/pokemon/";
         //Get types of each element in collection
 
@@ -74,11 +72,8 @@ export class LandingPageComponent implements OnInit {
           this._http
             .get<any>(tempUrl + tempCollection[i].pokemonId + "/")
             .subscribe(data => {
-              //console.log("response from poki api: ", data);
               let tempType = data.types[0].type.name;
-              //console.log(tempType);
               tempCollection[i].pokemonType = tempType;
-              //console.log(tempCollection[i]);
               this.pokemonArr.push(tempCollection[i]);
               localStorage.setItem(
                 "playerPreview",
@@ -112,8 +107,6 @@ export class LandingPageComponent implements OnInit {
       let normalType: number = 0;
       let unknownType: number = 0;
       let tempCollection = JSON.parse(localStorage.getItem("playerPreview"));
-      console.log("TempCollection", tempCollection);
-      //console.log(this.pokemonArr);
       //Loop through pokemonArr and check each elements type. Depending on a switch increment the count fo each type.
       for (let i = 0; i < tempCollection.length; i++) {
         switch (tempCollection[i].pokemonType) {
@@ -201,6 +194,9 @@ export class LandingPageComponent implements OnInit {
         ["Fairy", fairyType],
         ["Normal", normalType]
       ]);
+
+      //var data = google.visualization.arrayToDataTable(this.userScoreArray);
+
       var options = {
         title: " Pokemon Types",
         backgroundColor: "transparent",
