@@ -14,6 +14,24 @@ export class UserService {
   currentUser = JSON.parse(localStorage.getItem("currentUser"));
  //http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/
   //URL endpoint for getting all users to for the leaderboard.
+<<<<<<< HEAD
+  _leaderUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/leader";
+  //URL endpoint for registering a new user.
+  _createUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/create";
+  //URL endpoint for generating a new pokemon.
+  _generateUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/generate";
+  //URL endpoint for getting active users collection.
+
+  _userCollectionUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/collection";
+  //URL endpoint for user login.
+  _loginUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/login";
+  //URL endpoint for shop getALl
+  _shopUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/shop";
+  //URL endpoint for buy pokemon
+  _buyUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/redeem";
+  _getDuplicatesUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/collection";
+  _redeemUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/redeem";
+=======
   _leaderUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/leader";
   //URL endpoint for registering a new user.
   _createUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/create";
@@ -30,6 +48,7 @@ export class UserService {
   _buyUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/redeem";
   _getDuplicatesUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/collection";
   _redeemUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/redeem";
+>>>>>>> 5b54dfa9b1010f3a40d63ca63d59436cf28b77c0
 
   //Method call for GET request for leaderboard users.
   getLeaderboard() {
