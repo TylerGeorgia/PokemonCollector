@@ -10,9 +10,8 @@ import { RedeemUser } from "src/app/models/redeem-user";
 })
 export class UserService {
   constructor(private _http: HttpClient) {}
-
+  
   currentUser = JSON.parse(localStorage.getItem("currentUser"));
- //http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/ui/
   //URL endpoint for getting all users to for the leaderboard.
   _leaderUrl = "http://ec2-18-221-27-66.us-east-2.compute.amazonaws.com:8080/PokemonCollector/leader";
   //URL endpoint for registering a new user.
